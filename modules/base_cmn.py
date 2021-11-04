@@ -67,7 +67,7 @@ class Transformer(nn.Module):
         return self.decode(self.encode(src, src_mask), src_mask, tgt, tgt_mask, memory_matrix=memory_matrix)
 
     def encode(self, src, src_mask):
-        return self.encoder(self.src_embed(src), src_mask)
+        return self.encoder(self.src_embed(src), src_mask) # [12,98,512]
 
     def decode(self, memory, src_mask, tgt, tgt_mask, past=None, memory_matrix=None):
         embeddings = self.tgt_embed(tgt)
@@ -350,7 +350,7 @@ class BaseCMN(AttModel):
 
         #self.memory_matrix = nn.Parameter(torch.FloatTensor(args.cmm_size, args.cmm_dim))
 
-        self.labels = torch.arange(self.num_cluster).t().flatten()
+        #self.labels = torch.arange(self.num_cluster).unsqueeze(1).expand(self.num_cluster,self.num_prototype).flatten()
         nn.init.normal_(self.memory_matrix, 0, 1 / args.cmm_dim)
         #nn.init.normal_(self.prior_matrix, 0, 1 / args.cmm_dim)
 
@@ -403,12 +403,13 @@ class BaseCMN(AttModel):
 
         return att_feats, seq, att_masks, seq_mask
 
-    def _forward(self, fc_feats, att_feats, seq, att_masks=None):
+    def _forward(self, fc_feats, att_feats, seq, att_masks=None, label=None):
         att_feats, seq, att_masks, seq_mask = self._prepare_feature_forward(att_feats, att_masks, seq)
         out = self.model(att_feats, seq, att_masks, seq_mask, memory_matrix=self.memory_matrix)
         outputs = F.log_softmax(self.logit(out), dim=-1)
+        con_ls = con_loss(self.memory_matrix[:(self.num_cluster-1)*self.num_prototype,:],label[:(self.num_cluster-1) * self.num_prototype])
 
-        return outputs
+        return outputs, con_ls
 
     def core(self, it, fc_feats_ph, att_feats_ph, memory, state, mask):
         if len(state) == 0:
@@ -429,7 +430,7 @@ def con_loss(features, labels):
     pos_label_matrix = torch.stack([labels == labels[i] for i in range(B)]).float()
     neg_label_matrix = 1 - pos_label_matrix
     pos_cos_matrix = 1 - cos_matrix
-    neg_cos_matrix = cos_matrix - 0.4
+    neg_cos_matrix = cos_matrix - 0.3
     neg_cos_matrix[neg_cos_matrix < 0] = 0
     loss = (pos_cos_matrix * pos_label_matrix).sum() + (neg_cos_matrix * neg_label_matrix).sum()
     loss /= (B * B)

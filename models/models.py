@@ -23,7 +23,7 @@ class BaseCMNModel(nn.Module):
         params = sum([np.prod(p.size()) for p in model_parameters])
         return super().__str__() + '\nTrainable parameters: {}'.format(params)
 
-    def forward(self, images, targets=None, mode='train', update_opts={}):
+    def forward(self, images, targets=None, label=None, mode='train', update_opts={}):
         if self.args.dataset_name=='iu_xray':
             att_feats_0, fc_feats_0 = self.visual_extractor(images[:, 0])
             att_feats_1, fc_feats_1 = self.visual_extractor(images[:, 1])
@@ -31,7 +31,7 @@ class BaseCMNModel(nn.Module):
             fc_feats = torch.cat((fc_feats_0, fc_feats_1), dim=1)
             att_feats = torch.cat((att_feats_0, att_feats_1), dim=1)
             if mode == 'train':
-                output = self.encoder_decoder(fc_feats, att_feats, targets, mode='forward')
+                output = self.encoder_decoder(fc_feats, att_feats, targets, label = label, mode='forward')
                 return output
             elif mode == 'sample':
                 output, output_probs = self.encoder_decoder(fc_feats, att_feats, mode='sample', update_opts=update_opts)

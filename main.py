@@ -94,6 +94,7 @@ def parse_agrs():
     parser.add_argument('--resume', type=str, help='whether to resume the training from existing checkpoints.')
     parser.add_argument('--num_prototype', type=int, default=10, help='.')
     parser.add_argument('--num_cluster', type=int, default=20, help='.')
+    parser.add_argument('--weight_cnn_loss', type=float, default=0.5, help='.')
 
     args = parser.parse_args()
     return args

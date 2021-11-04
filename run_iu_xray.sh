@@ -4,7 +4,7 @@ python main.py \
     --dataset_name iu_xray \
     --max_seq_length 60 \
     --threshold 3 \
-    --epochs 100 \
+    --epochs 30 \
     --batch_size 12 \
     --lr_ve 1e-4 \
     --lr_ed 5e-4 \
@@ -18,5 +18,8 @@ python main.py \
     --beam_size 3 \
     --save_dir results/iu_xray/ \
     --log_period 50 \
-    --n_gpu 1
+    --n_gpu 1 \
+    --weight_cnn_loss 0.5 \
+    --num_cluster 15 \
+    --num_prototype 10 \
 

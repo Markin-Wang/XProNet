@@ -57,12 +57,14 @@ class BaseTrainer(object):
 
     def train(self):
         not_improved_count = 0
+        best_epoch = 0
         for epoch in range(self.start_epoch, self.epochs + 1):
             result = self._train_epoch(epoch)
 
             # save logged informations into log dict
             log = {'epoch': epoch}
             log.update(result)
+
             self._record_best(log)
 
             # print logged informations to the screen
@@ -87,6 +89,7 @@ class BaseTrainer(object):
                     self.mnt_best = log[self.mnt_metric]
                     not_improved_count = 0
                     best = True
+                    best_epoch = epoch
                 else:
                     not_improved_count += 1
 
@@ -97,6 +100,7 @@ class BaseTrainer(object):
 
             if epoch % self.save_period == 0:
                 self._save_checkpoint(epoch, save_best=best)
+        print('best performance in epoch: ',best_epoch)
 
     def _record_best(self, log):
         improved_val = (self.mnt_mode == 'min' and log[self.mnt_metric] <= self.best_recorder['val'][
@@ -170,28 +174,34 @@ class Trainer(BaseTrainer):
         self.train_dataloader = train_dataloader
         self.val_dataloader = val_dataloader
         self.test_dataloader = test_dataloader
+        self.cnn_loss_weight = args.weight_cnn_loss
+        self.labels = torch.arange(args.num_cluster).unsqueeze(1).\
+            expand(args.num_cluster, args.num_prototype).flatten().to(self.device)
 
     def _train_epoch(self, epoch):
 
         self.logger.info('[{}/{}] Start to train in the training set.'.format(epoch, self.epochs))
-        train_loss = 0
+        ce_loss = 0
+        con_loss = 0
         self.model.train()
         for batch_idx, (images_id, images, reports_ids, reports_masks) in enumerate(self.train_dataloader):
 
             images, reports_ids, reports_masks = images.to(self.device), reports_ids.to(self.device), \
                                                  reports_masks.to(self.device)
-            output = self.model(images, reports_ids, mode='train')
-            loss = self.criterion(output, reports_ids, reports_masks)
-            train_loss += loss.item()
+            output, con_ls = self.model(images, reports_ids, label=self.labels, mode='train')
+            ce_ls = self.criterion(output, reports_ids, reports_masks)
+            con_loss += con_ls.item()
+            ce_loss += ce_ls.item()
+            loss = ce_ls + self.cnn_loss_weight * con_ls
             self.optimizer.zero_grad()
             loss.backward()
             self.optimizer.step()
             if batch_idx % self.args.log_period == 0:
-                self.logger.info('[{}/{}] Step: {}/{}, Training Loss: {:.5f}.'
+                self.logger.info('[{}/{}] Step: {}/{}, CE Loss: {:.5f}, CON Loss: {:.5f}.'
                                  .format(epoch, self.epochs, batch_idx, len(self.train_dataloader),
-                                         train_loss / (batch_idx + 1)))
+                                         ce_loss / (batch_idx + 1), con_loss / (batch_idx + 1)))
 
-        log = {'train_loss': train_loss / len(self.train_dataloader)}
+        log = {'ce_loss': ce_loss / len(self.train_dataloader),'con': con_loss / len(self.train_dataloader)}
 
         self.logger.info('[{}/{}] Start to evaluate in the validation set.'.format(epoch, self.epochs))
         self.model.eval()
