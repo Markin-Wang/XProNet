@@ -42,7 +42,7 @@ class BaseCMNModel(nn.Module):
         else:
             att_feats, fc_feats = self.visual_extractor(images)
             if mode == 'train':
-                output = self.encoder_decoder(fc_feats, att_feats, targets, mode='forward')
+                output = self.encoder_decoder(fc_feats, att_feats, targets,label=label, mode='forward')
                 return output
             elif mode == 'sample':
                 output, output_probs = self.encoder_decoder(fc_feats, att_feats, mode='sample', update_opts=update_opts)
