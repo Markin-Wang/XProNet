@@ -338,6 +338,7 @@ class BaseCMN(AttModel):
         self.num_prototype = args.num_prototype
         self.num_cluster=args.num_cluster
 
+
         tgt_vocab = self.vocab_size + 1
 
 
@@ -347,11 +348,15 @@ class BaseCMN(AttModel):
         self.logit = nn.Linear(args.d_model, tgt_vocab)
         
         self.memory_matrix = nn.Parameter(torch.FloatTensor(self.num_cluster*self.num_prototype, args.cmm_dim))
+        self.global_memory = nn.Parameter(torch.FloatTensor(self.num_prototype, args.cmm_dim))
+
+        self.attn_global = MultiHeadedAttention(self.num_heads, self.d_model)
 
         #self.memory_matrix = nn.Parameter(torch.FloatTensor(args.cmm_size, args.cmm_dim))
 
         #self.labels = torch.arange(self.num_cluster).unsqueeze(1).expand(self.num_cluster,self.num_prototype).flatten()
         nn.init.normal_(self.memory_matrix, 0, 1 / args.cmm_dim)
+        nn.init.normal_(self.global_memory, 0, 1 / args.cmm_dim)
         #nn.init.normal_(self.prior_matrix, 0, 1 / args.cmm_dim)
 
     def init_hidden(self, bsz):
@@ -377,14 +382,17 @@ class BaseCMN(AttModel):
         shared_pattern = self.memory_matrix[-1*self.num_prototype:, :]
         # att_feats: [12,98,512]
         global_rep_feat = torch.mean(att_feats,1)
+        #global_memory = self.attn_global(self.global_memory.unsqueeze(0),self.memory_matrix,self.memory_matrix).squeeze(0)
         prototypes = torch.mean(self.memory_matrix.view(self.num_cluster,self.num_prototype, -1),1)
+        prototypes = prototypes[:self.num_cluster-1, :]
         prototypes = prototypes.unsqueeze(0).expand(att_feats.size(0),prototypes.size(0), prototypes.size(1))
         global_rep_feat = global_rep_feat.unsqueeze(1).expand(global_rep_feat.size(0), prototypes.size(1), global_rep_feat.size(1))
-        dist = torch.sum((global_rep_feat-prototypes)**2,2)
+        dist = torch.sum((global_rep_feat-prototypes)**2, 2)
 
         idxs = torch.argmin(dist,1)
 
         dummy_memory_matrix = torch.stack([torch.cat([self.memory_matrix[index*self.num_prototype:(index+1)*self.num_prototype,:],shared_pattern],0) for index in idxs])
+        #dummy_memory_matrix = torch.stack([torch.cat([self.memory_matrix, self.global_memory], 0) for index in idxs])
         responses = self.cmn(att_feats, dummy_memory_matrix, dummy_memory_matrix)
 
         att_feats = att_feats + responses
@@ -408,7 +416,7 @@ class BaseCMN(AttModel):
         out = self.model(att_feats, seq, att_masks, seq_mask, memory_matrix=self.memory_matrix)
         outputs = F.log_softmax(self.logit(out), dim=-1)
         con_ls = con_loss(self.memory_matrix[:(self.num_cluster-1)*self.num_prototype,:],label[:(self.num_cluster-1) * self.num_prototype])
-
+        #con_ls = con_loss(self.memory_matrix,label)
         return outputs, con_ls
 
     def core(self, it, fc_feats_ph, att_feats_ph, memory, state, mask):
@@ -430,7 +438,7 @@ def con_loss(features, labels):
     pos_label_matrix = torch.stack([labels == labels[i] for i in range(B)]).float()
     neg_label_matrix = 1 - pos_label_matrix
     pos_cos_matrix = 1 - cos_matrix
-    neg_cos_matrix = cos_matrix - 0.3
+    neg_cos_matrix = cos_matrix - 0.4
     neg_cos_matrix[neg_cos_matrix < 0] = 0
     loss = (pos_cos_matrix * pos_label_matrix).sum() + (neg_cos_matrix * neg_label_matrix).sum()
     loss /= (B * B)

@@ -191,6 +191,7 @@ class Trainer(BaseTrainer):
             output, con_ls = self.model(images, reports_ids, label=self.labels, mode='train')
             ce_ls = self.criterion(output, reports_ids, reports_masks)
             con_loss += con_ls.item()
+            #con_loss += 0
             ce_loss += ce_ls.item()
             loss = ce_ls + self.cnn_loss_weight * con_ls
             self.optimizer.zero_grad()
