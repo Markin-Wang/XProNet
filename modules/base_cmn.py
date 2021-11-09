@@ -22,7 +22,6 @@ def subsequent_mask(size):
     subsequent_mask = np.triu(np.ones(attn_shape), k=1).astype('uint8')
     return torch.from_numpy(subsequent_mask) == 0
 
-
 def attention(query, key, value, mask=None, dropout=None):
     d_k = query.size(-1)
     scores = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(d_k)
@@ -415,9 +414,8 @@ class BaseCMN(AttModel):
         att_feats, seq, att_masks, seq_mask = self._prepare_feature_forward(att_feats, att_masks, seq)
         out = self.model(att_feats, seq, att_masks, seq_mask, memory_matrix=self.memory_matrix)
         outputs = F.log_softmax(self.logit(out), dim=-1)
-        con_ls = con_loss(self.memory_matrix[:(self.num_cluster-1)*self.num_prototype,:],label[:(self.num_cluster-1) * self.num_prototype])
-        #con_ls = con_loss(self.memory_matrix,label)
-        return outputs, con_ls
+
+        return outputs, self.memory_matrix
 
     def core(self, it, fc_feats_ph, att_feats_ph, memory, state, mask):
         if len(state) == 0:
