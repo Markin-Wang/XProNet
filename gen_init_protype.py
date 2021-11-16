@@ -120,7 +120,7 @@ with open('./data/iu_xray/iu_xray_labels.pickle','rb') as myfile:
 # In[ ]:
 
 num_classes = len(list(labels.values())[0])
-initial_protypes = np.zeros((num_classes,512),dtype=float)
+initial_protypes = np.zeros((num_classes,2048),dtype=float)
 counter=np.zeros(num_classes,dtype=float)
 
 
@@ -129,29 +129,32 @@ counter=np.zeros(num_classes,dtype=float)
 
 args = parse_agrs()
 tokenizer = Tokenizer(args)
-model = models.resnet34(pretrained=True)
+model = models.resnet101(pretrained=True)
 modules = list(model.children())[:-2]
 model = nn.Sequential(*modules)
-train_dataloader = R2DataLoader(args, tokenizer, split='train', shuffle=True,drop_last=False)
+train_dataloader_flip = R2DataLoader(args, tokenizer, split='train', shuffle=True,drop_last=False)
+train_dataloader = R2DataLoader(args, tokenizer, split='train', shuffle=True, drop_last=False, flip=False)
 model = model.cuda()
 model.eval()
 for images_id, images, reports_ids, reports_masks in tqdm(train_dataloader):
     images= images.cuda()
-    if args.dataset_name == 'iu_xray':                                                 
+    if args.dataset_name == 'iu_xray':
         features_1 = model(images[:,0])
         features_2 = model(images[:,1])
         features = (features_1+features_2)/2
     for i,image_id in enumerate(images_id):
         label = labels[image_id]
-        counter[label==1]+=1
+        counter[label==1] += 1
         feature = features[i]
         feature = F.avg_pool2d(feature,kernel_size=7, stride=1, padding=0).squeeze()
-        initial_protypes[label]+=feature.detach().cpu().numpy()
+        initial_protypes[label] += feature.detach().cpu().numpy()
+
+
 
 for i in range(len(initial_protypes)):
     initial_protypes[i]=initial_protypes[i]/counter[i]
 print(sum(counter==0))
-with open('./init_prototypes_512.pickle','wb') as myfile:
+with open('./init_prototypes_2048.pickle','wb') as myfile:
     pickle.dump(initial_protypes,myfile) 
         
         

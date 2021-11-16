@@ -6,8 +6,8 @@ python main.py \
     --threshold 10 \
     --epochs 30 \
     --batch_size 12 \
-    --lr_ve 1e-4 \
-    --lr_ed 5e-4 \
+    --lr_ve 5e-4 \
+    --lr_ed 1e-3 \
     --step_size 3 \
     --gamma 0.8 \
     --num_layers 3 \

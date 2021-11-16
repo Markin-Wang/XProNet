@@ -9,6 +9,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import pickle
 
 from .att_model import pack_wrapper, AttModel
 
@@ -62,17 +63,18 @@ class Transformer(nn.Module):
         self.tgt_embed = tgt_embed
         self.cmn = cmn
 
-    def forward(self, src, tgt, src_mask, tgt_mask, memory_matrix):
-        return self.decode(self.encode(src, src_mask), src_mask, tgt, tgt_mask, memory_matrix=memory_matrix)
+    def forward(self, src, tgt, src_mask, tgt_mask, memory_matrix, labels):
+        return self.decode(self.encode(src, src_mask), src_mask, tgt, tgt_mask, memory_matrix=memory_matrix,labels=labels)
 
     def encode(self, src, src_mask):
         return self.encoder(self.src_embed(src), src_mask) # [12,98,512]
 
-    def decode(self, memory, src_mask, tgt, tgt_mask, past=None, memory_matrix=None):
+    def decode(self, memory, src_mask, tgt, tgt_mask, past=None, memory_matrix=None,labels=None):
         embeddings = self.tgt_embed(tgt)
 
         # Memory querying and responding for textual features
         dummy_memory_matrix = memory_matrix.unsqueeze(0).expand(embeddings.size(0), memory_matrix.size(0), memory_matrix.size(1))
+        #dummy_memory_matrix = torch.stack([self.memory_matrix[labels[i] == 1, :] for i in range(embeddings.size(0))])
         responses = self.cmn(embeddings, dummy_memory_matrix, dummy_memory_matrix)
         embeddings = embeddings + responses
         # Memory querying and responding for textual features
@@ -346,20 +348,25 @@ class BaseCMN(AttModel):
         self.model = self.make_model(tgt_vocab, self.cmn)
         self.logit = nn.Linear(args.d_model, tgt_vocab)
         
-        self.memory_matrix = nn.Parameter(torch.FloatTensor(self.num_cluster*self.num_prototype, args.cmm_dim))
-        self.global_memory = nn.Parameter(torch.FloatTensor(self.num_prototype, args.cmm_dim))
+        self.memory_matrix = self.init_memory(args.init_protypes_path)
+        #self.global_memory = nn.Parameter(torch.FloatTensor(self.num_prototype, args.cmm_dim))
 
-        self.attn_global = MultiHeadedAttention(self.num_heads, self.d_model)
+        #self.attn_global = MultiHeadedAttention(self.num_heads, self.d_model)
 
         #self.memory_matrix = nn.Parameter(torch.FloatTensor(args.cmm_size, args.cmm_dim))
 
         #self.labels = torch.arange(self.num_cluster).unsqueeze(1).expand(self.num_cluster,self.num_prototype).flatten()
-        nn.init.normal_(self.memory_matrix, 0, 1 / args.cmm_dim)
-        nn.init.normal_(self.global_memory, 0, 1 / args.cmm_dim)
+        #nn.init.normal_(self.memory_matrix, 0, 1 / args.cmm_dim)
+        #nn.init.normal_(self.global_memory, 0, 1 / args.cmm_dim)
         #nn.init.normal_(self.prior_matrix, 0, 1 / args.cmm_dim)
 
     def init_hidden(self, bsz):
         return []
+
+    def init_memory(self,init_file_path):
+        with open(init_file_path,'rb') as myfile:
+            init_protypes = pickle.load(myfile)
+        return nn.Parameter(torch.FloatTensor(init_protypes))
 
     def _prepare_feature(self, fc_feats, att_feats, att_masks):
         att_feats, seq, att_masks, seq_mask = self._prepare_feature_forward(att_feats, att_masks)
@@ -367,7 +374,7 @@ class BaseCMN(AttModel):
 
         return fc_feats[..., :1], att_feats[..., :1], memory, att_masks
 
-    def _prepare_feature_forward(self, att_feats, att_masks=None, seq=None):
+    def _prepare_feature_forward(self, att_feats, att_masks=None, seq=None, labels=None,):
 
         att_feats, att_masks = self.clip_att(att_feats, att_masks)
         att_feats = pack_wrapper(self.att_embed, att_feats, att_masks)
@@ -378,19 +385,9 @@ class BaseCMN(AttModel):
         # Memory querying and responding for visual features
 
         #dummy_memory_matrix = self.memory_matrix.unsqueeze(0).expand(att_feats.size(0), self.memory_matrix.size(0), self.memory_matrix.size(1))
-        shared_pattern = self.memory_matrix[-1*self.num_prototype:, :]
-        # att_feats: [12,98,512]
-        global_rep_feat = torch.mean(att_feats,1)
-        #global_memory = self.attn_global(self.global_memory.unsqueeze(0),self.memory_matrix,self.memory_matrix).squeeze(0)
-        prototypes = torch.mean(self.memory_matrix.view(self.num_cluster,self.num_prototype, -1),1)
-        prototypes = prototypes[:self.num_cluster-1, :]
-        prototypes = prototypes.unsqueeze(0).expand(att_feats.size(0),prototypes.size(0), prototypes.size(1))
-        global_rep_feat = global_rep_feat.unsqueeze(1).expand(global_rep_feat.size(0), prototypes.size(1), global_rep_feat.size(1))
-        dist = torch.sum((global_rep_feat-prototypes)**2, 2)
+        dummy_memory_matrix = torch.stack([self.memory_matrix[labels[i]==1,:] for i in range(att_feats.size(0))])
 
-        idxs = torch.argmin(dist,1)
 
-        dummy_memory_matrix = torch.stack([torch.cat([self.memory_matrix[index*self.num_prototype:(index+1)*self.num_prototype,:],shared_pattern],0) for index in idxs])
         #dummy_memory_matrix = torch.stack([torch.cat([self.memory_matrix, self.global_memory], 0) for index in idxs])
         responses = self.cmn(att_feats, dummy_memory_matrix, dummy_memory_matrix)
 
@@ -410,9 +407,9 @@ class BaseCMN(AttModel):
 
         return att_feats, seq, att_masks, seq_mask
 
-    def _forward(self, fc_feats, att_feats, seq, att_masks=None, label=None):
-        att_feats, seq, att_masks, seq_mask = self._prepare_feature_forward(att_feats, att_masks, seq)
-        out = self.model(att_feats, seq, att_masks, seq_mask, memory_matrix=self.memory_matrix)
+    def _forward(self, fc_feats, att_feats, seq, att_masks=None, labels=None):
+        att_feats, seq, att_masks, seq_mask = self._prepare_feature_forward(att_feats, att_masks, seq, labels)
+        out = self.model(att_feats, seq, att_masks, seq_mask, memory_matrix=self.memory_matrix, labels=labels)
         outputs = F.log_softmax(self.logit(out), dim=-1)
 
         return outputs, self.memory_matrix

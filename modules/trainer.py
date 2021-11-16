@@ -102,7 +102,7 @@ class BaseTrainer(object):
 
             if epoch % self.save_period == 0:
                 self._save_checkpoint(epoch, save_best=best)
-        print('best performance in epoch: ',best_epoch)
+            print('best performance in epoch: ',best_epoch)
 
     def _record_best(self, log):
         improved_val = (self.mnt_mode == 'min' and log[self.mnt_metric] <= self.best_recorder['val'][
@@ -179,8 +179,8 @@ class Trainer(BaseTrainer):
         self.cnn_loss_weight = args.weight_cnn_loss
         self.num_cluster = args.num_cluster
         self.num_prototype = args.num_prototype
-        self.labels = torch.arange(args.num_cluster).unsqueeze(1).\
-            expand(args.num_cluster, args.num_prototype).flatten().to(self.device)
+        #self.labels = torch.arange(args.num_cluster).unsqueeze(1).\
+        #    expand(args.num_cluster, args.num_prototype).flatten().to(self.device)
 
     def _train_epoch(self, epoch):
 
@@ -188,16 +188,18 @@ class Trainer(BaseTrainer):
         ce_loss = 0
         con_loss = 0
         self.model.train()
-        for batch_idx, (images_id, images, reports_ids, reports_masks) in enumerate(self.train_dataloader):
+        for batch_idx, (images_id, images, reports_ids, reports_masks, labels) in enumerate(self.train_dataloader):
 
             images, reports_ids, reports_masks = images.to(self.device), reports_ids.to(self.device), \
                                                  reports_masks.to(self.device)
-            output, memory_matrix = self.model(images, reports_ids, label=self.labels, mode='train')
+            if labels is not None:
+                labels = labels.to(self.device)
+            output, memory_matrix = self.model(images, reports_ids, labels=labels, mode='train')
             ce_ls = self.criterion(output, reports_ids, reports_masks)
-            con_ls = contrastive_loss(memory_matrix[:(self.num_cluster-1)*self.num_prototype,:], \
-                                      self.labels[:(self.num_cluster-1)*self.num_prototype])
-            con_loss += con_ls.item()
-            #con_loss += 0
+            #con_ls = contrastive_loss(memory_matrix,labels)
+            con_ls = 0
+            #con_loss += con_ls.item()
+            con_loss += 0
             ce_loss += ce_ls.item()
             loss = ce_ls + self.cnn_loss_weight * con_ls
             self.optimizer.zero_grad()

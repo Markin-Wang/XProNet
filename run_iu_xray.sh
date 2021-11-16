@@ -1,6 +1,8 @@
 python main.py \
     --image_dir data/iu_xray/images/ \
     --ann_path data/iu_xray/annotation.json \
+    --label_path data/iu_xray/labels.pickle \
+    --init_protypes_path data/iu_xray/init_prototypes_512.pickle \
     --dataset_name iu_xray \
     --max_seq_length 60 \
     --threshold 3 \
@@ -11,7 +13,7 @@ python main.py \
     --step_size 10 \
     --gamma 0.8 \
     --num_layers 3 \
-    --topk 10 \
+    --topk 3 \
     --cmm_size 2048 \
     --cmm_dim 512 \
     --seed 7580 \

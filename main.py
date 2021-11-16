@@ -20,6 +20,11 @@ def parse_agrs():
                         help='the path to the directory containing the data.')
     parser.add_argument('--ann_path', type=str, default='data/iu_xray/annotation.json',
                         help='the path to the directory containing the data.')
+    parser.add_argument('--label_path', type=str, default='data/iu_xray/labels.pickle',
+                        help='the path to the directory containing the data.')
+
+    parser.add_argument('--init_protypes_path', type=str, default='data/iu_xray/init_prototypes_512.pickle',
+                        help='the path to the directory containing the data.')
 
     # Data loader settings
     parser.add_argument('--dataset_name', type=str, default='iu_xray', choices=['iu_xray', 'mimic_cxr'],
