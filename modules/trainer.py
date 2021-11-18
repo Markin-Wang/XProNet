@@ -176,7 +176,7 @@ class Trainer(BaseTrainer):
         self.train_dataloader = train_dataloader
         self.val_dataloader = val_dataloader
         self.test_dataloader = test_dataloader
-        self.cnn_loss_weight = args.weight_cnn_loss
+        self.con_loss_weight = args.weight_con_loss
         self.num_cluster = args.num_cluster
         self.num_prototype = args.num_prototype
         #self.labels = torch.arange(args.num_cluster).unsqueeze(1).\
@@ -190,17 +190,19 @@ class Trainer(BaseTrainer):
         self.model.train()
         for batch_idx, (images_id, images, reports_ids, reports_masks, labels) in enumerate(self.train_dataloader):
 
-            images, reports_ids, reports_masks = images.to(self.device), reports_ids.to(self.device), \
-                                                 reports_masks.to(self.device)
+            images, reports_ids, reports_masks, labels = images.to(self.device), reports_ids.to(self.device), \
+                                                 reports_masks.to(self.device), labels.to(self.device)
 
-            output, memory_matrix = self.model(images, reports_ids, labels=labels, mode='train')
+            output, con_ls = self.model(images, reports_ids, labels=labels, mode='train')
             ce_ls = self.criterion(output, reports_ids, reports_masks)
+            if self.n_gpu > 1:
+                con_ls = con_ls.mean()
             #con_ls = contrastive_loss(memory_matrix, labels)
-            con_ls = 0
-            #con_loss += con_ls.item()
-            con_loss += 0
+            #con_ls = 0
+            con_loss += con_ls.item()
+            #con_loss += 0
             ce_loss += ce_ls.item()
-            loss = ce_ls + self.cnn_loss_weight * con_ls
+            loss = ce_ls + self.con_loss_weight * con_ls
             self.optimizer.zero_grad()
             loss.backward()
             self.optimizer.step()
@@ -239,8 +241,8 @@ class Trainer(BaseTrainer):
         with torch.no_grad():
             test_gts, test_res = [], []
             for batch_idx, (images_id, images, reports_ids, reports_masks, labels) in enumerate(self.test_dataloader):
-                images, reports_ids, reports_masks = images.to(self.device), reports_ids.to(
-                    self.device), reports_masks.to(self.device)
+                images, reports_ids, reports_masks, labels = images.to(self.device), reports_ids.to(
+                    self.device), reports_masks.to(self.device), labels.to(self.device)
                 output, _ = self.model(images, labels=labels, mode='sample')
                 if self.n_gpu>1:
                     reports = self.model.module.tokenizer.decode_batch(output.cpu().numpy())

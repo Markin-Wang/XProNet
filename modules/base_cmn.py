@@ -10,6 +10,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import pickle
+from .utils import my_con_loss
 
 from .att_model import pack_wrapper, AttModel
 
@@ -338,6 +339,7 @@ class BaseCMN(AttModel):
         self.topk = args.topk
         self.num_prototype = args.num_prototype
         self.num_cluster=args.num_cluster
+        self.margin = args.con_margin
 
 
         tgt_vocab = self.vocab_size + 1
@@ -428,8 +430,10 @@ class BaseCMN(AttModel):
         att_feats, seq, att_masks, seq_mask = self._prepare_feature_forward(att_feats, att_masks, seq, labels)
         out = self.model(att_feats, seq, att_masks, seq_mask, memory_matrix=self.memory_matrix)
         outputs = F.log_softmax(self.logit(out), dim=-1)
+        con_loss = my_con_loss(self.memory_matrix, num_classes= self.num_cluster,
+                               num_protypes = self.num_prototype, margin = self.margin)
 
-        return outputs, None
+        return outputs, con_loss
 
     def core(self, it, fc_feats_ph, att_feats_ph, memory, state, mask):
         if len(state) == 0:
