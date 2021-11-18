@@ -216,8 +216,8 @@ class Trainer(BaseTrainer):
         with torch.no_grad():
             val_gts, val_res = [], []
             for batch_idx, (images_id, images, reports_ids, reports_masks, labels) in enumerate(self.val_dataloader):
-                images, reports_ids, reports_masks = images.to(self.device), reports_ids.to(
-                    self.device), reports_masks.to(self.device)
+                images, reports_ids, reports_masks, labels = images.to(self.device), reports_ids.to(
+                    self.device), reports_masks.to(self.device), labels.to(self.device)
 
                 output, _ = self.model(images, labels = labels, mode='sample')
                 # change to self.model.module for multi-gpu
