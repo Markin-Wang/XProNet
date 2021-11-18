@@ -123,8 +123,8 @@ def parse_agrs():
 # In[ ]:
 num_classes = 13*3+1
 num_cluster = 4
-num_dim=512
-initial_protypes = torch.zeros(((num_classes+3)*num_cluster,num_dim),dtype=float)
+num_dim=2048
+initial_protypes = torch.zeros(((num_classes+2)*num_cluster,num_dim),dtype=float)
 torch.nn.init.normal_(initial_protypes, 0, 1/num_dim)
 counter=np.zeros(num_classes,dtype=float)
 
@@ -135,7 +135,7 @@ features_list = [[] for i in range(num_classes)]
 
 args = parse_agrs()
 tokenizer = Tokenizer(args)
-model = models.resnet34(pretrained=True)
+model = models.resnet101(pretrained=True)
 modules = list(model.children())[:-2]
 model = nn.Sequential(*modules)
 train_dataloader = R2DataLoader(args, tokenizer, split='train', shuffle=True,drop_last=False)
@@ -165,14 +165,12 @@ for i in range(num_classes):
     if len(features_list[i])==0:
         continue
 
-    while len(features_list[i])<num_cluster:
-        features_list[i].extend(features_list[i])
     data = np.stack(features_list[i], 0)
-    cluster_num = num_cluster
-    if i==num_classes-1:
-        cluster_num*=4
+    cluster_num = num_cluster if data.shape[0] > num_cluster else data.shape[0]
+    if i == num_classes-1:
+        cluster_num *= 3
     kmean_model = KMeans(n_clusters=cluster_num, max_iter=100,  init="k-means++")
-    if len(features_list[i])==0:
+    if len(features_list[i]) == 0:
         continue
     print(data.shape)
     results = kmean_model.fit_predict(data)
@@ -181,6 +179,13 @@ for i in range(num_classes):
         cluster_rep = np.mean(data[label_pred == j], 0)
         initial_protypes[i*num_cluster+j, :] = torch.from_numpy(cluster_rep)
 
+    z = 0
+    while cluster_num + z < num_cluster:
+        initial_protypes[i * num_cluster + cluster_num + z, :] = initial_protypes[i * num_cluster + z, :]
+        z += 1
+
+
+print((~torch.isfinite(initial_protypes)).sum())
 '''
 
 for i in range(len(initial_protypes)):
@@ -191,7 +196,8 @@ print(sum(counter==0))
 with open('./init_prototypes_512.pickle','wb') as myfile:
     pickle.dump(initial_protypes,myfile) 
 '''
-torch.save(initial_protypes, "./init_protypes_512.pt")
+
+torch.save(initial_protypes, "./init_protypes_2048_duplicate_224_flip.pt")
         
         
         

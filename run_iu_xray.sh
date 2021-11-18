@@ -2,7 +2,7 @@ python main.py \
     --image_dir data/iu_xray/images/ \
     --ann_path data/iu_xray/annotation.json \
     --label_path data/iu_xray/labels.pickle \
-    --init_protypes_path data/iu_xray/init_protypes_512.pt \
+    --init_protypes_path data/iu_xray/init_protypes_512_duplicate_224_both.pt \
     --dataset_name iu_xray \
     --max_seq_length 60 \
     --threshold 3 \
@@ -23,5 +23,5 @@ python main.py \
     --n_gpu 1 \
     --weight_cnn_loss 0.0 \
     --num_cluster 40 \
-    --num_prototype 4 \
+    --num_prototype 8 \
 

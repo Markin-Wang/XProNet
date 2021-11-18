@@ -349,10 +349,8 @@ class BaseCMN(AttModel):
         self.logit = nn.Linear(args.d_model, tgt_vocab)
 
         init_protypes = torch.load(args.init_protypes_path).float()
-        init_protypes[~torch.isfinite(init_protypes)] = 1e-5
 
         self.memory_matrix = nn.Parameter(init_protypes)
-        self.global_memory = nn.Parameter(torch.FloatTensor(self.num_prototype, args.cmm_dim))
 
         #self.attn_global = MultiHeadedAttention(self.num_heads, self.d_model)
 
@@ -360,7 +358,7 @@ class BaseCMN(AttModel):
 
         #self.labels = torch.arange(self.num_cluster).unsqueeze(1).expand(self.num_cluster,self.num_prototype).flatten()
         #nn.init.normal_(self.memory_matrix, 0, 1 / args.cmm_dim)
-        nn.init.normal_(self.global_memory, 0, 1 / args.cmm_dim)
+        #nn.init.normal_(self.global_memory, 0, 1 / args.cmm_dim)
         #nn.init.normal_(self.prior_matrix, 0, 1 / args.cmm_dim)
 
     def init_hidden(self, bsz):
@@ -392,10 +390,8 @@ class BaseCMN(AttModel):
                         query_matrix.extend(self.memory_matrix[j*self.num_prototype:(j+1)*self.num_prototype, :])
                     else:
                         query_matrix.extend(self.memory_matrix[j * self.num_prototype:(j + 4) * self.num_prototype, :])
-            if len(query_matrix)==0:
-                query_matrix = self.global_memory
-            else:
-                query_matrix = torch.stack(query_matrix, 0)
+
+            query_matrix = torch.stack(query_matrix, 0)
             query_matrix = query_matrix.unsqueeze(0)
 
             response = self.cmn(att_feats[i].unsqueeze(0), query_matrix, query_matrix)
