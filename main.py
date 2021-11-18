@@ -11,7 +11,7 @@ from modules.optimizers import build_optimizer, build_lr_scheduler
 from modules.tokenizers import Tokenizer
 from modules.trainer import Trainer
 
-
+torch.autograd.set_detect_anomaly(True)
 def parse_agrs():
     parser = argparse.ArgumentParser()
 
@@ -23,7 +23,7 @@ def parse_agrs():
     parser.add_argument('--label_path', type=str, default='data/iu_xray/labels.pickle',
                         help='the path to the directory containing the data.')
 
-    parser.add_argument('--init_protypes_path', type=str, default='data/iu_xray/init_prototypes_512.pickle',
+    parser.add_argument('--init_protypes_path', type=str, default='data/iu_xray/init_protypes_512.pt',
                         help='the path to the directory containing the data.')
 
     # Data loader settings

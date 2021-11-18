@@ -7,7 +7,7 @@ from .datasets import IuxrayMultiImageDataset, MimiccxrSingleImageDataset
 
 
 class R2DataLoader(DataLoader):
-    def __init__(self, args, tokenizer, split, shuffle,drop_last=False, flip=True):
+    def __init__(self, args, tokenizer, split, shuffle,drop_last=False):
         self.args = args
         self.dataset_name = args.dataset_name
         self.batch_size = args.batch_size
@@ -17,21 +17,13 @@ class R2DataLoader(DataLoader):
         self.split = split
 
         if split == 'train':
-            if flip:
-                self.transform = transforms.Compose([
-                    transforms.Resize(256),
-                    transforms.RandomCrop(224),
-                    transforms.RandomHorizontalFlip(p=1),
-                    transforms.ToTensor(),
-                    transforms.Normalize((0.485, 0.456, 0.406),
-                                        (0.229, 0.224, 0.225))])
-            else:
-                self.transform = transforms.Compose([
-                    transforms.Resize(256),
-                    transforms.RandomCrop(224),
-                    transforms.ToTensor(),
-                    transforms.Normalize((0.485, 0.456, 0.406),
-                                        (0.229, 0.224, 0.225))])
+            self.transform = transforms.Compose([
+                transforms.Resize(256),
+                transforms.RandomCrop(224),
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                transforms.Normalize((0.485, 0.456, 0.406),
+                                     (0.229, 0.224, 0.225))])
         else:
             self.transform = transforms.Compose([
                 transforms.Resize((224, 224)),
@@ -56,15 +48,13 @@ class R2DataLoader(DataLoader):
 
     @staticmethod
     def collate_fn(data):
-        image_id_batch, image_batch, report_ids_batch, report_masks_batch, seq_lengths_batch, labels = zip(*data)
-
+        image_id_batch, image_batch, report_ids_batch, report_masks_batch, seq_lengths_batch, label = zip(*data)
         image_batch = torch.stack(image_batch, 0)
         max_seq_length = max(seq_lengths_batch)
+        label_batch = torch.stack(label, 0)
 
         target_batch = np.zeros((len(report_ids_batch), max_seq_length), dtype=int)
         target_masks_batch = np.zeros((len(report_ids_batch), max_seq_length), dtype=int)
-
-
 
         for i, report_ids in enumerate(report_ids_batch):
             target_batch[i, :len(report_ids)] = report_ids
@@ -72,11 +62,5 @@ class R2DataLoader(DataLoader):
         for i, report_masks in enumerate(report_masks_batch):
             target_masks_batch[i, :len(report_masks)] = report_masks
 
-        if labels[0] is None:
-            return image_id_batch, image_batch, torch.LongTensor(target_batch), \
-               torch.FloatTensor(target_masks_batch)
-        else:
-            labels_batch = torch.stack(labels)
-            return image_id_batch, image_batch, torch.LongTensor(target_batch), \
-                   torch.FloatTensor(target_masks_batch), labels_batch
-
+        return image_id_batch, image_batch, torch.LongTensor(target_batch), \
+               torch.FloatTensor(target_masks_batch), label_batch

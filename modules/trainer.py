@@ -192,11 +192,10 @@ class Trainer(BaseTrainer):
 
             images, reports_ids, reports_masks = images.to(self.device), reports_ids.to(self.device), \
                                                  reports_masks.to(self.device)
-            if labels is not None:
-                labels = labels.to(self.device)
+
             output, memory_matrix = self.model(images, reports_ids, labels=labels, mode='train')
             ce_ls = self.criterion(output, reports_ids, reports_masks)
-            #con_ls = contrastive_loss(memory_matrix,labels)
+            #con_ls = contrastive_loss(memory_matrix, labels)
             con_ls = 0
             #con_loss += con_ls.item()
             con_loss += 0
@@ -216,11 +215,11 @@ class Trainer(BaseTrainer):
         self.model.eval()
         with torch.no_grad():
             val_gts, val_res = [], []
-            for batch_idx, (images_id, images, reports_ids, reports_masks) in enumerate(self.val_dataloader):
+            for batch_idx, (images_id, images, reports_ids, reports_masks, labels) in enumerate(self.val_dataloader):
                 images, reports_ids, reports_masks = images.to(self.device), reports_ids.to(
                     self.device), reports_masks.to(self.device)
 
-                output, _ = self.model(images, mode='sample')
+                output, _ = self.model(images, labels = labels, mode='sample')
                 # change to self.model.module for multi-gpu
                 if self.n_gpu>1:
                     reports = self.model.module.tokenizer.decode_batch(output.cpu().numpy())
@@ -239,10 +238,10 @@ class Trainer(BaseTrainer):
         self.model.eval()
         with torch.no_grad():
             test_gts, test_res = [], []
-            for batch_idx, (images_id, images, reports_ids, reports_masks) in enumerate(self.test_dataloader):
+            for batch_idx, (images_id, images, reports_ids, reports_masks, labels) in enumerate(self.test_dataloader):
                 images, reports_ids, reports_masks = images.to(self.device), reports_ids.to(
                     self.device), reports_masks.to(self.device)
-                output, _ = self.model(images, mode='sample')
+                output, _ = self.model(images, labels=labels, mode='sample')
                 if self.n_gpu>1:
                     reports = self.model.module.tokenizer.decode_batch(output.cpu().numpy())
                     ground_truths = self.model.module.tokenizer.decode_batch(reports_ids[:, 1:].cpu().numpy())

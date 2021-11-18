@@ -17,6 +17,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import pickle
 from tqdm import tqdm
+from sklearn.cluster import KMeans
 
 
 # In[ ]:
@@ -30,6 +31,9 @@ def parse_agrs():
                         help='the path to the directory containing the data.')
     parser.add_argument('--ann_path', type=str, default='data/iu_xray/annotation.json',
                         help='the path to the directory containing the data.')
+    parser.add_argument('--label_path', type=str, default='data/iu_xray/labels.pickle',
+                        help='the path to the label annotatoin')
+
 
     # Data loader settings
     parser.add_argument('--dataset_name', type=str, default='iu_xray', choices=['iu_xray', 'mimic_cxr'],
@@ -113,50 +117,81 @@ def parse_agrs():
 # In[ ]:
 
 
-with open('./data/iu_xray/iu_xray_labels.pickle','rb') as myfile:
-    labels = pickle.load(myfile)
+
 
 
 # In[ ]:
-
-num_classes = len(list(labels.values())[0])
-initial_protypes = np.zeros((num_classes,2048),dtype=float)
+num_classes = 13*3+1
+num_cluster = 4
+num_dim=512
+initial_protypes = torch.zeros(((num_classes+3)*num_cluster,num_dim),dtype=float)
+torch.nn.init.normal_(initial_protypes, 0, 1/num_dim)
 counter=np.zeros(num_classes,dtype=float)
 
+features_list = [[] for i in range(num_classes)]
 
 # In[ ]:
 
 
 args = parse_agrs()
 tokenizer = Tokenizer(args)
-model = models.resnet101(pretrained=True)
+model = models.resnet34(pretrained=True)
 modules = list(model.children())[:-2]
 model = nn.Sequential(*modules)
-train_dataloader_flip = R2DataLoader(args, tokenizer, split='train', shuffle=True,drop_last=False)
-train_dataloader = R2DataLoader(args, tokenizer, split='train', shuffle=True, drop_last=False, flip=False)
+train_dataloader = R2DataLoader(args, tokenizer, split='train', shuffle=True,drop_last=False)
 model = model.cuda()
 model.eval()
-for images_id, images, reports_ids, reports_masks in tqdm(train_dataloader):
-    images= images.cuda()
-    if args.dataset_name == 'iu_xray':
+print('111',len(train_dataloader))
+
+for images_id, images, reports_ids, reports_masks, labels in tqdm(train_dataloader):
+    images = images.cuda()
+    if args.dataset_name == 'iu_xray':                                                 
         features_1 = model(images[:,0])
         features_2 = model(images[:,1])
         features = (features_1+features_2)/2
     for i,image_id in enumerate(images_id):
-        label = labels[image_id]
-        counter[label==1] += 1
+        label = labels[i]
+        counter[label == 1] += 1
         feature = features[i]
         feature = F.avg_pool2d(feature,kernel_size=7, stride=1, padding=0).squeeze()
-        initial_protypes[label] += feature.detach().cpu().numpy()
+        for j in range(num_classes):
+            if label[j] == 1:
+                features_list[j].append(feature.detach().cpu().numpy())
+        #initial_protypes[label==1]+=feature.detach().cpu().numpy()
 
 
+
+for i in range(num_classes):
+    if len(features_list[i])==0:
+        continue
+
+    while len(features_list[i])<num_cluster:
+        features_list[i].extend(features_list[i])
+    data = np.stack(features_list[i], 0)
+    cluster_num = num_cluster
+    if i==num_classes-1:
+        cluster_num*=4
+    kmean_model = KMeans(n_clusters=cluster_num, max_iter=100,  init="k-means++")
+    if len(features_list[i])==0:
+        continue
+    print(data.shape)
+    results = kmean_model.fit_predict(data)
+    label_pred = kmean_model.labels_
+    for j in range(cluster_num):
+        cluster_rep = np.mean(data[label_pred == j], 0)
+        initial_protypes[i*num_cluster+j, :] = torch.from_numpy(cluster_rep)
+
+'''
 
 for i in range(len(initial_protypes)):
+    if counter[i]==0:
+        continue
     initial_protypes[i]=initial_protypes[i]/counter[i]
 print(sum(counter==0))
-with open('./init_prototypes_2048.pickle','wb') as myfile:
+with open('./init_prototypes_512.pickle','wb') as myfile:
     pickle.dump(initial_protypes,myfile) 
-        
+'''
+torch.save(initial_protypes, "./init_protypes_512.pt")
         
         
         

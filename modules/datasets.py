@@ -5,7 +5,6 @@ import torch
 from PIL import Image
 from torch.utils.data import Dataset
 import pickle
-import numpy as np
 
 
 class BaseDataset(Dataset):
@@ -18,11 +17,9 @@ class BaseDataset(Dataset):
         self.transform = transform
         self.ann = json.loads(open(self.ann_path, 'r').read())
         self.examples = self.ann[self.split]
-
-        if args.dataset_name == 'iu_xray' and split=='train':
+        if args.dataset_name == 'iu_xray':
             with open(args.label_path, 'rb') as f:
                 self.labels = pickle.load(f)
-
 
         for i in range(len(self.examples)):
             self.examples[i]['ids'] = tokenizer(self.examples[i]['report'])[:self.max_seq_length]
@@ -39,9 +36,9 @@ class IuxrayMultiImageDataset(BaseDataset):
         image_path = example['image_path']
         image_1 = Image.open(os.path.join(self.image_dir, image_path[0])).convert('RGB')
         image_2 = Image.open(os.path.join(self.image_dir, image_path[1])).convert('RGB')
-        label = None
-        if self.split=='train':
-            label = torch.from_numpy(self.labels[image_id])
+        array = image_id.split('-')
+        modified_id = array[0]+'-'+array[1]
+        label = torch.LongTensor(self.labels[modified_id])
         if self.transform is not None:
             image_1 = self.transform(image_1)
             image_2 = self.transform(image_2)
@@ -49,7 +46,6 @@ class IuxrayMultiImageDataset(BaseDataset):
         report_ids = example['ids']
         report_masks = example['mask']
         seq_length = len(report_ids)
-
         sample = (image_id, image, report_ids, report_masks, seq_length, label)
         return sample
 
@@ -66,5 +62,5 @@ class MimiccxrSingleImageDataset(BaseDataset):
         report_ids = example['ids']
         report_masks = example['mask']
         seq_length = len(report_ids)
-        sample = (image_id, image, report_ids, report_masks, seq_length, None)
+        sample = (image_id, image, report_ids, report_masks, seq_length)
         return sample
