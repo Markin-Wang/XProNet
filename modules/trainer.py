@@ -195,8 +195,9 @@ class Trainer(BaseTrainer):
 
             output, con_ls = self.model(images, reports_ids, labels=labels, mode='train')
             ce_ls = self.criterion(output, reports_ids, reports_masks)
-            if self.n_gpu > 1:
-                con_ls = con_ls.mean()
+            #print('222', con_ls, con_ls.shape)
+            #if self.n_gpu > 1:
+            con_ls = con_ls.mean()
             #con_ls = contrastive_loss(memory_matrix, labels)
             #con_ls = 0
             con_loss += con_ls.item()

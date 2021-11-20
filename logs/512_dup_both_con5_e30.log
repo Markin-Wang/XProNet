@@ -1,0 +1,728 @@
+nohup: ignoring input
+11/20/2021 12:31:20 - INFO - modules.trainer -   [1/30] Start to train in the training set.
+[W TensorIterator.cpp:918] Warning: Mixed memory format inputs detected while calling the operator. The operator will output contiguous tensor even if some of the inputs are in channels_last format. (function operator())
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 12:31:23 - INFO - modules.trainer -   [1/30] Step: 0/64, CE Loss: 6.82308, CON Loss: 0.37640.
+11/20/2021 12:32:24 - INFO - modules.trainer -   [1/30] Step: 50/64, CE Loss: 4.58448, CON Loss: 0.37009.
+11/20/2021 12:32:40 - INFO - modules.trainer -   [1/30] Start to evaluate in the validation set.
+11/20/2021 12:32:54 - INFO - modules.trainer -   [1/30] Start to evaluate in the test set.
+11/20/2021 12:33:16 - INFO - modules.trainer -   	epoch          : 1
+11/20/2021 12:33:16 - INFO - modules.trainer -   	ce_loss        : 4.326788116246462
+11/20/2021 12:33:16 - INFO - modules.trainer -   	con            : 0.36908735986799
+11/20/2021 12:33:16 - INFO - modules.trainer -   	val_BLEU_1     : 0.037850023279545404
+11/20/2021 12:33:16 - INFO - modules.trainer -   	val_BLEU_2     : 0.025765075133840718
+11/20/2021 12:33:16 - INFO - modules.trainer -   	val_BLEU_3     : 0.01871688835191693
+11/20/2021 12:33:16 - INFO - modules.trainer -   	val_BLEU_4     : 0.013574125836052957
+11/20/2021 12:33:16 - INFO - modules.trainer -   	val_METEOR     : 0.06421988534561093
+11/20/2021 12:33:16 - INFO - modules.trainer -   	val_ROUGE_L    : 0.2511060732297613
+11/20/2021 12:33:16 - INFO - modules.trainer -   	test_BLEU_1    : 0.054057178355578266
+11/20/2021 12:33:16 - INFO - modules.trainer -   	test_BLEU_2    : 0.037616907986649614
+11/20/2021 12:33:16 - INFO - modules.trainer -   	test_BLEU_3    : 0.027651022029146474
+11/20/2021 12:33:16 - INFO - modules.trainer -   	test_BLEU_4    : 0.019993501999947576
+11/20/2021 12:33:16 - INFO - modules.trainer -   	test_METEOR    : 0.0732905587746733
+11/20/2021 12:33:16 - INFO - modules.trainer -   	test_ROUGE_L   : 0.27518008439232755
+11/20/2021 12:33:19 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 12:33:25 - INFO - modules.trainer -   Saving current best: model_best.pth ...
+11/20/2021 12:33:25 - INFO - modules.trainer -   [2/30] Start to train in the training set.
+best performance in epoch:  1
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 12:33:27 - INFO - modules.trainer -   [2/30] Step: 0/64, CE Loss: 2.90318, CON Loss: 0.36405.
+11/20/2021 12:34:27 - INFO - modules.trainer -   [2/30] Step: 50/64, CE Loss: 2.74500, CON Loss: 0.35996.
+11/20/2021 12:34:42 - INFO - modules.trainer -   [2/30] Start to evaluate in the validation set.
+11/20/2021 12:34:57 - INFO - modules.trainer -   [2/30] Start to evaluate in the test set.
+11/20/2021 12:35:19 - INFO - modules.trainer -   	epoch          : 2
+11/20/2021 12:35:19 - INFO - modules.trainer -   	ce_loss        : 2.6838019974529743
+11/20/2021 12:35:19 - INFO - modules.trainer -   	con            : 0.3588538789190352
+11/20/2021 12:35:19 - INFO - modules.trainer -   	val_BLEU_1     : 0.2408333437420675
+11/20/2021 12:35:19 - INFO - modules.trainer -   	val_BLEU_2     : 0.1616941153722628
+11/20/2021 12:35:19 - INFO - modules.trainer -   	val_BLEU_3     : 0.11472582966766418
+11/20/2021 12:35:19 - INFO - modules.trainer -   	val_BLEU_4     : 0.08475130622352828
+11/20/2021 12:35:19 - INFO - modules.trainer -   	val_METEOR     : 0.151658677099365
+11/20/2021 12:35:19 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3329632075197875
+11/20/2021 12:35:19 - INFO - modules.trainer -   	test_BLEU_1    : 0.28221581412932806
+11/20/2021 12:35:19 - INFO - modules.trainer -   	test_BLEU_2    : 0.18946398376329718
+11/20/2021 12:35:19 - INFO - modules.trainer -   	test_BLEU_3    : 0.1349473575780519
+11/20/2021 12:35:19 - INFO - modules.trainer -   	test_BLEU_4    : 0.10116127961510413
+11/20/2021 12:35:19 - INFO - modules.trainer -   	test_METEOR    : 0.16372639463165092
+11/20/2021 12:35:19 - INFO - modules.trainer -   	test_ROUGE_L   : 0.345684110967146
+11/20/2021 12:35:24 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 12:35:27 - INFO - modules.trainer -   Saving current best: model_best.pth ...
+11/20/2021 12:35:27 - INFO - modules.trainer -   [3/30] Start to train in the training set.
+best performance in epoch:  2
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 12:35:29 - INFO - modules.trainer -   [3/30] Step: 0/64, CE Loss: 2.60885, CON Loss: 0.35326.
+11/20/2021 12:36:31 - INFO - modules.trainer -   [3/30] Step: 50/64, CE Loss: 2.22102, CON Loss: 0.34845.
+11/20/2021 12:36:47 - INFO - modules.trainer -   [3/30] Start to evaluate in the validation set.
+11/20/2021 12:37:02 - INFO - modules.trainer -   [3/30] Start to evaluate in the test set.
+11/20/2021 12:37:24 - INFO - modules.trainer -   	epoch          : 3
+11/20/2021 12:37:24 - INFO - modules.trainer -   	ce_loss        : 2.186958495527506
+11/20/2021 12:37:24 - INFO - modules.trainer -   	con            : 0.3470992399379611
+11/20/2021 12:37:24 - INFO - modules.trainer -   	val_BLEU_1     : 0.26499690357344496
+11/20/2021 12:37:24 - INFO - modules.trainer -   	val_BLEU_2     : 0.17434314552855193
+11/20/2021 12:37:24 - INFO - modules.trainer -   	val_BLEU_3     : 0.11935749184851545
+11/20/2021 12:37:24 - INFO - modules.trainer -   	val_BLEU_4     : 0.08415052498219991
+11/20/2021 12:37:24 - INFO - modules.trainer -   	val_METEOR     : 0.14857144338277123
+11/20/2021 12:37:24 - INFO - modules.trainer -   	val_ROUGE_L    : 0.32751285057923607
+11/20/2021 12:37:24 - INFO - modules.trainer -   	test_BLEU_1    : 0.3068438830756878
+11/20/2021 12:37:24 - INFO - modules.trainer -   	test_BLEU_2    : 0.20272680236334092
+11/20/2021 12:37:24 - INFO - modules.trainer -   	test_BLEU_3    : 0.13949645577355982
+11/20/2021 12:37:24 - INFO - modules.trainer -   	test_BLEU_4    : 0.09772655849948561
+11/20/2021 12:37:24 - INFO - modules.trainer -   	test_METEOR    : 0.16321627864479854
+11/20/2021 12:37:24 - INFO - modules.trainer -   	test_ROUGE_L   : 0.34638919850736893
+11/20/2021 12:37:28 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 12:37:28 - INFO - modules.trainer -   [4/30] Start to train in the training set.
+best performance in epoch:  2
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 12:37:29 - INFO - modules.trainer -   [4/30] Step: 0/64, CE Loss: 2.01083, CON Loss: 0.34025.
+11/20/2021 12:38:31 - INFO - modules.trainer -   [4/30] Step: 50/64, CE Loss: 1.96266, CON Loss: 0.33421.
+11/20/2021 12:38:47 - INFO - modules.trainer -   [4/30] Start to evaluate in the validation set.
+11/20/2021 12:39:02 - INFO - modules.trainer -   [4/30] Start to evaluate in the test set.
+11/20/2021 12:39:24 - INFO - modules.trainer -   	epoch          : 4
+11/20/2021 12:39:24 - INFO - modules.trainer -   	ce_loss        : 1.960022035986185
+11/20/2021 12:39:24 - INFO - modules.trainer -   	con            : 0.3325100797228515
+11/20/2021 12:39:24 - INFO - modules.trainer -   	val_BLEU_1     : 0.40409883670684527
+11/20/2021 12:39:24 - INFO - modules.trainer -   	val_BLEU_2     : 0.2253977619747798
+11/20/2021 12:39:24 - INFO - modules.trainer -   	val_BLEU_3     : 0.14733907021851336
+11/20/2021 12:39:24 - INFO - modules.trainer -   	val_BLEU_4     : 0.10286167609280514
+11/20/2021 12:39:24 - INFO - modules.trainer -   	val_METEOR     : 0.15175931687196437
+11/20/2021 12:39:24 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3135279162014428
+11/20/2021 12:39:24 - INFO - modules.trainer -   	test_BLEU_1    : 0.45415054958412976
+11/20/2021 12:39:24 - INFO - modules.trainer -   	test_BLEU_2    : 0.2740652268385559
+11/20/2021 12:39:24 - INFO - modules.trainer -   	test_BLEU_3    : 0.19391820020801548
+11/20/2021 12:39:24 - INFO - modules.trainer -   	test_BLEU_4    : 0.14656037979037986
+11/20/2021 12:39:24 - INFO - modules.trainer -   	test_METEOR    : 0.17452257739254887
+11/20/2021 12:39:24 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3472032995941017
+11/20/2021 12:39:28 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 12:39:34 - INFO - modules.trainer -   Saving current best: model_best.pth ...
+11/20/2021 12:39:34 - INFO - modules.trainer -   [5/30] Start to train in the training set.
+best performance in epoch:  4
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 12:39:36 - INFO - modules.trainer -   [5/30] Step: 0/64, CE Loss: 1.97611, CON Loss: 0.32384.
+11/20/2021 12:40:36 - INFO - modules.trainer -   [5/30] Step: 50/64, CE Loss: 1.78240, CON Loss: 0.31607.
+11/20/2021 12:40:52 - INFO - modules.trainer -   [5/30] Start to evaluate in the validation set.
+11/20/2021 12:41:06 - INFO - modules.trainer -   [5/30] Start to evaluate in the test set.
+11/20/2021 12:41:28 - INFO - modules.trainer -   	epoch          : 5
+11/20/2021 12:41:28 - INFO - modules.trainer -   	ce_loss        : 1.7887694016098976
+11/20/2021 12:41:28 - INFO - modules.trainer -   	con            : 0.31387602258473635
+11/20/2021 12:41:28 - INFO - modules.trainer -   	val_BLEU_1     : 0.1993963160069106
+11/20/2021 12:41:28 - INFO - modules.trainer -   	val_BLEU_2     : 0.11897595569230493
+11/20/2021 12:41:28 - INFO - modules.trainer -   	val_BLEU_3     : 0.08425486262448187
+11/20/2021 12:41:28 - INFO - modules.trainer -   	val_BLEU_4     : 0.06439511124923274
+11/20/2021 12:41:28 - INFO - modules.trainer -   	val_METEOR     : 0.10385550149167085
+11/20/2021 12:41:28 - INFO - modules.trainer -   	val_ROUGE_L    : 0.2934111926451342
+11/20/2021 12:41:28 - INFO - modules.trainer -   	test_BLEU_1    : 0.2451921610499201
+11/20/2021 12:41:28 - INFO - modules.trainer -   	test_BLEU_2    : 0.15112654445125506
+11/20/2021 12:41:28 - INFO - modules.trainer -   	test_BLEU_3    : 0.10934532298208022
+11/20/2021 12:41:28 - INFO - modules.trainer -   	test_BLEU_4    : 0.08397386136820295
+11/20/2021 12:41:28 - INFO - modules.trainer -   	test_METEOR    : 0.12172717443868382
+11/20/2021 12:41:28 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3125252726108979
+11/20/2021 12:41:32 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 12:41:32 - INFO - modules.trainer -   [6/30] Start to train in the training set.
+best performance in epoch:  4
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 12:41:34 - INFO - modules.trainer -   [6/30] Step: 0/64, CE Loss: 1.77713, CON Loss: 0.30268.
+11/20/2021 12:42:34 - INFO - modules.trainer -   [6/30] Step: 50/64, CE Loss: 1.63929, CON Loss: 0.29266.
+11/20/2021 12:42:50 - INFO - modules.trainer -   [6/30] Start to evaluate in the validation set.
+11/20/2021 12:43:05 - INFO - modules.trainer -   [6/30] Start to evaluate in the test set.
+11/20/2021 12:43:27 - INFO - modules.trainer -   	epoch          : 6
+11/20/2021 12:43:27 - INFO - modules.trainer -   	ce_loss        : 1.6616249829530716
+11/20/2021 12:43:27 - INFO - modules.trainer -   	con            : 0.28984727850183845
+11/20/2021 12:43:27 - INFO - modules.trainer -   	val_BLEU_1     : 0.40168757806338645
+11/20/2021 12:43:27 - INFO - modules.trainer -   	val_BLEU_2     : 0.2204173805889966
+11/20/2021 12:43:27 - INFO - modules.trainer -   	val_BLEU_3     : 0.14280022661370556
+11/20/2021 12:43:27 - INFO - modules.trainer -   	val_BLEU_4     : 0.10039125422390623
+11/20/2021 12:43:27 - INFO - modules.trainer -   	val_METEOR     : 0.1475239715188552
+11/20/2021 12:43:27 - INFO - modules.trainer -   	val_ROUGE_L    : 0.30427728840153306
+11/20/2021 12:43:27 - INFO - modules.trainer -   	test_BLEU_1    : 0.4356184258251497
+11/20/2021 12:43:27 - INFO - modules.trainer -   	test_BLEU_2    : 0.2584598615071165
+11/20/2021 12:43:27 - INFO - modules.trainer -   	test_BLEU_3    : 0.1812860760215406
+11/20/2021 12:43:27 - INFO - modules.trainer -   	test_BLEU_4    : 0.13648674818479342
+11/20/2021 12:43:27 - INFO - modules.trainer -   	test_METEOR    : 0.17059172154128668
+11/20/2021 12:43:27 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3352666543668864
+11/20/2021 12:43:30 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 12:43:30 - INFO - modules.trainer -   [7/30] Start to train in the training set.
+best performance in epoch:  4
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 12:43:32 - INFO - modules.trainer -   [7/30] Step: 0/64, CE Loss: 1.49426, CON Loss: 0.27556.
+11/20/2021 12:44:33 - INFO - modules.trainer -   [7/30] Step: 50/64, CE Loss: 1.53414, CON Loss: 0.26304.
+11/20/2021 12:44:49 - INFO - modules.trainer -   [7/30] Start to evaluate in the validation set.
+11/20/2021 12:45:03 - INFO - modules.trainer -   [7/30] Start to evaluate in the test set.
+11/20/2021 12:45:25 - INFO - modules.trainer -   	epoch          : 7
+11/20/2021 12:45:25 - INFO - modules.trainer -   	ce_loss        : 1.556922361254692
+11/20/2021 12:45:25 - INFO - modules.trainer -   	con            : 0.2595861090812832
+11/20/2021 12:45:25 - INFO - modules.trainer -   	val_BLEU_1     : 0.2368311045884197
+11/20/2021 12:45:25 - INFO - modules.trainer -   	val_BLEU_2     : 0.14137109719790816
+11/20/2021 12:45:25 - INFO - modules.trainer -   	val_BLEU_3     : 0.0990718198066328
+11/20/2021 12:45:25 - INFO - modules.trainer -   	val_BLEU_4     : 0.07475430265757244
+11/20/2021 12:45:25 - INFO - modules.trainer -   	val_METEOR     : 0.10796255581176076
+11/20/2021 12:45:25 - INFO - modules.trainer -   	val_ROUGE_L    : 0.29461682279713075
+11/20/2021 12:45:25 - INFO - modules.trainer -   	test_BLEU_1    : 0.27720051612742963
+11/20/2021 12:45:25 - INFO - modules.trainer -   	test_BLEU_2    : 0.17031620328864383
+11/20/2021 12:45:25 - INFO - modules.trainer -   	test_BLEU_3    : 0.122125051909167
+11/20/2021 12:45:25 - INFO - modules.trainer -   	test_BLEU_4    : 0.09254248416973165
+11/20/2021 12:45:25 - INFO - modules.trainer -   	test_METEOR    : 0.12462457760965708
+11/20/2021 12:45:25 - INFO - modules.trainer -   	test_ROUGE_L   : 0.31577879422938754
+11/20/2021 12:45:29 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 12:45:29 - INFO - modules.trainer -   [8/30] Start to train in the training set.
+best performance in epoch:  4
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 12:45:31 - INFO - modules.trainer -   [8/30] Step: 0/64, CE Loss: 1.35463, CON Loss: 0.24214.
+11/20/2021 12:46:31 - INFO - modules.trainer -   [8/30] Step: 50/64, CE Loss: 1.42975, CON Loss: 0.22767.
+11/20/2021 12:46:47 - INFO - modules.trainer -   [8/30] Start to evaluate in the validation set.
+11/20/2021 12:47:02 - INFO - modules.trainer -   [8/30] Start to evaluate in the test set.
+11/20/2021 12:47:24 - INFO - modules.trainer -   	epoch          : 8
+11/20/2021 12:47:24 - INFO - modules.trainer -   	ce_loss        : 1.4412506744265556
+11/20/2021 12:47:24 - INFO - modules.trainer -   	con            : 0.22379027330316603
+11/20/2021 12:47:24 - INFO - modules.trainer -   	val_BLEU_1     : 0.4011816028164664
+11/20/2021 12:47:24 - INFO - modules.trainer -   	val_BLEU_2     : 0.22214954840651074
+11/20/2021 12:47:24 - INFO - modules.trainer -   	val_BLEU_3     : 0.14426607270225336
+11/20/2021 12:47:24 - INFO - modules.trainer -   	val_BLEU_4     : 0.10109474031105396
+11/20/2021 12:47:24 - INFO - modules.trainer -   	val_METEOR     : 0.14774855644104434
+11/20/2021 12:47:24 - INFO - modules.trainer -   	val_ROUGE_L    : 0.30973458509922885
+11/20/2021 12:47:24 - INFO - modules.trainer -   	test_BLEU_1    : 0.44260491433957966
+11/20/2021 12:47:24 - INFO - modules.trainer -   	test_BLEU_2    : 0.2682403960296073
+11/20/2021 12:47:24 - INFO - modules.trainer -   	test_BLEU_3    : 0.19114301580336923
+11/20/2021 12:47:24 - INFO - modules.trainer -   	test_BLEU_4    : 0.1459124128046638
+11/20/2021 12:47:24 - INFO - modules.trainer -   	test_METEOR    : 0.17222844621523986
+11/20/2021 12:47:24 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3421654182019129
+11/20/2021 12:47:27 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 12:47:27 - INFO - modules.trainer -   [9/30] Start to train in the training set.
+best performance in epoch:  4
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 12:47:29 - INFO - modules.trainer -   [9/30] Step: 0/64, CE Loss: 1.40885, CON Loss: 0.20431.
+11/20/2021 12:48:29 - INFO - modules.trainer -   [9/30] Step: 50/64, CE Loss: 1.33845, CON Loss: 0.18895.
+11/20/2021 12:48:45 - INFO - modules.trainer -   [9/30] Start to evaluate in the validation set.
+11/20/2021 12:49:00 - INFO - modules.trainer -   [9/30] Start to evaluate in the test set.
+11/20/2021 12:49:22 - INFO - modules.trainer -   	epoch          : 9
+11/20/2021 12:49:22 - INFO - modules.trainer -   	ce_loss        : 1.3478535134345293
+11/20/2021 12:49:22 - INFO - modules.trainer -   	con            : 0.1849583291914314
+11/20/2021 12:49:22 - INFO - modules.trainer -   	val_BLEU_1     : 0.3306346432772199
+11/20/2021 12:49:22 - INFO - modules.trainer -   	val_BLEU_2     : 0.18712424418777596
+11/20/2021 12:49:22 - INFO - modules.trainer -   	val_BLEU_3     : 0.12075305126687781
+11/20/2021 12:49:22 - INFO - modules.trainer -   	val_BLEU_4     : 0.08312964209949472
+11/20/2021 12:49:22 - INFO - modules.trainer -   	val_METEOR     : 0.13664559967157783
+11/20/2021 12:49:22 - INFO - modules.trainer -   	val_ROUGE_L    : 0.2751320921601063
+11/20/2021 12:49:22 - INFO - modules.trainer -   	test_BLEU_1    : 0.3544762431577998
+11/20/2021 12:49:22 - INFO - modules.trainer -   	test_BLEU_2    : 0.20739608148344152
+11/20/2021 12:49:22 - INFO - modules.trainer -   	test_BLEU_3    : 0.13801132988954568
+11/20/2021 12:49:22 - INFO - modules.trainer -   	test_BLEU_4    : 0.09799477990570268
+11/20/2021 12:49:22 - INFO - modules.trainer -   	test_METEOR    : 0.14942256389865252
+11/20/2021 12:49:22 - INFO - modules.trainer -   	test_ROUGE_L   : 0.29403614890222635
+11/20/2021 12:49:26 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 12:49:26 - INFO - modules.trainer -   [10/30] Start to train in the training set.
+best performance in epoch:  4
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 12:49:28 - INFO - modules.trainer -   [10/30] Step: 0/64, CE Loss: 1.28091, CON Loss: 0.16510.
+11/20/2021 12:50:29 - INFO - modules.trainer -   [10/30] Step: 50/64, CE Loss: 1.24572, CON Loss: 0.15063.
+11/20/2021 12:50:44 - INFO - modules.trainer -   [10/30] Start to evaluate in the validation set.
+11/20/2021 12:50:59 - INFO - modules.trainer -   [10/30] Start to evaluate in the test set.
+11/20/2021 12:51:21 - INFO - modules.trainer -   	epoch          : 10
+11/20/2021 12:51:21 - INFO - modules.trainer -   	ce_loss        : 1.2579622529447079
+11/20/2021 12:51:21 - INFO - modules.trainer -   	con            : 0.1470786922145635
+11/20/2021 12:51:21 - INFO - modules.trainer -   	val_BLEU_1     : 0.2748438922431328
+11/20/2021 12:51:21 - INFO - modules.trainer -   	val_BLEU_2     : 0.16853572522038435
+11/20/2021 12:51:21 - INFO - modules.trainer -   	val_BLEU_3     : 0.11788562777130897
+11/20/2021 12:51:21 - INFO - modules.trainer -   	val_BLEU_4     : 0.08755838994902979
+11/20/2021 12:51:21 - INFO - modules.trainer -   	val_METEOR     : 0.12344713521308068
+11/20/2021 12:51:21 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3067139211576895
+11/20/2021 12:51:21 - INFO - modules.trainer -   	test_BLEU_1    : 0.31164897898076216
+11/20/2021 12:51:21 - INFO - modules.trainer -   	test_BLEU_2    : 0.19372159701492683
+11/20/2021 12:51:21 - INFO - modules.trainer -   	test_BLEU_3    : 0.13788269434186345
+11/20/2021 12:51:21 - INFO - modules.trainer -   	test_BLEU_4    : 0.10395129306303272
+11/20/2021 12:51:21 - INFO - modules.trainer -   	test_METEOR    : 0.13869382703362698
+11/20/2021 12:51:21 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3272316457660329
+11/20/2021 12:51:25 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 12:51:25 - INFO - modules.trainer -   [11/30] Start to train in the training set.
+best performance in epoch:  4
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 12:51:27 - INFO - modules.trainer -   [11/30] Step: 0/64, CE Loss: 1.10309, CON Loss: 0.12959.
+11/20/2021 12:52:27 - INFO - modules.trainer -   [11/30] Step: 50/64, CE Loss: 1.11808, CON Loss: 0.12024.
+11/20/2021 12:52:43 - INFO - modules.trainer -   [11/30] Start to evaluate in the validation set.
+11/20/2021 12:52:58 - INFO - modules.trainer -   [11/30] Start to evaluate in the test set.
+11/20/2021 12:53:20 - INFO - modules.trainer -   	epoch          : 11
+11/20/2021 12:53:20 - INFO - modules.trainer -   	ce_loss        : 1.1303928662091494
+11/20/2021 12:53:20 - INFO - modules.trainer -   	con            : 0.11800102388951927
+11/20/2021 12:53:20 - INFO - modules.trainer -   	val_BLEU_1     : 0.2129931918494404
+11/20/2021 12:53:20 - INFO - modules.trainer -   	val_BLEU_2     : 0.12653893492021775
+11/20/2021 12:53:20 - INFO - modules.trainer -   	val_BLEU_3     : 0.08920335266540054
+11/20/2021 12:53:20 - INFO - modules.trainer -   	val_BLEU_4     : 0.06790400183811225
+11/20/2021 12:53:20 - INFO - modules.trainer -   	val_METEOR     : 0.10539977471438362
+11/20/2021 12:53:20 - INFO - modules.trainer -   	val_ROUGE_L    : 0.2954962652854289
+11/20/2021 12:53:20 - INFO - modules.trainer -   	test_BLEU_1    : 0.2563308622427671
+11/20/2021 12:53:20 - INFO - modules.trainer -   	test_BLEU_2    : 0.15483019242560636
+11/20/2021 12:53:20 - INFO - modules.trainer -   	test_BLEU_3    : 0.11064721608163457
+11/20/2021 12:53:20 - INFO - modules.trainer -   	test_BLEU_4    : 0.0843894289805879
+11/20/2021 12:53:20 - INFO - modules.trainer -   	test_METEOR    : 0.12144192773939205
+11/20/2021 12:53:20 - INFO - modules.trainer -   	test_ROUGE_L   : 0.31216277291045796
+11/20/2021 12:53:23 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 12:53:23 - INFO - modules.trainer -   [12/30] Start to train in the training set.
+best performance in epoch:  4
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 12:53:25 - INFO - modules.trainer -   [12/30] Step: 0/64, CE Loss: 0.82310, CON Loss: 0.10700.
+11/20/2021 12:54:26 - INFO - modules.trainer -   [12/30] Step: 50/64, CE Loss: 1.02816, CON Loss: 0.09981.
+11/20/2021 12:54:42 - INFO - modules.trainer -   [12/30] Start to evaluate in the validation set.
+11/20/2021 12:54:57 - INFO - modules.trainer -   [12/30] Start to evaluate in the test set.
+11/20/2021 12:55:19 - INFO - modules.trainer -   	epoch          : 12
+11/20/2021 12:55:19 - INFO - modules.trainer -   	ce_loss        : 1.0405047619715333
+11/20/2021 12:55:19 - INFO - modules.trainer -   	con            : 0.09811505069956183
+11/20/2021 12:55:19 - INFO - modules.trainer -   	val_BLEU_1     : 0.27602545829859204
+11/20/2021 12:55:19 - INFO - modules.trainer -   	val_BLEU_2     : 0.16510087679094368
+11/20/2021 12:55:19 - INFO - modules.trainer -   	val_BLEU_3     : 0.11401328597703062
+11/20/2021 12:55:19 - INFO - modules.trainer -   	val_BLEU_4     : 0.08456814786641281
+11/20/2021 12:55:19 - INFO - modules.trainer -   	val_METEOR     : 0.11997833031491775
+11/20/2021 12:55:19 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3018236513812601
+11/20/2021 12:55:19 - INFO - modules.trainer -   	test_BLEU_1    : 0.3088859102501218
+11/20/2021 12:55:19 - INFO - modules.trainer -   	test_BLEU_2    : 0.19024211839144567
+11/20/2021 12:55:19 - INFO - modules.trainer -   	test_BLEU_3    : 0.13617123234682088
+11/20/2021 12:55:19 - INFO - modules.trainer -   	test_BLEU_4    : 0.10297979713946653
+11/20/2021 12:55:19 - INFO - modules.trainer -   	test_METEOR    : 0.13441151862804407
+11/20/2021 12:55:19 - INFO - modules.trainer -   	test_ROUGE_L   : 0.31880267220258424
+11/20/2021 12:55:22 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 12:55:22 - INFO - modules.trainer -   [13/30] Start to train in the training set.
+best performance in epoch:  4
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 12:55:24 - INFO - modules.trainer -   [13/30] Step: 0/64, CE Loss: 0.81144, CON Loss: 0.08984.
+11/20/2021 12:56:25 - INFO - modules.trainer -   [13/30] Step: 50/64, CE Loss: 0.95217, CON Loss: 0.08452.
+11/20/2021 12:56:40 - INFO - modules.trainer -   [13/30] Start to evaluate in the validation set.
+11/20/2021 12:56:55 - INFO - modules.trainer -   [13/30] Start to evaluate in the test set.
+11/20/2021 12:57:17 - INFO - modules.trainer -   	epoch          : 13
+11/20/2021 12:57:17 - INFO - modules.trainer -   	ce_loss        : 0.9676840333268046
+11/20/2021 12:57:17 - INFO - modules.trainer -   	con            : 0.08325389248784631
+11/20/2021 12:57:17 - INFO - modules.trainer -   	val_BLEU_1     : 0.2399370093135463
+11/20/2021 12:57:17 - INFO - modules.trainer -   	val_BLEU_2     : 0.1414090306828176
+11/20/2021 12:57:17 - INFO - modules.trainer -   	val_BLEU_3     : 0.09847143437832837
+11/20/2021 12:57:17 - INFO - modules.trainer -   	val_BLEU_4     : 0.07401127912838078
+11/20/2021 12:57:17 - INFO - modules.trainer -   	val_METEOR     : 0.11128598066939156
+11/20/2021 12:57:17 - INFO - modules.trainer -   	val_ROUGE_L    : 0.2975936605248437
+11/20/2021 12:57:17 - INFO - modules.trainer -   	test_BLEU_1    : 0.2705684493809721
+11/20/2021 12:57:17 - INFO - modules.trainer -   	test_BLEU_2    : 0.1651834268949303
+11/20/2021 12:57:17 - INFO - modules.trainer -   	test_BLEU_3    : 0.1187065723974578
+11/20/2021 12:57:17 - INFO - modules.trainer -   	test_BLEU_4    : 0.09103953635560294
+11/20/2021 12:57:17 - INFO - modules.trainer -   	test_METEOR    : 0.1261568586606859
+11/20/2021 12:57:17 - INFO - modules.trainer -   	test_ROUGE_L   : 0.31545292528872854
+11/20/2021 12:57:23 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 12:57:23 - INFO - modules.trainer -   [14/30] Start to train in the training set.
+best performance in epoch:  4
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 12:57:25 - INFO - modules.trainer -   [14/30] Step: 0/64, CE Loss: 0.82657, CON Loss: 0.07706.
+11/20/2021 12:58:26 - INFO - modules.trainer -   [14/30] Step: 50/64, CE Loss: 0.89174, CON Loss: 0.07302.
+11/20/2021 12:58:41 - INFO - modules.trainer -   [14/30] Start to evaluate in the validation set.
+11/20/2021 12:58:56 - INFO - modules.trainer -   [14/30] Start to evaluate in the test set.
+11/20/2021 12:59:19 - INFO - modules.trainer -   	epoch          : 14
+11/20/2021 12:59:19 - INFO - modules.trainer -   	ce_loss        : 0.9045363301411271
+11/20/2021 12:59:19 - INFO - modules.trainer -   	con            : 0.07205808430444449
+11/20/2021 12:59:19 - INFO - modules.trainer -   	val_BLEU_1     : 0.25769008498666107
+11/20/2021 12:59:19 - INFO - modules.trainer -   	val_BLEU_2     : 0.15373788186482235
+11/20/2021 12:59:19 - INFO - modules.trainer -   	val_BLEU_3     : 0.10628279660267677
+11/20/2021 12:59:19 - INFO - modules.trainer -   	val_BLEU_4     : 0.07915864358779214
+11/20/2021 12:59:19 - INFO - modules.trainer -   	val_METEOR     : 0.11594501974167903
+11/20/2021 12:59:19 - INFO - modules.trainer -   	val_ROUGE_L    : 0.29934232227563035
+11/20/2021 12:59:19 - INFO - modules.trainer -   	test_BLEU_1    : 0.2837708444662629
+11/20/2021 12:59:19 - INFO - modules.trainer -   	test_BLEU_2    : 0.17400835933443667
+11/20/2021 12:59:19 - INFO - modules.trainer -   	test_BLEU_3    : 0.12464855446043302
+11/20/2021 12:59:19 - INFO - modules.trainer -   	test_BLEU_4    : 0.09485294298609619
+11/20/2021 12:59:19 - INFO - modules.trainer -   	test_METEOR    : 0.1279593981169489
+11/20/2021 12:59:19 - INFO - modules.trainer -   	test_ROUGE_L   : 0.31637493346567824
+11/20/2021 12:59:22 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 12:59:22 - INFO - modules.trainer -   [15/30] Start to train in the training set.
+best performance in epoch:  4
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 12:59:24 - INFO - modules.trainer -   [15/30] Step: 0/64, CE Loss: 0.74973, CON Loss: 0.06733.
+11/20/2021 13:00:26 - INFO - modules.trainer -   [15/30] Step: 50/64, CE Loss: 0.82788, CON Loss: 0.06420.
+11/20/2021 13:00:42 - INFO - modules.trainer -   [15/30] Start to evaluate in the validation set.
+11/20/2021 13:00:57 - INFO - modules.trainer -   [15/30] Start to evaluate in the test set.
+11/20/2021 13:01:19 - INFO - modules.trainer -   	epoch          : 15
+11/20/2021 13:01:19 - INFO - modules.trainer -   	ce_loss        : 0.8456549160182476
+11/20/2021 13:01:19 - INFO - modules.trainer -   	con            : 0.06343873334117234
+11/20/2021 13:01:19 - INFO - modules.trainer -   	val_BLEU_1     : 0.2913949047813639
+11/20/2021 13:01:19 - INFO - modules.trainer -   	val_BLEU_2     : 0.17239504997321023
+11/20/2021 13:01:19 - INFO - modules.trainer -   	val_BLEU_3     : 0.11597742305099516
+11/20/2021 13:01:19 - INFO - modules.trainer -   	val_BLEU_4     : 0.08389139016799595
+11/20/2021 13:01:19 - INFO - modules.trainer -   	val_METEOR     : 0.1259429590219105
+11/20/2021 13:01:19 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3034707926950743
+11/20/2021 13:01:19 - INFO - modules.trainer -   	test_BLEU_1    : 0.33440142353396335
+11/20/2021 13:01:19 - INFO - modules.trainer -   	test_BLEU_2    : 0.19990735708066315
+11/20/2021 13:01:19 - INFO - modules.trainer -   	test_BLEU_3    : 0.1356193669236178
+11/20/2021 13:01:19 - INFO - modules.trainer -   	test_BLEU_4    : 0.09797452687504853
+11/20/2021 13:01:19 - INFO - modules.trainer -   	test_METEOR    : 0.14119873361753238
+11/20/2021 13:01:19 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3229793930536606
+11/20/2021 13:01:22 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 13:01:22 - INFO - modules.trainer -   [16/30] Start to train in the training set.
+best performance in epoch:  4
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 13:01:24 - INFO - modules.trainer -   [16/30] Step: 0/64, CE Loss: 0.66600, CON Loss: 0.05969.
+11/20/2021 13:02:25 - INFO - modules.trainer -   [16/30] Step: 50/64, CE Loss: 0.79441, CON Loss: 0.05710.
+11/20/2021 13:02:41 - INFO - modules.trainer -   [16/30] Start to evaluate in the validation set.
+11/20/2021 13:02:55 - INFO - modules.trainer -   [16/30] Start to evaluate in the test set.
+11/20/2021 13:03:16 - INFO - modules.trainer -   	epoch          : 16
+11/20/2021 13:03:16 - INFO - modules.trainer -   	ce_loss        : 0.8008602550253272
+11/20/2021 13:03:16 - INFO - modules.trainer -   	con            : 0.05647115001920611
+11/20/2021 13:03:16 - INFO - modules.trainer -   	val_BLEU_1     : 0.26295724048145047
+11/20/2021 13:03:16 - INFO - modules.trainer -   	val_BLEU_2     : 0.157004566268597
+11/20/2021 13:03:16 - INFO - modules.trainer -   	val_BLEU_3     : 0.10843066411461864
+11/20/2021 13:03:16 - INFO - modules.trainer -   	val_BLEU_4     : 0.08048224354221702
+11/20/2021 13:03:16 - INFO - modules.trainer -   	val_METEOR     : 0.11732971339754873
+11/20/2021 13:03:16 - INFO - modules.trainer -   	val_ROUGE_L    : 0.30268202802192007
+11/20/2021 13:03:16 - INFO - modules.trainer -   	test_BLEU_1    : 0.2921853668940203
+11/20/2021 13:03:16 - INFO - modules.trainer -   	test_BLEU_2    : 0.1789955492492948
+11/20/2021 13:03:16 - INFO - modules.trainer -   	test_BLEU_3    : 0.12716683519183497
+11/20/2021 13:03:16 - INFO - modules.trainer -   	test_BLEU_4    : 0.09581904406768975
+11/20/2021 13:03:16 - INFO - modules.trainer -   	test_METEOR    : 0.13112198419083276
+11/20/2021 13:03:16 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3197728537504703
+11/20/2021 13:03:20 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 13:03:20 - INFO - modules.trainer -   [17/30] Start to train in the training set.
+best performance in epoch:  4
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 13:03:22 - INFO - modules.trainer -   [17/30] Step: 0/64, CE Loss: 0.72738, CON Loss: 0.05335.
+11/20/2021 13:04:22 - INFO - modules.trainer -   [17/30] Step: 50/64, CE Loss: 0.73474, CON Loss: 0.05118.
+11/20/2021 13:04:38 - INFO - modules.trainer -   [17/30] Start to evaluate in the validation set.
+11/20/2021 13:04:52 - INFO - modules.trainer -   [17/30] Start to evaluate in the test set.
+11/20/2021 13:05:13 - INFO - modules.trainer -   	epoch          : 17
+11/20/2021 13:05:13 - INFO - modules.trainer -   	ce_loss        : 0.7482819892466068
+11/20/2021 13:05:13 - INFO - modules.trainer -   	con            : 0.05065012304112315
+11/20/2021 13:05:13 - INFO - modules.trainer -   	val_BLEU_1     : 0.3859101959323246
+11/20/2021 13:05:13 - INFO - modules.trainer -   	val_BLEU_2     : 0.24760506930616025
+11/20/2021 13:05:13 - INFO - modules.trainer -   	val_BLEU_3     : 0.17166510179255529
+11/20/2021 13:05:13 - INFO - modules.trainer -   	val_BLEU_4     : 0.12352483074281866
+11/20/2021 13:05:13 - INFO - modules.trainer -   	val_METEOR     : 0.15485081718992275
+11/20/2021 13:05:13 - INFO - modules.trainer -   	val_ROUGE_L    : 0.333704585521664
+11/20/2021 13:05:13 - INFO - modules.trainer -   	test_BLEU_1    : 0.44226786473427265
+11/20/2021 13:05:13 - INFO - modules.trainer -   	test_BLEU_2    : 0.28820690225213347
+11/20/2021 13:05:13 - INFO - modules.trainer -   	test_BLEU_3    : 0.20254079854787413
+11/20/2021 13:05:13 - INFO - modules.trainer -   	test_BLEU_4    : 0.1466448643101794
+11/20/2021 13:05:13 - INFO - modules.trainer -   	test_METEOR    : 0.1768554258593489
+11/20/2021 13:05:13 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3615798526326647
+11/20/2021 13:05:16 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 13:05:20 - INFO - modules.trainer -   Saving current best: model_best.pth ...
+11/20/2021 13:05:20 - INFO - modules.trainer -   [18/30] Start to train in the training set.
+best performance in epoch:  17
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 13:05:21 - INFO - modules.trainer -   [18/30] Step: 0/64, CE Loss: 0.61126, CON Loss: 0.04802.
+11/20/2021 13:06:21 - INFO - modules.trainer -   [18/30] Step: 50/64, CE Loss: 0.70944, CON Loss: 0.04617.
+11/20/2021 13:06:37 - INFO - modules.trainer -   [18/30] Start to evaluate in the validation set.
+11/20/2021 13:06:51 - INFO - modules.trainer -   [18/30] Start to evaluate in the test set.
+11/20/2021 13:07:13 - INFO - modules.trainer -   	epoch          : 18
+11/20/2021 13:07:13 - INFO - modules.trainer -   	ce_loss        : 0.7145924801006913
+11/20/2021 13:07:13 - INFO - modules.trainer -   	con            : 0.04571724875131622
+11/20/2021 13:07:13 - INFO - modules.trainer -   	val_BLEU_1     : 0.24994424271826124
+11/20/2021 13:07:13 - INFO - modules.trainer -   	val_BLEU_2     : 0.14189087703040357
+11/20/2021 13:07:13 - INFO - modules.trainer -   	val_BLEU_3     : 0.09367079214876771
+11/20/2021 13:07:13 - INFO - modules.trainer -   	val_BLEU_4     : 0.0671819914876111
+11/20/2021 13:07:13 - INFO - modules.trainer -   	val_METEOR     : 0.11585558374332684
+11/20/2021 13:07:13 - INFO - modules.trainer -   	val_ROUGE_L    : 0.2962317343483102
+11/20/2021 13:07:13 - INFO - modules.trainer -   	test_BLEU_1    : 0.29448117552498926
+11/20/2021 13:07:13 - INFO - modules.trainer -   	test_BLEU_2    : 0.1731357700613548
+11/20/2021 13:07:13 - INFO - modules.trainer -   	test_BLEU_3    : 0.11859296349516738
+11/20/2021 13:07:13 - INFO - modules.trainer -   	test_BLEU_4    : 0.08726975297985226
+11/20/2021 13:07:13 - INFO - modules.trainer -   	test_METEOR    : 0.12948280941395338
+11/20/2021 13:07:13 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3203265051428114
+11/20/2021 13:07:18 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 13:07:18 - INFO - modules.trainer -   [19/30] Start to train in the training set.
+best performance in epoch:  17
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 13:07:20 - INFO - modules.trainer -   [19/30] Step: 0/64, CE Loss: 0.56651, CON Loss: 0.04347.
+11/20/2021 13:08:20 - INFO - modules.trainer -   [19/30] Step: 50/64, CE Loss: 0.66168, CON Loss: 0.04189.
+11/20/2021 13:08:35 - INFO - modules.trainer -   [19/30] Start to evaluate in the validation set.
+11/20/2021 13:08:49 - INFO - modules.trainer -   [19/30] Start to evaluate in the test set.
+11/20/2021 13:09:10 - INFO - modules.trainer -   	epoch          : 19
+11/20/2021 13:09:10 - INFO - modules.trainer -   	ce_loss        : 0.6760711930692196
+11/20/2021 13:09:10 - INFO - modules.trainer -   	con            : 0.04149296978721395
+11/20/2021 13:09:10 - INFO - modules.trainer -   	val_BLEU_1     : 0.3985769830778856
+11/20/2021 13:09:10 - INFO - modules.trainer -   	val_BLEU_2     : 0.2550162624587469
+11/20/2021 13:09:10 - INFO - modules.trainer -   	val_BLEU_3     : 0.1741919431538638
+11/20/2021 13:09:10 - INFO - modules.trainer -   	val_BLEU_4     : 0.12580642427864377
+11/20/2021 13:09:10 - INFO - modules.trainer -   	val_METEOR     : 0.16961887856155133
+11/20/2021 13:09:10 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3439325832622978
+11/20/2021 13:09:10 - INFO - modules.trainer -   	test_BLEU_1    : 0.4302525284957465
+11/20/2021 13:09:10 - INFO - modules.trainer -   	test_BLEU_2    : 0.2744905809980355
+11/20/2021 13:09:10 - INFO - modules.trainer -   	test_BLEU_3    : 0.1904131224019204
+11/20/2021 13:09:10 - INFO - modules.trainer -   	test_BLEU_4    : 0.14087910056476763
+11/20/2021 13:09:10 - INFO - modules.trainer -   	test_METEOR    : 0.18060545531237324
+11/20/2021 13:09:10 - INFO - modules.trainer -   	test_ROUGE_L   : 0.35755619034672337
+11/20/2021 13:09:14 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 13:09:17 - INFO - modules.trainer -   Saving current best: model_best.pth ...
+11/20/2021 13:09:17 - INFO - modules.trainer -   [20/30] Start to train in the training set.
+best performance in epoch:  19
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 13:09:19 - INFO - modules.trainer -   [20/30] Step: 0/64, CE Loss: 0.52584, CON Loss: 0.03955.
+11/20/2021 13:10:19 - INFO - modules.trainer -   [20/30] Step: 50/64, CE Loss: 0.63063, CON Loss: 0.03817.
+11/20/2021 13:10:34 - INFO - modules.trainer -   [20/30] Start to evaluate in the validation set.
+11/20/2021 13:10:49 - INFO - modules.trainer -   [20/30] Start to evaluate in the test set.
+11/20/2021 13:11:10 - INFO - modules.trainer -   	epoch          : 20
+11/20/2021 13:11:10 - INFO - modules.trainer -   	ce_loss        : 0.6417867867276073
+11/20/2021 13:11:10 - INFO - modules.trainer -   	con            : 0.037825793435331434
+11/20/2021 13:11:10 - INFO - modules.trainer -   	val_BLEU_1     : 0.39957066382405804
+11/20/2021 13:11:10 - INFO - modules.trainer -   	val_BLEU_2     : 0.22445616178347863
+11/20/2021 13:11:10 - INFO - modules.trainer -   	val_BLEU_3     : 0.1457305024195458
+11/20/2021 13:11:10 - INFO - modules.trainer -   	val_BLEU_4     : 0.10240626684476573
+11/20/2021 13:11:10 - INFO - modules.trainer -   	val_METEOR     : 0.1511783251432474
+11/20/2021 13:11:10 - INFO - modules.trainer -   	val_ROUGE_L    : 0.30896092265738156
+11/20/2021 13:11:10 - INFO - modules.trainer -   	test_BLEU_1    : 0.44474833008991504
+11/20/2021 13:11:10 - INFO - modules.trainer -   	test_BLEU_2    : 0.26898022867788274
+11/20/2021 13:11:10 - INFO - modules.trainer -   	test_BLEU_3    : 0.19042558028997786
+11/20/2021 13:11:10 - INFO - modules.trainer -   	test_BLEU_4    : 0.14467553240175915
+11/20/2021 13:11:10 - INFO - modules.trainer -   	test_METEOR    : 0.17473600283628785
+11/20/2021 13:11:10 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3430330150919423
+11/20/2021 13:11:14 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 13:11:14 - INFO - modules.trainer -   [21/30] Start to train in the training set.
+best performance in epoch:  19
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 13:11:15 - INFO - modules.trainer -   [21/30] Step: 0/64, CE Loss: 0.56223, CON Loss: 0.03611.
+11/20/2021 13:12:15 - INFO - modules.trainer -   [21/30] Step: 50/64, CE Loss: 0.56396, CON Loss: 0.03513.
+11/20/2021 13:12:30 - INFO - modules.trainer -   [21/30] Start to evaluate in the validation set.
+11/20/2021 13:12:44 - INFO - modules.trainer -   [21/30] Start to evaluate in the test set.
+11/20/2021 13:13:05 - INFO - modules.trainer -   	epoch          : 21
+11/20/2021 13:13:05 - INFO - modules.trainer -   	ce_loss        : 0.5714923497289419
+11/20/2021 13:13:05 - INFO - modules.trainer -   	con            : 0.03488459071377292
+11/20/2021 13:13:05 - INFO - modules.trainer -   	val_BLEU_1     : 0.2611646702352334
+11/20/2021 13:13:05 - INFO - modules.trainer -   	val_BLEU_2     : 0.15705500881378925
+11/20/2021 13:13:05 - INFO - modules.trainer -   	val_BLEU_3     : 0.10928151418417421
+11/20/2021 13:13:05 - INFO - modules.trainer -   	val_BLEU_4     : 0.08191504152343947
+11/20/2021 13:13:05 - INFO - modules.trainer -   	val_METEOR     : 0.11936251802518837
+11/20/2021 13:13:05 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3028421163224485
+11/20/2021 13:13:05 - INFO - modules.trainer -   	test_BLEU_1    : 0.2900075647885901
+11/20/2021 13:13:05 - INFO - modules.trainer -   	test_BLEU_2    : 0.17923198352120512
+11/20/2021 13:13:05 - INFO - modules.trainer -   	test_BLEU_3    : 0.12881048199440326
+11/20/2021 13:13:05 - INFO - modules.trainer -   	test_BLEU_4    : 0.09777425298593155
+11/20/2021 13:13:05 - INFO - modules.trainer -   	test_METEOR    : 0.13172965130559827
+11/20/2021 13:13:05 - INFO - modules.trainer -   	test_ROUGE_L   : 0.31930830200573407
+11/20/2021 13:13:09 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 13:13:09 - INFO - modules.trainer -   [22/30] Start to train in the training set.
+best performance in epoch:  19
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 13:13:11 - INFO - modules.trainer -   [22/30] Step: 0/64, CE Loss: 0.49374, CON Loss: 0.03365.
+11/20/2021 13:14:10 - INFO - modules.trainer -   [22/30] Step: 50/64, CE Loss: 0.52916, CON Loss: 0.03277.
+11/20/2021 13:14:25 - INFO - modules.trainer -   [22/30] Start to evaluate in the validation set.
+11/20/2021 13:14:39 - INFO - modules.trainer -   [22/30] Start to evaluate in the test set.
+11/20/2021 13:15:00 - INFO - modules.trainer -   	epoch          : 22
+11/20/2021 13:15:00 - INFO - modules.trainer -   	ce_loss        : 0.5338813033886254
+11/20/2021 13:15:00 - INFO - modules.trainer -   	con            : 0.032547235023230314
+11/20/2021 13:15:00 - INFO - modules.trainer -   	val_BLEU_1     : 0.4206507174628589
+11/20/2021 13:15:00 - INFO - modules.trainer -   	val_BLEU_2     : 0.26680201646277946
+11/20/2021 13:15:00 - INFO - modules.trainer -   	val_BLEU_3     : 0.18147515525583793
+11/20/2021 13:15:00 - INFO - modules.trainer -   	val_BLEU_4     : 0.1296063638143526
+11/20/2021 13:15:00 - INFO - modules.trainer -   	val_METEOR     : 0.17786726046144716
+11/20/2021 13:15:00 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3422340198886939
+11/20/2021 13:15:00 - INFO - modules.trainer -   	test_BLEU_1    : 0.46108206327962664
+11/20/2021 13:15:00 - INFO - modules.trainer -   	test_BLEU_2    : 0.2969559099623058
+11/20/2021 13:15:00 - INFO - modules.trainer -   	test_BLEU_3    : 0.20795762878167853
+11/20/2021 13:15:00 - INFO - modules.trainer -   	test_BLEU_4    : 0.15396681480134747
+11/20/2021 13:15:00 - INFO - modules.trainer -   	test_METEOR    : 0.19565258709546562
+11/20/2021 13:15:00 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3603672002303337
+11/20/2021 13:15:04 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 13:15:07 - INFO - modules.trainer -   Saving current best: model_best.pth ...
+11/20/2021 13:15:07 - INFO - modules.trainer -   [23/30] Start to train in the training set.
+best performance in epoch:  22
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 13:15:09 - INFO - modules.trainer -   [23/30] Step: 0/64, CE Loss: 0.46693, CON Loss: 0.03144.
+11/20/2021 13:16:08 - INFO - modules.trainer -   [23/30] Step: 50/64, CE Loss: 0.49533, CON Loss: 0.03063.
+11/20/2021 13:16:23 - INFO - modules.trainer -   [23/30] Start to evaluate in the validation set.
+11/20/2021 13:16:37 - INFO - modules.trainer -   [23/30] Start to evaluate in the test set.
+11/20/2021 13:16:58 - INFO - modules.trainer -   	epoch          : 23
+11/20/2021 13:16:58 - INFO - modules.trainer -   	ce_loss        : 0.5059805000200868
+11/20/2021 13:16:58 - INFO - modules.trainer -   	con            : 0.0304217814700678
+11/20/2021 13:16:58 - INFO - modules.trainer -   	val_BLEU_1     : 0.2688282392226242
+11/20/2021 13:16:58 - INFO - modules.trainer -   	val_BLEU_2     : 0.1625077910777199
+11/20/2021 13:16:58 - INFO - modules.trainer -   	val_BLEU_3     : 0.11282099119074447
+11/20/2021 13:16:58 - INFO - modules.trainer -   	val_BLEU_4     : 0.08376813160671408
+11/20/2021 13:16:58 - INFO - modules.trainer -   	val_METEOR     : 0.12097899378178656
+11/20/2021 13:16:58 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3018619086508928
+11/20/2021 13:16:58 - INFO - modules.trainer -   	test_BLEU_1    : 0.3008816255337009
+11/20/2021 13:16:58 - INFO - modules.trainer -   	test_BLEU_2    : 0.18581561408101235
+11/20/2021 13:16:58 - INFO - modules.trainer -   	test_BLEU_3    : 0.13292169954215635
+11/20/2021 13:16:58 - INFO - modules.trainer -   	test_BLEU_4    : 0.10070390550160518
+11/20/2021 13:16:58 - INFO - modules.trainer -   	test_METEOR    : 0.13672993722223076
+11/20/2021 13:16:58 - INFO - modules.trainer -   	test_ROUGE_L   : 0.31935466593523454
+11/20/2021 13:17:02 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 13:17:02 - INFO - modules.trainer -   [24/30] Start to train in the training set.
+best performance in epoch:  22
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 13:17:04 - INFO - modules.trainer -   [24/30] Step: 0/64, CE Loss: 0.44627, CON Loss: 0.02940.
+11/20/2021 13:18:04 - INFO - modules.trainer -   [24/30] Step: 50/64, CE Loss: 0.48104, CON Loss: 0.02864.
+11/20/2021 13:18:19 - INFO - modules.trainer -   [24/30] Start to evaluate in the validation set.
+11/20/2021 13:18:33 - INFO - modules.trainer -   [24/30] Start to evaluate in the test set.
+11/20/2021 13:18:55 - INFO - modules.trainer -   	epoch          : 24
+11/20/2021 13:18:55 - INFO - modules.trainer -   	ce_loss        : 0.4892278788611293
+11/20/2021 13:18:55 - INFO - modules.trainer -   	con            : 0.028450599260395393
+11/20/2021 13:18:55 - INFO - modules.trainer -   	val_BLEU_1     : 0.3477294654267618
+11/20/2021 13:18:55 - INFO - modules.trainer -   	val_BLEU_2     : 0.19998110165319832
+11/20/2021 13:18:55 - INFO - modules.trainer -   	val_BLEU_3     : 0.12597084435754954
+11/20/2021 13:18:55 - INFO - modules.trainer -   	val_BLEU_4     : 0.08247925375005427
+11/20/2021 13:18:55 - INFO - modules.trainer -   	val_METEOR     : 0.13896795698147307
+11/20/2021 13:18:55 - INFO - modules.trainer -   	val_ROUGE_L    : 0.29522584947640934
+11/20/2021 13:18:55 - INFO - modules.trainer -   	test_BLEU_1    : 0.371053760819502
+11/20/2021 13:18:55 - INFO - modules.trainer -   	test_BLEU_2    : 0.21991992857916884
+11/20/2021 13:18:55 - INFO - modules.trainer -   	test_BLEU_3    : 0.14429874052174496
+11/20/2021 13:18:55 - INFO - modules.trainer -   	test_BLEU_4    : 0.09912950370060526
+11/20/2021 13:18:55 - INFO - modules.trainer -   	test_METEOR    : 0.14615303701910576
+11/20/2021 13:18:55 - INFO - modules.trainer -   	test_ROUGE_L   : 0.31420145673298533
+11/20/2021 13:18:59 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 13:18:59 - INFO - modules.trainer -   [25/30] Start to train in the training set.
+best performance in epoch:  22
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 13:19:00 - INFO - modules.trainer -   [25/30] Step: 0/64, CE Loss: 0.44343, CON Loss: 0.02751.
+11/20/2021 13:20:00 - INFO - modules.trainer -   [25/30] Step: 50/64, CE Loss: 0.46768, CON Loss: 0.02682.
+11/20/2021 13:20:16 - INFO - modules.trainer -   [25/30] Start to evaluate in the validation set.
+11/20/2021 13:20:30 - INFO - modules.trainer -   [25/30] Start to evaluate in the test set.
+11/20/2021 13:20:51 - INFO - modules.trainer -   	epoch          : 25
+11/20/2021 13:20:51 - INFO - modules.trainer -   	ce_loss        : 0.4768818747252226
+11/20/2021 13:20:51 - INFO - modules.trainer -   	con            : 0.02665053599048406
+11/20/2021 13:20:51 - INFO - modules.trainer -   	val_BLEU_1     : 0.24668570613077972
+11/20/2021 13:20:51 - INFO - modules.trainer -   	val_BLEU_2     : 0.14856514569786725
+11/20/2021 13:20:51 - INFO - modules.trainer -   	val_BLEU_3     : 0.10301874670324473
+11/20/2021 13:20:51 - INFO - modules.trainer -   	val_BLEU_4     : 0.0770011668662766
+11/20/2021 13:20:51 - INFO - modules.trainer -   	val_METEOR     : 0.11708669825878179
+11/20/2021 13:20:51 - INFO - modules.trainer -   	val_ROUGE_L    : 0.2991018394516394
+11/20/2021 13:20:51 - INFO - modules.trainer -   	test_BLEU_1    : 0.28990234003148063
+11/20/2021 13:20:51 - INFO - modules.trainer -   	test_BLEU_2    : 0.17710460988437302
+11/20/2021 13:20:51 - INFO - modules.trainer -   	test_BLEU_3    : 0.12577813198650759
+11/20/2021 13:20:51 - INFO - modules.trainer -   	test_BLEU_4    : 0.0944673238114526
+11/20/2021 13:20:51 - INFO - modules.trainer -   	test_METEOR    : 0.13228875251964337
+11/20/2021 13:20:51 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3153677001775343
+11/20/2021 13:20:55 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 13:20:55 - INFO - modules.trainer -   [26/30] Start to train in the training set.
+best performance in epoch:  22
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 13:20:57 - INFO - modules.trainer -   [26/30] Step: 0/64, CE Loss: 0.39543, CON Loss: 0.02579.
+11/20/2021 13:21:58 - INFO - modules.trainer -   [26/30] Step: 50/64, CE Loss: 0.45065, CON Loss: 0.02516.
+11/20/2021 13:22:13 - INFO - modules.trainer -   [26/30] Start to evaluate in the validation set.
+11/20/2021 13:22:27 - INFO - modules.trainer -   [26/30] Start to evaluate in the test set.
+11/20/2021 13:22:49 - INFO - modules.trainer -   	epoch          : 26
+11/20/2021 13:22:49 - INFO - modules.trainer -   	ce_loss        : 0.45982162468135357
+11/20/2021 13:22:49 - INFO - modules.trainer -   	con            : 0.025006080919411033
+11/20/2021 13:22:49 - INFO - modules.trainer -   	val_BLEU_1     : 0.41390239594036426
+11/20/2021 13:22:49 - INFO - modules.trainer -   	val_BLEU_2     : 0.22913736880219732
+11/20/2021 13:22:49 - INFO - modules.trainer -   	val_BLEU_3     : 0.14761375806818297
+11/20/2021 13:22:49 - INFO - modules.trainer -   	val_BLEU_4     : 0.10319403567249448
+11/20/2021 13:22:49 - INFO - modules.trainer -   	val_METEOR     : 0.15405894755964175
+11/20/2021 13:22:49 - INFO - modules.trainer -   	val_ROUGE_L    : 0.30737212164360717
+11/20/2021 13:22:49 - INFO - modules.trainer -   	test_BLEU_1    : 0.43581837171132265
+11/20/2021 13:22:49 - INFO - modules.trainer -   	test_BLEU_2    : 0.26441602347380017
+11/20/2021 13:22:49 - INFO - modules.trainer -   	test_BLEU_3    : 0.18706210834509843
+11/20/2021 13:22:49 - INFO - modules.trainer -   	test_BLEU_4    : 0.14171861791248358
+11/20/2021 13:22:49 - INFO - modules.trainer -   	test_METEOR    : 0.1800049271141538
+11/20/2021 13:22:49 - INFO - modules.trainer -   	test_ROUGE_L   : 0.34391940036502866
+11/20/2021 13:22:52 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 13:22:52 - INFO - modules.trainer -   [27/30] Start to train in the training set.
+best performance in epoch:  22
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 13:22:54 - INFO - modules.trainer -   [27/30] Step: 0/64, CE Loss: 0.40167, CON Loss: 0.02422.
+11/20/2021 13:23:54 - INFO - modules.trainer -   [27/30] Step: 50/64, CE Loss: 0.44144, CON Loss: 0.02365.
+11/20/2021 13:24:09 - INFO - modules.trainer -   [27/30] Start to evaluate in the validation set.
+11/20/2021 13:24:22 - INFO - modules.trainer -   [27/30] Start to evaluate in the test set.
+11/20/2021 13:24:44 - INFO - modules.trainer -   	epoch          : 27
+11/20/2021 13:24:44 - INFO - modules.trainer -   	ce_loss        : 0.44853034568950534
+11/20/2021 13:24:44 - INFO - modules.trainer -   	con            : 0.023507211793912575
+11/20/2021 13:24:44 - INFO - modules.trainer -   	val_BLEU_1     : 0.2830108895703915
+11/20/2021 13:24:44 - INFO - modules.trainer -   	val_BLEU_2     : 0.17187668619271307
+11/20/2021 13:24:44 - INFO - modules.trainer -   	val_BLEU_3     : 0.11973890873613165
+11/20/2021 13:24:44 - INFO - modules.trainer -   	val_BLEU_4     : 0.0894739343617752
+11/20/2021 13:24:44 - INFO - modules.trainer -   	val_METEOR     : 0.1248666532078933
+11/20/2021 13:24:44 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3050345504676151
+11/20/2021 13:24:44 - INFO - modules.trainer -   	test_BLEU_1    : 0.304394137619931
+11/20/2021 13:24:44 - INFO - modules.trainer -   	test_BLEU_2    : 0.18509013722102097
+11/20/2021 13:24:44 - INFO - modules.trainer -   	test_BLEU_3    : 0.13084920016417928
+11/20/2021 13:24:44 - INFO - modules.trainer -   	test_BLEU_4    : 0.09796373333478556
+11/20/2021 13:24:44 - INFO - modules.trainer -   	test_METEOR    : 0.13528025202212893
+11/20/2021 13:24:44 - INFO - modules.trainer -   	test_ROUGE_L   : 0.31467389129506446
+11/20/2021 13:24:47 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 13:24:47 - INFO - modules.trainer -   [28/30] Start to train in the training set.
+best performance in epoch:  22
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 13:24:49 - INFO - modules.trainer -   [28/30] Step: 0/64, CE Loss: 0.43441, CON Loss: 0.02279.
+11/20/2021 13:25:49 - INFO - modules.trainer -   [28/30] Step: 50/64, CE Loss: 0.42720, CON Loss: 0.02225.
+11/20/2021 13:26:05 - INFO - modules.trainer -   [28/30] Start to evaluate in the validation set.
+11/20/2021 13:26:19 - INFO - modules.trainer -   [28/30] Start to evaluate in the test set.
+11/20/2021 13:26:40 - INFO - modules.trainer -   	epoch          : 28
+11/20/2021 13:26:40 - INFO - modules.trainer -   	ce_loss        : 0.43396014254540205
+11/20/2021 13:26:40 - INFO - modules.trainer -   	con            : 0.022109246958279982
+11/20/2021 13:26:40 - INFO - modules.trainer -   	val_BLEU_1     : 0.2578242178436336
+11/20/2021 13:26:40 - INFO - modules.trainer -   	val_BLEU_2     : 0.15662355767585645
+11/20/2021 13:26:40 - INFO - modules.trainer -   	val_BLEU_3     : 0.10822892537539687
+11/20/2021 13:26:40 - INFO - modules.trainer -   	val_BLEU_4     : 0.08037053442504362
+11/20/2021 13:26:40 - INFO - modules.trainer -   	val_METEOR     : 0.12051454865638853
+11/20/2021 13:26:40 - INFO - modules.trainer -   	val_ROUGE_L    : 0.30021340805219954
+11/20/2021 13:26:40 - INFO - modules.trainer -   	test_BLEU_1    : 0.29571261688659944
+11/20/2021 13:26:40 - INFO - modules.trainer -   	test_BLEU_2    : 0.18199935920595514
+11/20/2021 13:26:40 - INFO - modules.trainer -   	test_BLEU_3    : 0.12939153171162587
+11/20/2021 13:26:40 - INFO - modules.trainer -   	test_BLEU_4    : 0.09716923865083486
+11/20/2021 13:26:40 - INFO - modules.trainer -   	test_METEOR    : 0.13485472357209277
+11/20/2021 13:26:40 - INFO - modules.trainer -   	test_ROUGE_L   : 0.31567593283181883
+11/20/2021 13:26:44 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 13:26:44 - INFO - modules.trainer -   [29/30] Start to train in the training set.
+best performance in epoch:  22
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 13:26:46 - INFO - modules.trainer -   [29/30] Step: 0/64, CE Loss: 0.39405, CON Loss: 0.02142.
+11/20/2021 13:27:46 - INFO - modules.trainer -   [29/30] Step: 50/64, CE Loss: 0.42635, CON Loss: 0.02092.
+11/20/2021 13:28:02 - INFO - modules.trainer -   [29/30] Start to evaluate in the validation set.
+11/20/2021 13:28:16 - INFO - modules.trainer -   [29/30] Start to evaluate in the test set.
+11/20/2021 13:28:37 - INFO - modules.trainer -   	epoch          : 29
+11/20/2021 13:28:37 - INFO - modules.trainer -   	ce_loss        : 0.43200785107910633
+11/20/2021 13:28:37 - INFO - modules.trainer -   	con            : 0.020793844683794305
+11/20/2021 13:28:37 - INFO - modules.trainer -   	val_BLEU_1     : 0.2598255171441856
+11/20/2021 13:28:37 - INFO - modules.trainer -   	val_BLEU_2     : 0.1561490358937045
+11/20/2021 13:28:37 - INFO - modules.trainer -   	val_BLEU_3     : 0.10926763799769094
+11/20/2021 13:28:37 - INFO - modules.trainer -   	val_BLEU_4     : 0.08255530744942255
+11/20/2021 13:28:37 - INFO - modules.trainer -   	val_METEOR     : 0.11886975462247078
+11/20/2021 13:28:37 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3040669229700135
+11/20/2021 13:28:37 - INFO - modules.trainer -   	test_BLEU_1    : 0.29295593425169514
+11/20/2021 13:28:37 - INFO - modules.trainer -   	test_BLEU_2    : 0.17801795046360652
+11/20/2021 13:28:37 - INFO - modules.trainer -   	test_BLEU_3    : 0.1263039941125944
+11/20/2021 13:28:37 - INFO - modules.trainer -   	test_BLEU_4    : 0.09516849073097786
+11/20/2021 13:28:37 - INFO - modules.trainer -   	test_METEOR    : 0.1313367131717812
+11/20/2021 13:28:37 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3169779742667804
+11/20/2021 13:28:42 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/20/2021 13:28:42 - INFO - modules.trainer -   [30/30] Start to train in the training set.
+best performance in epoch:  22
+/mnt/Data3/wangjun/anaconda3/envs/torch16/lib/python3.7/site-packages/torch/nn/parallel/_functions.py:61: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn('Was asked to gather along dimension 0, but all '
+11/20/2021 13:28:44 - INFO - modules.trainer -   [30/30] Step: 0/64, CE Loss: 0.36991, CON Loss: 0.02016.
+11/20/2021 13:29:43 - INFO - modules.trainer -   [30/30] Step: 50/64, CE Loss: 0.41798, CON Loss: 0.01971.
+11/20/2021 13:29:59 - INFO - modules.trainer -   [30/30] Start to evaluate in the validation set.
+11/20/2021 13:30:13 - INFO - modules.trainer -   [30/30] Start to evaluate in the test set.
+11/20/2021 13:30:34 - INFO - modules.trainer -   	epoch          : 30
+11/20/2021 13:30:34 - INFO - modules.trainer -   	ce_loss        : 0.4239783729426563
+11/20/2021 13:30:34 - INFO - modules.trainer -   	con            : 0.019593508244724944
+11/20/2021 13:30:34 - INFO - modules.trainer -   	val_BLEU_1     : 0.28011996558223173
+11/20/2021 13:30:34 - INFO - modules.trainer -   	val_BLEU_2     : 0.16792401004877258
+11/20/2021 13:30:34 - INFO - modules.trainer -   	val_BLEU_3     : 0.11551364295224885
+11/20/2021 13:30:34 - INFO - modules.trainer -   	val_BLEU_4     : 0.08478954336074647
+11/20/2021 13:30:34 - INFO - modules.trainer -   	val_METEOR     : 0.12538726526345995
+11/20/2021 13:30:34 - INFO - modules.trainer -   	val_ROUGE_L    : 0.303624202300358
+11/20/2021 13:30:34 - INFO - modules.trainer -   	test_BLEU_1    : 0.3027518027439918
+11/20/2021 13:30:34 - INFO - modules.trainer -   	test_BLEU_2    : 0.18273955415260054
+11/20/2021 13:30:34 - INFO - modules.trainer -   	test_BLEU_3    : 0.128843880024604
+11/20/2021 13:30:34 - INFO - modules.trainer -   	test_BLEU_4    : 0.09643178846317876
+11/20/2021 13:30:34 - INFO - modules.trainer -   	test_METEOR    : 0.1339917962998667
+11/20/2021 13:30:34 - INFO - modules.trainer -   	test_ROUGE_L   : 0.314641732462245
+11/20/2021 13:30:38 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+best performance in epoch:  22

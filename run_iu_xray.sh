@@ -7,9 +7,9 @@ python main.py \
     --max_seq_length 60 \
     --threshold 3 \
     --epochs 30 \
-    --batch_size 12 \
-    --lr_ve 5e-4 \
-    --lr_ed 1e-3 \
+    --batch_size 32 \
+    --lr_ve 1e-3 \
+    --lr_ed 2e-3 \
     --step_size 10 \
     --gamma 0.8 \
     --num_layers 3 \
@@ -20,8 +20,8 @@ python main.py \
     --beam_size 3 \
     --save_dir results/iu_xray/ \
     --log_period 50 \
-    --n_gpu 1 \
-    --weight_con_loss 0.5 \
+    --n_gpu 2 \
+    --weight_con_loss 10 \
     --num_cluster 40 \
     --num_prototype 8 \
     --con_margin 0.4 \

@@ -391,7 +391,7 @@ class BaseCMN(AttModel):
                     if j != len(labels[i])-1:
                         query_matrix.extend(self.memory_matrix[j*self.num_prototype:(j+1)*self.num_prototype, :])
                     else:
-                        query_matrix.extend(self.memory_matrix[j * self.num_prototype:(j + 4) * self.num_prototype, :])
+                        query_matrix.extend(self.memory_matrix[j * self.num_prototype:, :])
 
             query_matrix = torch.stack(query_matrix, 0)
             query_matrix = query_matrix.unsqueeze(0)
@@ -432,6 +432,7 @@ class BaseCMN(AttModel):
         outputs = F.log_softmax(self.logit(out), dim=-1)
         con_loss = my_con_loss(self.memory_matrix, num_classes= self.num_cluster,
                                num_protypes = self.num_prototype, margin = self.margin)
+        con_loss = con_loss.unsqueeze(0) # for  multi-gpu setting
 
         return outputs, con_loss
 
