@@ -1,4 +1,5 @@
 data/*
+data
 results/*
 .ipynb_checkpoints
 .idea

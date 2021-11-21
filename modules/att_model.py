@@ -82,11 +82,12 @@ class AttModel(CaptionModel):
 
         return fc_feats, att_feats, p_att_feats, att_masks
 
-    def get_logprobs_state(self, it, fc_feats, att_feats, p_att_feats, att_masks, labels, state,  output_logsoftmax=1):
+    def get_logprobs_state(self, it, fc_feats, att_feats, p_att_feats, att_masks, query_matrix, cmn_masks, labels, state,  output_logsoftmax=1):
         # 'it' contains a word index
         xt = self.embed(it)
 
-        output, state = self.core(xt, fc_feats, att_feats, p_att_feats, state, att_masks, labels=labels)
+        output, state = self.core(xt, fc_feats, att_feats, p_att_feats, state,
+                                  att_masks, query_matrix, cmn_masks, labels=labels)
         if output_logsoftmax:
             logprobs = F.log_softmax(self.logit(output), dim=1)
         else:
@@ -102,7 +103,8 @@ class AttModel(CaptionModel):
         assert sample_n == 1 or sample_n == beam_size // group_size, 'when beam search, sample_n == 1 or beam search'
         batch_size = fc_feats.size(0)
 
-        p_fc_feats, p_att_feats, pp_att_feats, p_att_masks, labels = self._prepare_feature(fc_feats, att_feats, att_masks, labels = labels)
+        p_fc_feats, p_att_feats, pp_att_feats, p_att_masks, labels, query_matrix, cmn_masks = \
+            self._prepare_feature(fc_feats, att_feats, att_masks, labels = labels)
 
         assert beam_size <= self.vocab_size + 1, 'lets assume this for now, otherwise this corner case causes a few headaches down the road. can be dealt with in future if needed'
         seq = fc_feats.new_full((batch_size * sample_n, self.max_seq_length), self.pad_idx, dtype=torch.long)
@@ -115,14 +117,16 @@ class AttModel(CaptionModel):
 
         # first step, feed bos
         it = fc_feats.new_full([batch_size], self.bos_idx, dtype=torch.long)
-        logprobs, state = self.get_logprobs_state(it, p_fc_feats, p_att_feats, pp_att_feats, p_att_masks, labels, state)
+        logprobs, state = self.get_logprobs_state(it, p_fc_feats, p_att_feats, pp_att_feats,
+                                                  p_att_masks, query_matrix, cmn_masks, labels, state)
 
-        p_fc_feats, p_att_feats, pp_att_feats, p_att_masks, labels = utils.repeat_tensors(beam_size,
+        p_fc_feats, p_att_feats, pp_att_feats, p_att_masks, labels, query_matrix, cmn_masks = utils.repeat_tensors(beam_size,
                                                                                   [p_fc_feats, p_att_feats,
-                                                                                   pp_att_feats, p_att_masks, labels]
+                                                                                   pp_att_feats, p_att_masks, labels,
+                                                                                   query_matrix, cmn_masks]
                                                                                   )
         self.done_beams = self.beam_search(state, logprobs, p_fc_feats, p_att_feats, pp_att_feats, p_att_masks,
-                                           labels, opt=opt)
+                                           query_matrix, cmn_masks, labels, opt=opt)
         for k in range(batch_size):
             if sample_n == beam_size:
                 for _n in range(sample_n):
