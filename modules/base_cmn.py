@@ -56,27 +56,45 @@ def memory_querying_responding(query, key, value, mask=None, dropout=None, topk=
 
 
 class Transformer(nn.Module):
-    def __init__(self, encoder, decoder, src_embed, tgt_embed, cmn):
+    def __init__(self, encoder, decoder, src_embed, tgt_embed, cmn, num_cluster = 40, num_prototype= 8):
         super(Transformer, self).__init__()
         self.encoder = encoder
         self.decoder = decoder
         self.src_embed = src_embed
         self.tgt_embed = tgt_embed
         self.cmn = cmn
+        self.num_cluster = num_cluster
+        self.num_prototype = num_prototype
 
-    def forward(self, src, tgt, src_mask, tgt_mask, memory_matrix):
-        return self.decode(self.encode(src, src_mask), src_mask, tgt, tgt_mask, memory_matrix=memory_matrix)
+    def forward(self, src, tgt, src_mask, tgt_mask, memory_matrix, labels = None):
+        return self.decode(self.encode(src, src_mask), src_mask, tgt, tgt_mask, memory_matrix=memory_matrix, labels = labels)
 
     def encode(self, src, src_mask):
         return self.encoder(self.src_embed(src), src_mask) # [12,98,512]
 
-    def decode(self, memory, src_mask, tgt, tgt_mask, past=None, memory_matrix=None):
+    def decode(self, memory, src_mask, tgt, tgt_mask, past=None, memory_matrix=None, labels = None):
         embeddings = self.tgt_embed(tgt)
 
         # Memory querying and responding for textual features
-        dummy_memory_matrix = memory_matrix.unsqueeze(0).expand(embeddings.size(0), memory_matrix.size(0), memory_matrix.size(1))
+        #dummy_memory_matrix = memory_matrix.unsqueeze(0).expand(embeddings.size(0), memory_matrix.size(0), memory_matrix.size(1))
         #dummy_memory_matrix = torch.stack([self.memory_matrix[labels[i] == 1, :] for i in range(embeddings.size(0))])
-        responses = self.cmn(embeddings, dummy_memory_matrix, dummy_memory_matrix)
+        #responses = self.cmn(embeddings, dummy_memory_matrix, dummy_memory_matrix)
+        responses = []
+        for i in range(embeddings.size(0)):
+            query_matrix = []
+            for j in range(len(labels[i])):
+                if labels[i, j] == 1:
+                    if j != len(labels[i])-1:
+                        query_matrix.extend(memory_matrix[j*self.num_prototype:(j+1)*self.num_prototype, :])
+                    else:
+                        query_matrix.extend(memory_matrix[j * self.num_prototype:, :])
+
+            query_matrix = torch.stack(query_matrix, 0)
+            query_matrix = query_matrix.unsqueeze(0)
+
+            response = self.cmn(embeddings[i].unsqueeze(0), query_matrix, query_matrix)
+            responses.append(response.squeeze(0))
+        responses = torch.stack(responses, 0)
         embeddings = embeddings + responses
         # Memory querying and responding for textual features
 
@@ -322,7 +340,9 @@ class BaseCMN(AttModel):
             Encoder(EncoderLayer(self.d_model, c(attn), c(ff), self.dropout), self.num_layers),
             Decoder(DecoderLayer(self.d_model, c(attn), c(attn), c(ff), self.dropout), self.num_layers),
             nn.Sequential(c(position)),
-            nn.Sequential(Embeddings(self.d_model, tgt_vocab), c(position)), cmn)
+            nn.Sequential(Embeddings(self.d_model, tgt_vocab), c(position)), cmn,
+            self.num_cluster, self.num_prototype
+        )
         for p in model.parameters():
             if p.dim() > 1:
                 nn.init.xavier_uniform_(p)
@@ -370,7 +390,11 @@ class BaseCMN(AttModel):
         att_feats, seq, att_masks, seq_mask = self._prepare_feature_forward(att_feats, att_masks, labels=labels)
         memory = self.model.encode(att_feats, att_masks)
 
-        return fc_feats[..., :1], att_feats[..., :1], memory, att_masks
+        # print('111', fc_feats.shape) 12x4096
+        # print('222', att_feats.shape) # 12x98x512
+        # print('111',fc_feats[..., :1].shape) 12x1
+        #print('222', att_feats[..., :1].shape) 12x98x1
+        return fc_feats[..., :1], att_feats[..., :1], memory, att_masks, labels
 
     def _prepare_feature_forward(self, att_feats, att_masks=None, seq=None, labels=None,):
 
@@ -428,7 +452,7 @@ class BaseCMN(AttModel):
 
     def _forward(self, fc_feats, att_feats, seq, att_masks=None, labels=None):
         att_feats, seq, att_masks, seq_mask = self._prepare_feature_forward(att_feats, att_masks, seq, labels)
-        out = self.model(att_feats, seq, att_masks, seq_mask, memory_matrix=self.memory_matrix)
+        out = self.model(att_feats, seq, att_masks, seq_mask, memory_matrix=self.memory_matrix, labels = labels)
         outputs = F.log_softmax(self.logit(out), dim=-1)
         con_loss = my_con_loss(self.memory_matrix, num_classes= self.num_cluster,
                                num_protypes = self.num_prototype, margin = self.margin)
@@ -436,16 +460,21 @@ class BaseCMN(AttModel):
 
         return outputs, con_loss
 
-    def core(self, it, fc_feats_ph, att_feats_ph, memory, state, mask):
+    def core(self, it, fc_feats_ph, att_feats_ph, memory, state, mask, labels=None):
         if len(state) == 0:
             ys = it.unsqueeze(1)
+            # print('111',ys.shape) 12x1
+            #print('222',fc_feats_ph.shape) 12 x 1
+
             past = [fc_feats_ph.new_zeros(self.num_layers * 2, fc_feats_ph.shape[0], 0, self.d_model),
                     fc_feats_ph.new_zeros(self.num_layers * 2, fc_feats_ph.shape[0], 0, self.d_model)]
         else:
             ys = torch.cat([state[0][0], it.unsqueeze(1)], dim=1)
             past = state[1:]
+
         out, past = self.model.decode(memory, mask, ys, subsequent_mask(ys.size(1)).to(memory.device), past=past,
-                                      memory_matrix=self.memory_matrix)
+                                      memory_matrix=self.memory_matrix, labels = labels)
+
         return out[:, -1], [ys.unsqueeze(0)] + past
     
 def con_loss(features, labels):

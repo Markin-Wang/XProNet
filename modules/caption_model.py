@@ -67,14 +67,18 @@ class CaptionModel(nn.Module):
             if t == 0:
                 assert logprobs.shape[1] == 1
                 beam_logprobs_sum = beam_logprobs_sum[:, :1]
+            #print('111', beam_logprobs_sum.shape,logprobs.shape) #12 x 3 12 x3 x 761
             candidate_logprobs = beam_logprobs_sum.unsqueeze(-1) + logprobs  # beam_logprobs_sum Nxb logprobs is NxbxV
+            #print('222', candidate_logprobs.shape) # 12 x 3 x 761
             ys, ix = torch.sort(candidate_logprobs.reshape(candidate_logprobs.shape[0], -1), -1, True)
+            #print('111', ys.shape, ix.shape) 12x2283
             ys, ix = ys[:, :beam_size], ix[:, :beam_size]
             beam_ix = ix // vocab_size  # Nxb which beam
             selected_ix = ix % vocab_size  # Nxb # which world
             state_ix = (beam_ix + torch.arange(batch_size).type_as(beam_ix).unsqueeze(-1) * logprobs.shape[1]).reshape(
                 -1)  # N*b which in Nxb beams
-
+            #print('111',(beam_ix + torch.arange(batch_size).type_as(beam_ix).unsqueeze(-1) * logprobs.shape[1]).shape, state_ix.shape)
+            # 12x3 , 36
             if t > 0:
                 # gather according to beam_ix
                 assert (beam_seq.gather(1, beam_ix.unsqueeze(-1).expand_as(beam_seq)) ==
@@ -84,7 +88,9 @@ class CaptionModel(nn.Module):
                 beam_seq_logprobs = beam_seq_logprobs.gather(1, beam_ix.unsqueeze(-1).unsqueeze(-1).expand_as(
                     beam_seq_logprobs))
 
+
             beam_seq = torch.cat([beam_seq, selected_ix.unsqueeze(-1)], -1)  # beam_seq Nxbxl
+
             beam_logprobs_sum = beam_logprobs_sum.gather(1, beam_ix) + \
                                 logprobs.reshape(batch_size, -1).gather(1, ix)
             assert (beam_logprobs_sum == ys).all()
@@ -191,6 +197,7 @@ class CaptionModel(nn.Module):
                     # move the current group one step forward in time
 
                     it = beam_seq_table[divm][:, :, t - divm].reshape(-1)
+
                     logprobs_table[divm], state_table[divm] = self.get_logprobs_state(it.cuda(), *(
                             args[divm] + [state_table[divm]]))
                     logprobs_table[divm] = F.log_softmax(logprobs_table[divm] / temperature, dim=-1)

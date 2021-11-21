@@ -82,11 +82,11 @@ class AttModel(CaptionModel):
 
         return fc_feats, att_feats, p_att_feats, att_masks
 
-    def get_logprobs_state(self, it, fc_feats, att_feats, p_att_feats, att_masks, state, output_logsoftmax=1):
+    def get_logprobs_state(self, it, fc_feats, att_feats, p_att_feats, att_masks, labels, state,  output_logsoftmax=1):
         # 'it' contains a word index
         xt = self.embed(it)
 
-        output, state = self.core(xt, fc_feats, att_feats, p_att_feats, state, att_masks)
+        output, state = self.core(xt, fc_feats, att_feats, p_att_feats, state, att_masks, labels=labels)
         if output_logsoftmax:
             logprobs = F.log_softmax(self.logit(output), dim=1)
         else:
@@ -102,7 +102,7 @@ class AttModel(CaptionModel):
         assert sample_n == 1 or sample_n == beam_size // group_size, 'when beam search, sample_n == 1 or beam search'
         batch_size = fc_feats.size(0)
 
-        p_fc_feats, p_att_feats, pp_att_feats, p_att_masks = self._prepare_feature(fc_feats, att_feats, att_masks, labels = labels)
+        p_fc_feats, p_att_feats, pp_att_feats, p_att_masks, labels = self._prepare_feature(fc_feats, att_feats, att_masks, labels = labels)
 
         assert beam_size <= self.vocab_size + 1, 'lets assume this for now, otherwise this corner case causes a few headaches down the road. can be dealt with in future if needed'
         seq = fc_feats.new_full((batch_size * sample_n, self.max_seq_length), self.pad_idx, dtype=torch.long)
@@ -115,13 +115,14 @@ class AttModel(CaptionModel):
 
         # first step, feed bos
         it = fc_feats.new_full([batch_size], self.bos_idx, dtype=torch.long)
-        logprobs, state = self.get_logprobs_state(it, p_fc_feats, p_att_feats, pp_att_feats, p_att_masks, state)
+        logprobs, state = self.get_logprobs_state(it, p_fc_feats, p_att_feats, pp_att_feats, p_att_masks, labels, state)
 
-        p_fc_feats, p_att_feats, pp_att_feats, p_att_masks = utils.repeat_tensors(beam_size,
+        p_fc_feats, p_att_feats, pp_att_feats, p_att_masks, labels = utils.repeat_tensors(beam_size,
                                                                                   [p_fc_feats, p_att_feats,
-                                                                                   pp_att_feats, p_att_masks]
+                                                                                   pp_att_feats, p_att_masks, labels]
                                                                                   )
-        self.done_beams = self.beam_search(state, logprobs, p_fc_feats, p_att_feats, pp_att_feats, p_att_masks, opt=opt)
+        self.done_beams = self.beam_search(state, logprobs, p_fc_feats, p_att_feats, pp_att_feats, p_att_masks,
+                                           labels, opt=opt)
         for k in range(batch_size):
             if sample_n == beam_size:
                 for _n in range(sample_n):
@@ -155,12 +156,12 @@ class AttModel(CaptionModel):
         batch_size = fc_feats.size(0)
         state = self.init_hidden(batch_size * sample_n)
 
-        p_fc_feats, p_att_feats, pp_att_feats, p_att_masks = self._prepare_feature(fc_feats, att_feats, att_masks, labels=labels)
+        p_fc_feats, p_att_feats, pp_att_feats, p_att_masks, labels = self._prepare_feature(fc_feats, att_feats, att_masks, labels=labels)
 
         if sample_n > 1:
-            p_fc_feats, p_att_feats, pp_att_feats, p_att_masks = utils.repeat_tensors(sample_n,
+            p_fc_feats, p_att_feats, pp_att_feats, p_att_masks, labels = utils.repeat_tensors(sample_n,
                                                                                       [p_fc_feats, p_att_feats,
-                                                                                       pp_att_feats, p_att_masks]
+                                                                                       pp_att_feats, p_att_masks, labels]
                                                                                       )
 
         trigrams = []  # will be a list of batch_size dictionaries
@@ -171,7 +172,7 @@ class AttModel(CaptionModel):
             if t == 0:  # input <bos>
                 it = fc_feats.new_full([batch_size * sample_n], self.bos_idx, dtype=torch.long)
 
-            logprobs, state = self.get_logprobs_state(it, p_fc_feats, p_att_feats, pp_att_feats, p_att_masks, state,
+            logprobs, state = self.get_logprobs_state(it, p_fc_feats, p_att_feats, pp_att_feats, p_att_masks, labels, state,
                                                       output_logsoftmax=output_logsoftmax)
 
             if decoding_constraint and t > 0:
