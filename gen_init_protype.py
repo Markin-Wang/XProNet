@@ -27,21 +27,21 @@ def parse_agrs():
     parser = argparse.ArgumentParser()
 
     # Data input settings
-    parser.add_argument('--image_dir', type=str, default='data/iu_xray/images/',
+    parser.add_argument('--image_dir', type=str, default='data/mimic_cxr/images/',
                         help='the path to the directory containing the data.')
-    parser.add_argument('--ann_path', type=str, default='data/iu_xray/annotation.json',
+    parser.add_argument('--ann_path', type=str, default='data/mimic_cxr/annotation.json',
                         help='the path to the directory containing the data.')
-    parser.add_argument('--label_path', type=str, default='data/iu_xray/labels.pickle',
+    parser.add_argument('--label_path', type=str, default='data/mimic_cxr/labels.pickle',
                         help='the path to the label annotatoin')
 
 
     # Data loader settings
-    parser.add_argument('--dataset_name', type=str, default='iu_xray', choices=['iu_xray', 'mimic_cxr'],
+    parser.add_argument('--dataset_name', type=str, default='mimic_cxr', choices=['iu_xray', 'mimic_cxr'],
                         help='the dataset to be used.')
     parser.add_argument('--max_seq_length', type=int, default=60, help='the maximum sequence length of the reports.')
     parser.add_argument('--threshold', type=int, default=3, help='the cut off frequency for the words.')
     parser.add_argument('--num_workers', type=int, default=2, help='the number of workers for dataloader.')
-    parser.add_argument('--batch_size', type=int, default=16, help='the number of samples for a batch')
+    parser.add_argument('--batch_size', type=int, default=32, help='the number of samples for a batch')
 
     # Model settings (for visual extractor)
     parser.add_argument('--visual_extractor', type=str, default='resnet101', help='the visual extractor to be used.')
@@ -149,6 +149,8 @@ for images_id, images, reports_ids, reports_masks, labels in tqdm(train_dataload
         features_1 = model(images[:,0])
         features_2 = model(images[:,1])
         features = (features_1+features_2)/2
+    else:
+        features = model(images)
     for i,image_id in enumerate(images_id):
         label = labels[i]
         counter[label == 1] += 1
@@ -178,11 +180,13 @@ for i in range(num_classes):
     for j in range(cluster_num):
         cluster_rep = np.mean(data[label_pred == j], 0)
         initial_protypes[i*num_cluster+j, :] = torch.from_numpy(cluster_rep)
-
+    '''
     z = 0
     while cluster_num + z < num_cluster:
         initial_protypes[i * num_cluster + cluster_num + z, :] = initial_protypes[i * num_cluster + z, :]
         z += 1
+        '''
+
 
 
 print((~torch.isfinite(initial_protypes)).sum())
@@ -197,7 +201,7 @@ with open('./init_prototypes_512.pickle','wb') as myfile:
     pickle.dump(initial_protypes,myfile) 
 '''
 
-torch.save(initial_protypes, "./init_protypes_2048_duplicate_224_flip.pt")
+torch.save(initial_protypes, "./init_protypes_2048_224_noflip.pt")
         
         
         

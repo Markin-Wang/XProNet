@@ -17,9 +17,8 @@ class BaseDataset(Dataset):
         self.transform = transform
         self.ann = json.loads(open(self.ann_path, 'r').read())
         self.examples = self.ann[self.split]
-        if args.dataset_name == 'iu_xray':
-            with open(args.label_path, 'rb') as f:
-                self.labels = pickle.load(f)
+        with open(args.label_path, 'rb') as f:
+            self.labels = pickle.load(f)
 
         for i in range(len(self.examples)):
             self.examples[i]['ids'] = tokenizer(self.examples[i]['report'])[:self.max_seq_length]
@@ -57,10 +56,11 @@ class MimiccxrSingleImageDataset(BaseDataset):
         image_path = example['image_path']
         image = Image.open(os.path.join(self.image_dir, image_path[0])).convert('RGB')
         image_id = os.path.join(self.image_dir, image_path[0])
+        label = torch.LongTensor(self.labels[example['id']])
         if self.transform is not None:
             image = self.transform(image)
         report_ids = example['ids']
         report_masks = example['mask']
         seq_length = len(report_ids)
-        sample = (image_id, image, report_ids, report_masks, seq_length)
+        sample = (image_id, image, report_ids, report_masks, seq_length, label)
         return sample
