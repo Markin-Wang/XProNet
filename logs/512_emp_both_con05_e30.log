@@ -1,0 +1,667 @@
+nohup: ignoring input
+11/21/2021 09:20:29 - INFO - modules.trainer -   [1/30] Start to train in the training set.
+[W TensorIterator.cpp:918] Warning: Mixed memory format inputs detected while calling the operator. The operator will output contiguous tensor even if some of the inputs are in channels_last format. (function operator())
+11/21/2021 09:20:32 - INFO - modules.trainer -   [1/30] Step: 0/64, CE Loss: 6.82502, CON Loss: 0.34984.
+11/21/2021 09:21:32 - INFO - modules.trainer -   [1/30] Step: 50/64, CE Loss: 4.55307, CON Loss: 0.34443.
+11/21/2021 09:21:48 - INFO - modules.trainer -   [1/30] Start to evaluate in the validation set.
+11/21/2021 09:22:02 - INFO - modules.trainer -   [1/30] Start to evaluate in the test set.
+11/21/2021 09:22:24 - INFO - modules.trainer -   	epoch          : 1
+11/21/2021 09:22:24 - INFO - modules.trainer -   	ce_loss        : 4.307402763515711
+11/21/2021 09:22:24 - INFO - modules.trainer -   	con            : 0.34364602668210864
+11/21/2021 09:22:24 - INFO - modules.trainer -   	val_BLEU_1     : 0.026928755993973805
+11/21/2021 09:22:24 - INFO - modules.trainer -   	val_BLEU_2     : 0.018282037716706705
+11/21/2021 09:22:24 - INFO - modules.trainer -   	val_BLEU_3     : 0.011354341140847242
+11/21/2021 09:22:24 - INFO - modules.trainer -   	val_BLEU_4     : 0.006419285555848008
+11/21/2021 09:22:24 - INFO - modules.trainer -   	val_METEOR     : 0.07721812038966894
+11/21/2021 09:22:24 - INFO - modules.trainer -   	val_ROUGE_L    : 0.2603905232919702
+11/21/2021 09:22:24 - INFO - modules.trainer -   	test_BLEU_1    : 0.03832855995860917
+11/21/2021 09:22:24 - INFO - modules.trainer -   	test_BLEU_2    : 0.025634028651752273
+11/21/2021 09:22:24 - INFO - modules.trainer -   	test_BLEU_3    : 0.015591883389678802
+11/21/2021 09:22:24 - INFO - modules.trainer -   	test_BLEU_4    : 0.00841331938749049
+11/21/2021 09:22:24 - INFO - modules.trainer -   	test_METEOR    : 0.08241586723077286
+11/21/2021 09:22:24 - INFO - modules.trainer -   	test_ROUGE_L   : 0.26760860980637224
+11/21/2021 09:22:28 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:22:31 - INFO - modules.trainer -   Saving current best: model_best.pth ...
+11/21/2021 09:22:31 - INFO - modules.trainer -   [2/30] Start to train in the training set.
+best performance in epoch:  1
+11/21/2021 09:22:33 - INFO - modules.trainer -   [2/30] Step: 0/64, CE Loss: 2.97064, CON Loss: 0.33977.
+11/21/2021 09:23:33 - INFO - modules.trainer -   [2/30] Step: 50/64, CE Loss: 2.82232, CON Loss: 0.33711.
+11/21/2021 09:23:48 - INFO - modules.trainer -   [2/30] Start to evaluate in the validation set.
+11/21/2021 09:24:03 - INFO - modules.trainer -   [2/30] Start to evaluate in the test set.
+11/21/2021 09:24:26 - INFO - modules.trainer -   	epoch          : 2
+11/21/2021 09:24:26 - INFO - modules.trainer -   	ce_loss        : 2.7635183073580265
+11/21/2021 09:24:26 - INFO - modules.trainer -   	con            : 0.33647287357598543
+11/21/2021 09:24:26 - INFO - modules.trainer -   	val_BLEU_1     : 0.3122228487637418
+11/21/2021 09:24:26 - INFO - modules.trainer -   	val_BLEU_2     : 0.19715231256818316
+11/21/2021 09:24:26 - INFO - modules.trainer -   	val_BLEU_3     : 0.1286265215603894
+11/21/2021 09:24:26 - INFO - modules.trainer -   	val_BLEU_4     : 0.08939461863745209
+11/21/2021 09:24:26 - INFO - modules.trainer -   	val_METEOR     : 0.14822943064719976
+11/21/2021 09:24:26 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3385172829526166
+11/21/2021 09:24:26 - INFO - modules.trainer -   	test_BLEU_1    : 0.35771177665829945
+11/21/2021 09:24:26 - INFO - modules.trainer -   	test_BLEU_2    : 0.22696353812168377
+11/21/2021 09:24:26 - INFO - modules.trainer -   	test_BLEU_3    : 0.1472122416842831
+11/21/2021 09:24:26 - INFO - modules.trainer -   	test_BLEU_4    : 0.10118109450364729
+11/21/2021 09:24:26 - INFO - modules.trainer -   	test_METEOR    : 0.16287714914348064
+11/21/2021 09:24:26 - INFO - modules.trainer -   	test_ROUGE_L   : 0.35181185746167937
+11/21/2021 09:24:30 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:24:41 - INFO - modules.trainer -   Saving current best: model_best.pth ...
+11/21/2021 09:24:41 - INFO - modules.trainer -   [3/30] Start to train in the training set.
+best performance in epoch:  2
+11/21/2021 09:24:43 - INFO - modules.trainer -   [3/30] Step: 0/64, CE Loss: 2.73369, CON Loss: 0.33334.
+11/21/2021 09:25:41 - INFO - modules.trainer -   [3/30] Step: 50/64, CE Loss: 2.32404, CON Loss: 0.33111.
+11/21/2021 09:25:56 - INFO - modules.trainer -   [3/30] Start to evaluate in the validation set.
+11/21/2021 09:26:11 - INFO - modules.trainer -   [3/30] Start to evaluate in the test set.
+11/21/2021 09:26:33 - INFO - modules.trainer -   	epoch          : 3
+11/21/2021 09:26:33 - INFO - modules.trainer -   	ce_loss        : 2.2887545730918646
+11/21/2021 09:26:33 - INFO - modules.trainer -   	con            : 0.3305531400255859
+11/21/2021 09:26:33 - INFO - modules.trainer -   	val_BLEU_1     : 0.23965448741495363
+11/21/2021 09:26:33 - INFO - modules.trainer -   	val_BLEU_2     : 0.1466119038714726
+11/21/2021 09:26:33 - INFO - modules.trainer -   	val_BLEU_3     : 0.1004455076466784
+11/21/2021 09:26:33 - INFO - modules.trainer -   	val_BLEU_4     : 0.07040314112548987
+11/21/2021 09:26:33 - INFO - modules.trainer -   	val_METEOR     : 0.12232192543708331
+11/21/2021 09:26:33 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3092638464147376
+11/21/2021 09:26:33 - INFO - modules.trainer -   	test_BLEU_1    : 0.2918024325993714
+11/21/2021 09:26:33 - INFO - modules.trainer -   	test_BLEU_2    : 0.18483545249387626
+11/21/2021 09:26:33 - INFO - modules.trainer -   	test_BLEU_3    : 0.12957844105733396
+11/21/2021 09:26:33 - INFO - modules.trainer -   	test_BLEU_4    : 0.09136418370357988
+11/21/2021 09:26:33 - INFO - modules.trainer -   	test_METEOR    : 0.1419387171311232
+11/21/2021 09:26:33 - INFO - modules.trainer -   	test_ROUGE_L   : 0.34668107330720704
+11/21/2021 09:26:37 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:26:37 - INFO - modules.trainer -   [4/30] Start to train in the training set.
+best performance in epoch:  2
+11/21/2021 09:26:39 - INFO - modules.trainer -   [4/30] Step: 0/64, CE Loss: 2.12141, CON Loss: 0.32778.
+11/21/2021 09:27:38 - INFO - modules.trainer -   [4/30] Step: 50/64, CE Loss: 2.10874, CON Loss: 0.32575.
+11/21/2021 09:27:53 - INFO - modules.trainer -   [4/30] Start to evaluate in the validation set.
+11/21/2021 09:28:08 - INFO - modules.trainer -   [4/30] Start to evaluate in the test set.
+11/21/2021 09:28:29 - INFO - modules.trainer -   	epoch          : 4
+11/21/2021 09:28:29 - INFO - modules.trainer -   	ce_loss        : 2.111665053293109
+11/21/2021 09:28:29 - INFO - modules.trainer -   	con            : 0.3252285332418978
+11/21/2021 09:28:29 - INFO - modules.trainer -   	val_BLEU_1     : 0.3620229947393297
+11/21/2021 09:28:29 - INFO - modules.trainer -   	val_BLEU_2     : 0.22970746836236777
+11/21/2021 09:28:29 - INFO - modules.trainer -   	val_BLEU_3     : 0.1606293737064204
+11/21/2021 09:28:29 - INFO - modules.trainer -   	val_BLEU_4     : 0.1198106418453182
+11/21/2021 09:28:29 - INFO - modules.trainer -   	val_METEOR     : 0.15670643465440182
+11/21/2021 09:28:29 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3613225202657838
+11/21/2021 09:28:29 - INFO - modules.trainer -   	test_BLEU_1    : 0.41157201458326903
+11/21/2021 09:28:29 - INFO - modules.trainer -   	test_BLEU_2    : 0.265510795064828
+11/21/2021 09:28:29 - INFO - modules.trainer -   	test_BLEU_3    : 0.18857382614360357
+11/21/2021 09:28:29 - INFO - modules.trainer -   	test_BLEU_4    : 0.14145041188847893
+11/21/2021 09:28:29 - INFO - modules.trainer -   	test_METEOR    : 0.17527356967937854
+11/21/2021 09:28:29 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3792815329227466
+11/21/2021 09:28:34 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:28:38 - INFO - modules.trainer -   Saving current best: model_best.pth ...
+11/21/2021 09:28:38 - INFO - modules.trainer -   [5/30] Start to train in the training set.
+best performance in epoch:  4
+11/21/2021 09:28:39 - INFO - modules.trainer -   [5/30] Step: 0/64, CE Loss: 2.15802, CON Loss: 0.32267.
+11/21/2021 09:29:40 - INFO - modules.trainer -   [5/30] Step: 50/64, CE Loss: 1.95488, CON Loss: 0.32077.
+11/21/2021 09:29:55 - INFO - modules.trainer -   [5/30] Start to evaluate in the validation set.
+11/21/2021 09:30:10 - INFO - modules.trainer -   [5/30] Start to evaluate in the test set.
+11/21/2021 09:30:32 - INFO - modules.trainer -   	epoch          : 5
+11/21/2021 09:30:32 - INFO - modules.trainer -   	ce_loss        : 1.9601881243288517
+11/21/2021 09:30:32 - INFO - modules.trainer -   	con            : 0.3202872471883893
+11/21/2021 09:30:32 - INFO - modules.trainer -   	val_BLEU_1     : 0.19861211121772857
+11/21/2021 09:30:32 - INFO - modules.trainer -   	val_BLEU_2     : 0.11782473239478379
+11/21/2021 09:30:32 - INFO - modules.trainer -   	val_BLEU_3     : 0.0832395204411258
+11/21/2021 09:30:32 - INFO - modules.trainer -   	val_BLEU_4     : 0.06368390932581688
+11/21/2021 09:30:32 - INFO - modules.trainer -   	val_METEOR     : 0.1033896222379384
+11/21/2021 09:30:32 - INFO - modules.trainer -   	val_ROUGE_L    : 0.2946634932973882
+11/21/2021 09:30:32 - INFO - modules.trainer -   	test_BLEU_1    : 0.23943813103904762
+11/21/2021 09:30:32 - INFO - modules.trainer -   	test_BLEU_2    : 0.14551046289673716
+11/21/2021 09:30:32 - INFO - modules.trainer -   	test_BLEU_3    : 0.1048144721078579
+11/21/2021 09:30:32 - INFO - modules.trainer -   	test_BLEU_4    : 0.08058150755262171
+11/21/2021 09:30:32 - INFO - modules.trainer -   	test_METEOR    : 0.11910785356592242
+11/21/2021 09:30:32 - INFO - modules.trainer -   	test_ROUGE_L   : 0.31181711407264656
+11/21/2021 09:30:36 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:30:36 - INFO - modules.trainer -   [6/30] Start to train in the training set.
+best performance in epoch:  4
+11/21/2021 09:30:38 - INFO - modules.trainer -   [6/30] Step: 0/64, CE Loss: 1.94948, CON Loss: 0.31787.
+11/21/2021 09:31:37 - INFO - modules.trainer -   [6/30] Step: 50/64, CE Loss: 1.81225, CON Loss: 0.31614.
+11/21/2021 09:31:52 - INFO - modules.trainer -   [6/30] Start to evaluate in the validation set.
+11/21/2021 09:32:07 - INFO - modules.trainer -   [6/30] Start to evaluate in the test set.
+11/21/2021 09:32:28 - INFO - modules.trainer -   	epoch          : 6
+11/21/2021 09:32:28 - INFO - modules.trainer -   	ce_loss        : 1.829486109316349
+11/21/2021 09:32:28 - INFO - modules.trainer -   	con            : 0.31569703249260783
+11/21/2021 09:32:28 - INFO - modules.trainer -   	val_BLEU_1     : 0.240518278129673
+11/21/2021 09:32:28 - INFO - modules.trainer -   	val_BLEU_2     : 0.14551603664493898
+11/21/2021 09:32:28 - INFO - modules.trainer -   	val_BLEU_3     : 0.1034287769333015
+11/21/2021 09:32:28 - INFO - modules.trainer -   	val_BLEU_4     : 0.0788677911722614
+11/21/2021 09:32:28 - INFO - modules.trainer -   	val_METEOR     : 0.11582231106240205
+11/21/2021 09:32:28 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3125014894954729
+11/21/2021 09:32:28 - INFO - modules.trainer -   	test_BLEU_1    : 0.28522989945217664
+11/21/2021 09:32:28 - INFO - modules.trainer -   	test_BLEU_2    : 0.17572272271267203
+11/21/2021 09:32:28 - INFO - modules.trainer -   	test_BLEU_3    : 0.12711094151371974
+11/21/2021 09:32:28 - INFO - modules.trainer -   	test_BLEU_4    : 0.09766007896850268
+11/21/2021 09:32:28 - INFO - modules.trainer -   	test_METEOR    : 0.13201791317608744
+11/21/2021 09:32:28 - INFO - modules.trainer -   	test_ROUGE_L   : 0.32528015351111356
+11/21/2021 09:32:32 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:32:32 - INFO - modules.trainer -   [7/30] Start to train in the training set.
+best performance in epoch:  4
+11/21/2021 09:32:34 - INFO - modules.trainer -   [7/30] Step: 0/64, CE Loss: 1.72305, CON Loss: 0.31349.
+11/21/2021 09:33:33 - INFO - modules.trainer -   [7/30] Step: 50/64, CE Loss: 1.70732, CON Loss: 0.31178.
+11/21/2021 09:33:48 - INFO - modules.trainer -   [7/30] Start to evaluate in the validation set.
+11/21/2021 09:34:02 - INFO - modules.trainer -   [7/30] Start to evaluate in the test set.
+11/21/2021 09:34:23 - INFO - modules.trainer -   	epoch          : 7
+11/21/2021 09:34:23 - INFO - modules.trainer -   	ce_loss        : 1.725585637614131
+11/21/2021 09:34:23 - INFO - modules.trainer -   	con            : 0.3113394919782877
+11/21/2021 09:34:23 - INFO - modules.trainer -   	val_BLEU_1     : 0.21846254066419302
+11/21/2021 09:34:23 - INFO - modules.trainer -   	val_BLEU_2     : 0.13093684720913057
+11/21/2021 09:34:23 - INFO - modules.trainer -   	val_BLEU_3     : 0.09233656777686983
+11/21/2021 09:34:23 - INFO - modules.trainer -   	val_BLEU_4     : 0.0700483975182477
+11/21/2021 09:34:23 - INFO - modules.trainer -   	val_METEOR     : 0.10871725744642466
+11/21/2021 09:34:23 - INFO - modules.trainer -   	val_ROUGE_L    : 0.2981735683164028
+11/21/2021 09:34:23 - INFO - modules.trainer -   	test_BLEU_1    : 0.25367206612371684
+11/21/2021 09:34:23 - INFO - modules.trainer -   	test_BLEU_2    : 0.1558690274190618
+11/21/2021 09:34:23 - INFO - modules.trainer -   	test_BLEU_3    : 0.11195438494155137
+11/21/2021 09:34:23 - INFO - modules.trainer -   	test_BLEU_4    : 0.08556386212262461
+11/21/2021 09:34:23 - INFO - modules.trainer -   	test_METEOR    : 0.1226507123320777
+11/21/2021 09:34:23 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3146062650523917
+11/21/2021 09:34:28 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:34:28 - INFO - modules.trainer -   [8/30] Start to train in the training set.
+best performance in epoch:  4
+11/21/2021 09:34:30 - INFO - modules.trainer -   [8/30] Step: 0/64, CE Loss: 1.53026, CON Loss: 0.30915.
+11/21/2021 09:35:28 - INFO - modules.trainer -   [8/30] Step: 50/64, CE Loss: 1.60850, CON Loss: 0.30750.
+11/21/2021 09:35:44 - INFO - modules.trainer -   [8/30] Start to evaluate in the validation set.
+11/21/2021 09:35:58 - INFO - modules.trainer -   [8/30] Start to evaluate in the test set.
+11/21/2021 09:36:20 - INFO - modules.trainer -   	epoch          : 8
+11/21/2021 09:36:20 - INFO - modules.trainer -   	ce_loss        : 1.6216144133359194
+11/21/2021 09:36:20 - INFO - modules.trainer -   	con            : 0.3070672950707376
+11/21/2021 09:36:20 - INFO - modules.trainer -   	val_BLEU_1     : 0.1988625889127359
+11/21/2021 09:36:20 - INFO - modules.trainer -   	val_BLEU_2     : 0.1180353903908086
+11/21/2021 09:36:20 - INFO - modules.trainer -   	val_BLEU_3     : 0.0835544869652126
+11/21/2021 09:36:20 - INFO - modules.trainer -   	val_BLEU_4     : 0.06400886298630389
+11/21/2021 09:36:20 - INFO - modules.trainer -   	val_METEOR     : 0.1034722429799017
+11/21/2021 09:36:20 - INFO - modules.trainer -   	val_ROUGE_L    : 0.29474007494202537
+11/21/2021 09:36:20 - INFO - modules.trainer -   	test_BLEU_1    : 0.2414891728040812
+11/21/2021 09:36:20 - INFO - modules.trainer -   	test_BLEU_2    : 0.14657508017251872
+11/21/2021 09:36:20 - INFO - modules.trainer -   	test_BLEU_3    : 0.10545486468993152
+11/21/2021 09:36:20 - INFO - modules.trainer -   	test_BLEU_4    : 0.08101704657824713
+11/21/2021 09:36:20 - INFO - modules.trainer -   	test_METEOR    : 0.11945841070409312
+11/21/2021 09:36:20 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3121804906222145
+11/21/2021 09:36:25 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:36:25 - INFO - modules.trainer -   [9/30] Start to train in the training set.
+best performance in epoch:  4
+11/21/2021 09:36:27 - INFO - modules.trainer -   [9/30] Step: 0/64, CE Loss: 1.62147, CON Loss: 0.30492.
+11/21/2021 09:37:27 - INFO - modules.trainer -   [9/30] Step: 50/64, CE Loss: 1.52450, CON Loss: 0.30333.
+11/21/2021 09:37:42 - INFO - modules.trainer -   [9/30] Start to evaluate in the validation set.
+11/21/2021 09:37:56 - INFO - modules.trainer -   [9/30] Start to evaluate in the test set.
+11/21/2021 09:38:18 - INFO - modules.trainer -   	epoch          : 9
+11/21/2021 09:38:18 - INFO - modules.trainer -   	ce_loss        : 1.5306851342320442
+11/21/2021 09:38:18 - INFO - modules.trainer -   	con            : 0.3029153235256672
+11/21/2021 09:38:18 - INFO - modules.trainer -   	val_BLEU_1     : 0.41955444849880036
+11/21/2021 09:38:18 - INFO - modules.trainer -   	val_BLEU_2     : 0.23617767270869558
+11/21/2021 09:38:18 - INFO - modules.trainer -   	val_BLEU_3     : 0.153521976687067
+11/21/2021 09:38:18 - INFO - modules.trainer -   	val_BLEU_4     : 0.10753542551478333
+11/21/2021 09:38:18 - INFO - modules.trainer -   	val_METEOR     : 0.15668807149730382
+11/21/2021 09:38:18 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3127049107277694
+11/21/2021 09:38:18 - INFO - modules.trainer -   	test_BLEU_1    : 0.4402311669877096
+11/21/2021 09:38:18 - INFO - modules.trainer -   	test_BLEU_2    : 0.26662081495444184
+11/21/2021 09:38:18 - INFO - modules.trainer -   	test_BLEU_3    : 0.18805249894057188
+11/21/2021 09:38:18 - INFO - modules.trainer -   	test_BLEU_4    : 0.14248879823435281
+11/21/2021 09:38:18 - INFO - modules.trainer -   	test_METEOR    : 0.17884820320790287
+11/21/2021 09:38:18 - INFO - modules.trainer -   	test_ROUGE_L   : 0.34441106507881575
+11/21/2021 09:38:22 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:38:22 - INFO - modules.trainer -   [10/30] Start to train in the training set.
+best performance in epoch:  4
+11/21/2021 09:38:23 - INFO - modules.trainer -   [10/30] Step: 0/64, CE Loss: 1.48933, CON Loss: 0.30083.
+11/21/2021 09:39:22 - INFO - modules.trainer -   [10/30] Step: 50/64, CE Loss: 1.43978, CON Loss: 0.29924.
+11/21/2021 09:39:38 - INFO - modules.trainer -   [10/30] Start to evaluate in the validation set.
+11/21/2021 09:39:52 - INFO - modules.trainer -   [10/30] Start to evaluate in the test set.
+11/21/2021 09:40:15 - INFO - modules.trainer -   	epoch          : 10
+11/21/2021 09:40:15 - INFO - modules.trainer -   	ce_loss        : 1.4468753151595592
+11/21/2021 09:40:15 - INFO - modules.trainer -   	con            : 0.29882210586220026
+11/21/2021 09:40:15 - INFO - modules.trainer -   	val_BLEU_1     : 0.3498331719980803
+11/21/2021 09:40:15 - INFO - modules.trainer -   	val_BLEU_2     : 0.21013462879164027
+11/21/2021 09:40:15 - INFO - modules.trainer -   	val_BLEU_3     : 0.14183637439201333
+11/21/2021 09:40:15 - INFO - modules.trainer -   	val_BLEU_4     : 0.10198252845149199
+11/21/2021 09:40:15 - INFO - modules.trainer -   	val_METEOR     : 0.14684735282042094
+11/21/2021 09:40:15 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3190585510978268
+11/21/2021 09:40:15 - INFO - modules.trainer -   	test_BLEU_1    : 0.3838559232917565
+11/21/2021 09:40:15 - INFO - modules.trainer -   	test_BLEU_2    : 0.23066542336078288
+11/21/2021 09:40:15 - INFO - modules.trainer -   	test_BLEU_3    : 0.15091917977028568
+11/21/2021 09:40:15 - INFO - modules.trainer -   	test_BLEU_4    : 0.10337116889184661
+11/21/2021 09:40:15 - INFO - modules.trainer -   	test_METEOR    : 0.15795444808562548
+11/21/2021 09:40:15 - INFO - modules.trainer -   	test_ROUGE_L   : 0.33777694403916825
+11/21/2021 09:40:19 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:40:19 - INFO - modules.trainer -   [11/30] Start to train in the training set.
+best performance in epoch:  4
+11/21/2021 09:40:21 - INFO - modules.trainer -   [11/30] Step: 0/64, CE Loss: 1.34339, CON Loss: 0.29675.
+11/21/2021 09:41:19 - INFO - modules.trainer -   [11/30] Step: 50/64, CE Loss: 1.31033, CON Loss: 0.29548.
+11/21/2021 09:41:35 - INFO - modules.trainer -   [11/30] Start to evaluate in the validation set.
+11/21/2021 09:41:50 - INFO - modules.trainer -   [11/30] Start to evaluate in the test set.
+11/21/2021 09:42:11 - INFO - modules.trainer -   	epoch          : 11
+11/21/2021 09:42:11 - INFO - modules.trainer -   	ce_loss        : 1.317480648867786
+11/21/2021 09:42:11 - INFO - modules.trainer -   	con            : 0.2951564616523683
+11/21/2021 09:42:11 - INFO - modules.trainer -   	val_BLEU_1     : 0.2130339886127658
+11/21/2021 09:42:11 - INFO - modules.trainer -   	val_BLEU_2     : 0.1267788379793236
+11/21/2021 09:42:11 - INFO - modules.trainer -   	val_BLEU_3     : 0.08921885577993319
+11/21/2021 09:42:11 - INFO - modules.trainer -   	val_BLEU_4     : 0.06787001600770788
+11/21/2021 09:42:11 - INFO - modules.trainer -   	val_METEOR     : 0.1055314508513165
+11/21/2021 09:42:11 - INFO - modules.trainer -   	val_ROUGE_L    : 0.2948824484500023
+11/21/2021 09:42:11 - INFO - modules.trainer -   	test_BLEU_1    : 0.24902257956711238
+11/21/2021 09:42:11 - INFO - modules.trainer -   	test_BLEU_2    : 0.15134599128064516
+11/21/2021 09:42:11 - INFO - modules.trainer -   	test_BLEU_3    : 0.10891170510498102
+11/21/2021 09:42:11 - INFO - modules.trainer -   	test_BLEU_4    : 0.08357316245985426
+11/21/2021 09:42:11 - INFO - modules.trainer -   	test_METEOR    : 0.12091245130366385
+11/21/2021 09:42:11 - INFO - modules.trainer -   	test_ROUGE_L   : 0.31370093785486414
+11/21/2021 09:42:14 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:42:14 - INFO - modules.trainer -   [12/30] Start to train in the training set.
+best performance in epoch:  4
+11/21/2021 09:42:16 - INFO - modules.trainer -   [12/30] Step: 0/64, CE Loss: 1.01493, CON Loss: 0.29353.
+11/21/2021 09:43:16 - INFO - modules.trainer -   [12/30] Step: 50/64, CE Loss: 1.20740, CON Loss: 0.29226.
+11/21/2021 09:43:32 - INFO - modules.trainer -   [12/30] Start to evaluate in the validation set.
+11/21/2021 09:43:46 - INFO - modules.trainer -   [12/30] Start to evaluate in the test set.
+11/21/2021 09:44:08 - INFO - modules.trainer -   	epoch          : 12
+11/21/2021 09:44:08 - INFO - modules.trainer -   	ce_loss        : 1.2184326220303774
+11/21/2021 09:44:08 - INFO - modules.trainer -   	con            : 0.2919332003220916
+11/21/2021 09:44:08 - INFO - modules.trainer -   	val_BLEU_1     : 0.3286720606629005
+11/21/2021 09:44:08 - INFO - modules.trainer -   	val_BLEU_2     : 0.2245879350243382
+11/21/2021 09:44:08 - INFO - modules.trainer -   	val_BLEU_3     : 0.16254014754769952
+11/21/2021 09:44:08 - INFO - modules.trainer -   	val_BLEU_4     : 0.12151115582227126
+11/21/2021 09:44:08 - INFO - modules.trainer -   	val_METEOR     : 0.15392985063472822
+11/21/2021 09:44:08 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3391096077417151
+11/21/2021 09:44:08 - INFO - modules.trainer -   	test_BLEU_1    : 0.3703121472577964
+11/21/2021 09:44:08 - INFO - modules.trainer -   	test_BLEU_2    : 0.25766824258722476
+11/21/2021 09:44:08 - INFO - modules.trainer -   	test_BLEU_3    : 0.18850051811596238
+11/21/2021 09:44:08 - INFO - modules.trainer -   	test_BLEU_4    : 0.1400551101752337
+11/21/2021 09:44:08 - INFO - modules.trainer -   	test_METEOR    : 0.17001524414106545
+11/21/2021 09:44:08 - INFO - modules.trainer -   	test_ROUGE_L   : 0.36005510897828086
+11/21/2021 09:44:11 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:44:15 - INFO - modules.trainer -   Saving current best: model_best.pth ...
+11/21/2021 09:44:15 - INFO - modules.trainer -   [13/30] Start to train in the training set.
+best performance in epoch:  12
+11/21/2021 09:44:17 - INFO - modules.trainer -   [13/30] Step: 0/64, CE Loss: 0.96478, CON Loss: 0.29029.
+11/21/2021 09:45:17 - INFO - modules.trainer -   [13/30] Step: 50/64, CE Loss: 1.13105, CON Loss: 0.28902.
+11/21/2021 09:45:32 - INFO - modules.trainer -   [13/30] Start to evaluate in the validation set.
+11/21/2021 09:45:47 - INFO - modules.trainer -   [13/30] Start to evaluate in the test set.
+11/21/2021 09:46:09 - INFO - modules.trainer -   	epoch          : 13
+11/21/2021 09:46:09 - INFO - modules.trainer -   	ce_loss        : 1.146153257228434
+11/21/2021 09:46:09 - INFO - modules.trainer -   	con            : 0.2886842810548842
+11/21/2021 09:46:09 - INFO - modules.trainer -   	val_BLEU_1     : 0.2394673449086653
+11/21/2021 09:46:09 - INFO - modules.trainer -   	val_BLEU_2     : 0.14391737645986624
+11/21/2021 09:46:09 - INFO - modules.trainer -   	val_BLEU_3     : 0.1009273487200616
+11/21/2021 09:46:09 - INFO - modules.trainer -   	val_BLEU_4     : 0.0766280555088628
+11/21/2021 09:46:09 - INFO - modules.trainer -   	val_METEOR     : 0.11253193108210872
+11/21/2021 09:46:09 - INFO - modules.trainer -   	val_ROUGE_L    : 0.2993415782506645
+11/21/2021 09:46:09 - INFO - modules.trainer -   	test_BLEU_1    : 0.27658483836668046
+11/21/2021 09:46:09 - INFO - modules.trainer -   	test_BLEU_2    : 0.1677565918843539
+11/21/2021 09:46:09 - INFO - modules.trainer -   	test_BLEU_3    : 0.11940176069236987
+11/21/2021 09:46:09 - INFO - modules.trainer -   	test_BLEU_4    : 0.09047186699366339
+11/21/2021 09:46:09 - INFO - modules.trainer -   	test_METEOR    : 0.12725148625925511
+11/21/2021 09:46:09 - INFO - modules.trainer -   	test_ROUGE_L   : 0.31546728969707977
+11/21/2021 09:46:13 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:46:13 - INFO - modules.trainer -   [14/30] Start to train in the training set.
+best performance in epoch:  12
+11/21/2021 09:46:14 - INFO - modules.trainer -   [14/30] Step: 0/64, CE Loss: 1.05516, CON Loss: 0.28703.
+11/21/2021 09:47:13 - INFO - modules.trainer -   [14/30] Step: 50/64, CE Loss: 1.06852, CON Loss: 0.28575.
+11/21/2021 09:47:28 - INFO - modules.trainer -   [14/30] Start to evaluate in the validation set.
+11/21/2021 09:47:42 - INFO - modules.trainer -   [14/30] Start to evaluate in the test set.
+11/21/2021 09:48:05 - INFO - modules.trainer -   	epoch          : 14
+11/21/2021 09:48:05 - INFO - modules.trainer -   	ce_loss        : 1.081491689197719
+11/21/2021 09:48:05 - INFO - modules.trainer -   	con            : 0.2854127064347267
+11/21/2021 09:48:05 - INFO - modules.trainer -   	val_BLEU_1     : 0.30003162645815995
+11/21/2021 09:48:05 - INFO - modules.trainer -   	val_BLEU_2     : 0.17967160374339183
+11/21/2021 09:48:05 - INFO - modules.trainer -   	val_BLEU_3     : 0.12411096719593248
+11/21/2021 09:48:05 - INFO - modules.trainer -   	val_BLEU_4     : 0.09233830022141662
+11/21/2021 09:48:05 - INFO - modules.trainer -   	val_METEOR     : 0.12418537321903207
+11/21/2021 09:48:05 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3031264557667181
+11/21/2021 09:48:05 - INFO - modules.trainer -   	test_BLEU_1    : 0.3288227999148037
+11/21/2021 09:48:05 - INFO - modules.trainer -   	test_BLEU_2    : 0.20112998205565447
+11/21/2021 09:48:05 - INFO - modules.trainer -   	test_BLEU_3    : 0.14272774781372294
+11/21/2021 09:48:05 - INFO - modules.trainer -   	test_BLEU_4    : 0.10763231052947543
+11/21/2021 09:48:05 - INFO - modules.trainer -   	test_METEOR    : 0.13817182299895686
+11/21/2021 09:48:05 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3204401313024184
+11/21/2021 09:48:08 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:48:08 - INFO - modules.trainer -   [15/30] Start to train in the training set.
+best performance in epoch:  12
+11/21/2021 09:48:10 - INFO - modules.trainer -   [15/30] Step: 0/64, CE Loss: 0.96685, CON Loss: 0.28373.
+11/21/2021 09:49:08 - INFO - modules.trainer -   [15/30] Step: 50/64, CE Loss: 0.99048, CON Loss: 0.28242.
+11/21/2021 09:49:23 - INFO - modules.trainer -   [15/30] Start to evaluate in the validation set.
+11/21/2021 09:49:37 - INFO - modules.trainer -   [15/30] Start to evaluate in the test set.
+11/21/2021 09:49:59 - INFO - modules.trainer -   	epoch          : 15
+11/21/2021 09:49:59 - INFO - modules.trainer -   	ce_loss        : 1.0091641657054424
+11/21/2021 09:49:59 - INFO - modules.trainer -   	con            : 0.2820746065117419
+11/21/2021 09:49:59 - INFO - modules.trainer -   	val_BLEU_1     : 0.268631570966873
+11/21/2021 09:49:59 - INFO - modules.trainer -   	val_BLEU_2     : 0.1619478403758382
+11/21/2021 09:49:59 - INFO - modules.trainer -   	val_BLEU_3     : 0.11272802265953145
+11/21/2021 09:49:59 - INFO - modules.trainer -   	val_BLEU_4     : 0.08422817599469112
+11/21/2021 09:49:59 - INFO - modules.trainer -   	val_METEOR     : 0.11901424000321907
+11/21/2021 09:49:59 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3041234785718596
+11/21/2021 09:49:59 - INFO - modules.trainer -   	test_BLEU_1    : 0.30398246405262735
+11/21/2021 09:49:59 - INFO - modules.trainer -   	test_BLEU_2    : 0.18822777956420061
+11/21/2021 09:49:59 - INFO - modules.trainer -   	test_BLEU_3    : 0.13429582772440632
+11/21/2021 09:49:59 - INFO - modules.trainer -   	test_BLEU_4    : 0.10165535999216725
+11/21/2021 09:49:59 - INFO - modules.trainer -   	test_METEOR    : 0.13405883131366433
+11/21/2021 09:49:59 - INFO - modules.trainer -   	test_ROUGE_L   : 0.32203064465851466
+11/21/2021 09:50:02 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:50:02 - INFO - modules.trainer -   [16/30] Start to train in the training set.
+best performance in epoch:  12
+11/21/2021 09:50:04 - INFO - modules.trainer -   [16/30] Step: 0/64, CE Loss: 0.83862, CON Loss: 0.28035.
+11/21/2021 09:51:04 - INFO - modules.trainer -   [16/30] Step: 50/64, CE Loss: 0.94927, CON Loss: 0.27903.
+11/21/2021 09:51:19 - INFO - modules.trainer -   [16/30] Start to evaluate in the validation set.
+11/21/2021 09:51:33 - INFO - modules.trainer -   [16/30] Start to evaluate in the test set.
+11/21/2021 09:51:56 - INFO - modules.trainer -   	epoch          : 16
+11/21/2021 09:51:56 - INFO - modules.trainer -   	ce_loss        : 0.953344632871449
+11/21/2021 09:51:56 - INFO - modules.trainer -   	con            : 0.278686311095953
+11/21/2021 09:51:56 - INFO - modules.trainer -   	val_BLEU_1     : 0.29107189745384593
+11/21/2021 09:51:56 - INFO - modules.trainer -   	val_BLEU_2     : 0.17497049101557935
+11/21/2021 09:51:56 - INFO - modules.trainer -   	val_BLEU_3     : 0.11976535937214772
+11/21/2021 09:51:56 - INFO - modules.trainer -   	val_BLEU_4     : 0.08758583965256551
+11/21/2021 09:51:56 - INFO - modules.trainer -   	val_METEOR     : 0.12564481934129848
+11/21/2021 09:51:56 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3035490712989747
+11/21/2021 09:51:56 - INFO - modules.trainer -   	test_BLEU_1    : 0.3291946826614209
+11/21/2021 09:51:56 - INFO - modules.trainer -   	test_BLEU_2    : 0.202412481256522
+11/21/2021 09:51:56 - INFO - modules.trainer -   	test_BLEU_3    : 0.1430054191283486
+11/21/2021 09:51:56 - INFO - modules.trainer -   	test_BLEU_4    : 0.10621759068660316
+11/21/2021 09:51:56 - INFO - modules.trainer -   	test_METEOR    : 0.1385369171463006
+11/21/2021 09:51:56 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3210300857645034
+11/21/2021 09:51:59 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:51:59 - INFO - modules.trainer -   [17/30] Start to train in the training set.
+best performance in epoch:  12
+11/21/2021 09:52:01 - INFO - modules.trainer -   [17/30] Step: 0/64, CE Loss: 0.87317, CON Loss: 0.27696.
+11/21/2021 09:52:59 - INFO - modules.trainer -   [17/30] Step: 50/64, CE Loss: 0.88053, CON Loss: 0.27562.
+11/21/2021 09:53:14 - INFO - modules.trainer -   [17/30] Start to evaluate in the validation set.
+11/21/2021 09:53:29 - INFO - modules.trainer -   [17/30] Start to evaluate in the test set.
+11/21/2021 09:53:50 - INFO - modules.trainer -   	epoch          : 17
+11/21/2021 09:53:50 - INFO - modules.trainer -   	ce_loss        : 0.8962071286514401
+11/21/2021 09:53:50 - INFO - modules.trainer -   	con            : 0.2752650994807482
+11/21/2021 09:53:50 - INFO - modules.trainer -   	val_BLEU_1     : 0.28998744325172926
+11/21/2021 09:53:50 - INFO - modules.trainer -   	val_BLEU_2     : 0.1601252568716111
+11/21/2021 09:53:50 - INFO - modules.trainer -   	val_BLEU_3     : 0.10174342685776712
+11/21/2021 09:53:50 - INFO - modules.trainer -   	val_BLEU_4     : 0.06995439786147578
+11/21/2021 09:53:50 - INFO - modules.trainer -   	val_METEOR     : 0.12625645459938284
+11/21/2021 09:53:50 - INFO - modules.trainer -   	val_ROUGE_L    : 0.30237500526665734
+11/21/2021 09:53:50 - INFO - modules.trainer -   	test_BLEU_1    : 0.33354714337269215
+11/21/2021 09:53:50 - INFO - modules.trainer -   	test_BLEU_2    : 0.19167246441788338
+11/21/2021 09:53:50 - INFO - modules.trainer -   	test_BLEU_3    : 0.1254888598120336
+11/21/2021 09:53:50 - INFO - modules.trainer -   	test_BLEU_4    : 0.08906351564638004
+11/21/2021 09:53:50 - INFO - modules.trainer -   	test_METEOR    : 0.14229658822959826
+11/21/2021 09:53:50 - INFO - modules.trainer -   	test_ROUGE_L   : 0.32594640993858065
+11/21/2021 09:53:54 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:53:54 - INFO - modules.trainer -   [18/30] Start to train in the training set.
+best performance in epoch:  12
+11/21/2021 09:53:56 - INFO - modules.trainer -   [18/30] Step: 0/64, CE Loss: 0.76468, CON Loss: 0.27346.
+11/21/2021 09:54:55 - INFO - modules.trainer -   [18/30] Step: 50/64, CE Loss: 0.84878, CON Loss: 0.27203.
+11/21/2021 09:55:11 - INFO - modules.trainer -   [18/30] Start to evaluate in the validation set.
+11/21/2021 09:55:25 - INFO - modules.trainer -   [18/30] Start to evaluate in the test set.
+11/21/2021 09:55:47 - INFO - modules.trainer -   	epoch          : 18
+11/21/2021 09:55:47 - INFO - modules.trainer -   	ce_loss        : 0.8500381158664823
+11/21/2021 09:55:47 - INFO - modules.trainer -   	con            : 0.2716521150432527
+11/21/2021 09:55:47 - INFO - modules.trainer -   	val_BLEU_1     : 0.2992280823503036
+11/21/2021 09:55:47 - INFO - modules.trainer -   	val_BLEU_2     : 0.1805034485791535
+11/21/2021 09:55:47 - INFO - modules.trainer -   	val_BLEU_3     : 0.12491572245389719
+11/21/2021 09:55:47 - INFO - modules.trainer -   	val_BLEU_4     : 0.09207414053661835
+11/21/2021 09:55:47 - INFO - modules.trainer -   	val_METEOR     : 0.12479488978624804
+11/21/2021 09:55:47 - INFO - modules.trainer -   	val_ROUGE_L    : 0.29820002049313626
+11/21/2021 09:55:47 - INFO - modules.trainer -   	test_BLEU_1    : 0.33156642182086016
+11/21/2021 09:55:47 - INFO - modules.trainer -   	test_BLEU_2    : 0.2052857958819767
+11/21/2021 09:55:47 - INFO - modules.trainer -   	test_BLEU_3    : 0.144817697561439
+11/21/2021 09:55:47 - INFO - modules.trainer -   	test_BLEU_4    : 0.1078804430398134
+11/21/2021 09:55:47 - INFO - modules.trainer -   	test_METEOR    : 0.14052504373115357
+11/21/2021 09:55:47 - INFO - modules.trainer -   	test_ROUGE_L   : 0.31975427150046576
+11/21/2021 09:55:50 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:55:50 - INFO - modules.trainer -   [19/30] Start to train in the training set.
+best performance in epoch:  12
+11/21/2021 09:55:53 - INFO - modules.trainer -   [19/30] Step: 0/64, CE Loss: 0.71885, CON Loss: 0.26977.
+11/21/2021 09:56:52 - INFO - modules.trainer -   [19/30] Step: 50/64, CE Loss: 0.79001, CON Loss: 0.26832.
+11/21/2021 09:57:07 - INFO - modules.trainer -   [19/30] Start to evaluate in the validation set.
+11/21/2021 09:57:22 - INFO - modules.trainer -   [19/30] Start to evaluate in the test set.
+11/21/2021 09:57:44 - INFO - modules.trainer -   	epoch          : 19
+11/21/2021 09:57:44 - INFO - modules.trainer -   	ce_loss        : 0.8048777859658003
+11/21/2021 09:57:44 - INFO - modules.trainer -   	con            : 0.26793973753228784
+11/21/2021 09:57:44 - INFO - modules.trainer -   	val_BLEU_1     : 0.299640235040974
+11/21/2021 09:57:44 - INFO - modules.trainer -   	val_BLEU_2     : 0.1841626850765961
+11/21/2021 09:57:44 - INFO - modules.trainer -   	val_BLEU_3     : 0.12831892275447407
+11/21/2021 09:57:44 - INFO - modules.trainer -   	val_BLEU_4     : 0.09528589858049623
+11/21/2021 09:57:44 - INFO - modules.trainer -   	val_METEOR     : 0.13096496495555587
+11/21/2021 09:57:44 - INFO - modules.trainer -   	val_ROUGE_L    : 0.30876597142865614
+11/21/2021 09:57:44 - INFO - modules.trainer -   	test_BLEU_1    : 0.3283238932893041
+11/21/2021 09:57:44 - INFO - modules.trainer -   	test_BLEU_2    : 0.20098153597157795
+11/21/2021 09:57:44 - INFO - modules.trainer -   	test_BLEU_3    : 0.14056282438511195
+11/21/2021 09:57:44 - INFO - modules.trainer -   	test_BLEU_4    : 0.1043094947896224
+11/21/2021 09:57:44 - INFO - modules.trainer -   	test_METEOR    : 0.14056925304236703
+11/21/2021 09:57:44 - INFO - modules.trainer -   	test_ROUGE_L   : 0.31914878529136037
+11/21/2021 09:57:47 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:57:47 - INFO - modules.trainer -   [20/30] Start to train in the training set.
+best performance in epoch:  12
+11/21/2021 09:57:49 - INFO - modules.trainer -   [20/30] Step: 0/64, CE Loss: 0.61766, CON Loss: 0.26603.
+11/21/2021 09:58:48 - INFO - modules.trainer -   [20/30] Step: 50/64, CE Loss: 0.75293, CON Loss: 0.26456.
+11/21/2021 09:59:03 - INFO - modules.trainer -   [20/30] Start to evaluate in the validation set.
+11/21/2021 09:59:18 - INFO - modules.trainer -   [20/30] Start to evaluate in the test set.
+11/21/2021 09:59:40 - INFO - modules.trainer -   	epoch          : 20
+11/21/2021 09:59:40 - INFO - modules.trainer -   	ce_loss        : 0.7621329985558987
+11/21/2021 09:59:40 - INFO - modules.trainer -   	con            : 0.26416533160954714
+11/21/2021 09:59:40 - INFO - modules.trainer -   	val_BLEU_1     : 0.41751624270450566
+11/21/2021 09:59:40 - INFO - modules.trainer -   	val_BLEU_2     : 0.23407743292438055
+11/21/2021 09:59:40 - INFO - modules.trainer -   	val_BLEU_3     : 0.1524601692788597
+11/21/2021 09:59:40 - INFO - modules.trainer -   	val_BLEU_4     : 0.10699347611901326
+11/21/2021 09:59:40 - INFO - modules.trainer -   	val_METEOR     : 0.15597554588813786
+11/21/2021 09:59:40 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3139519990900585
+11/21/2021 09:59:40 - INFO - modules.trainer -   	test_BLEU_1    : 0.4402480557108504
+11/21/2021 09:59:40 - INFO - modules.trainer -   	test_BLEU_2    : 0.2657834848083377
+11/21/2021 09:59:40 - INFO - modules.trainer -   	test_BLEU_3    : 0.1875847161273972
+11/21/2021 09:59:40 - INFO - modules.trainer -   	test_BLEU_4    : 0.1419750510485599
+11/21/2021 09:59:40 - INFO - modules.trainer -   	test_METEOR    : 0.17815949707873857
+11/21/2021 09:59:40 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3453546782173707
+11/21/2021 09:59:44 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 09:59:44 - INFO - modules.trainer -   [21/30] Start to train in the training set.
+best performance in epoch:  12
+11/21/2021 09:59:46 - INFO - modules.trainer -   [21/30] Step: 0/64, CE Loss: 0.67747, CON Loss: 0.26219.
+11/21/2021 10:00:45 - INFO - modules.trainer -   [21/30] Step: 50/64, CE Loss: 0.67229, CON Loss: 0.26094.
+11/21/2021 10:01:01 - INFO - modules.trainer -   [21/30] Start to evaluate in the validation set.
+11/21/2021 10:01:16 - INFO - modules.trainer -   [21/30] Start to evaluate in the test set.
+11/21/2021 10:01:38 - INFO - modules.trainer -   	epoch          : 21
+11/21/2021 10:01:38 - INFO - modules.trainer -   	ce_loss        : 0.6797033650800586
+11/21/2021 10:01:38 - INFO - modules.trainer -   	con            : 0.26061564730480313
+11/21/2021 10:01:38 - INFO - modules.trainer -   	val_BLEU_1     : 0.2554495970843177
+11/21/2021 10:01:38 - INFO - modules.trainer -   	val_BLEU_2     : 0.15318546287488627
+11/21/2021 10:01:38 - INFO - modules.trainer -   	val_BLEU_3     : 0.10596502188869038
+11/21/2021 10:01:38 - INFO - modules.trainer -   	val_BLEU_4     : 0.07850619392026414
+11/21/2021 10:01:38 - INFO - modules.trainer -   	val_METEOR     : 0.1155370848774929
+11/21/2021 10:01:38 - INFO - modules.trainer -   	val_ROUGE_L    : 0.29944117715945834
+11/21/2021 10:01:38 - INFO - modules.trainer -   	test_BLEU_1    : 0.2914322822219101
+11/21/2021 10:01:38 - INFO - modules.trainer -   	test_BLEU_2    : 0.17997143839855467
+11/21/2021 10:01:38 - INFO - modules.trainer -   	test_BLEU_3    : 0.1292409593438906
+11/21/2021 10:01:38 - INFO - modules.trainer -   	test_BLEU_4    : 0.0979610435566616
+11/21/2021 10:01:38 - INFO - modules.trainer -   	test_METEOR    : 0.1304290672835224
+11/21/2021 10:01:38 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3189856741430573
+11/21/2021 10:01:42 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 10:01:42 - INFO - modules.trainer -   [22/30] Start to train in the training set.
+best performance in epoch:  12
+11/21/2021 10:01:43 - INFO - modules.trainer -   [22/30] Step: 0/64, CE Loss: 0.57925, CON Loss: 0.25900.
+11/21/2021 10:02:43 - INFO - modules.trainer -   [22/30] Step: 50/64, CE Loss: 0.62749, CON Loss: 0.25772.
+11/21/2021 10:02:59 - INFO - modules.trainer -   [22/30] Start to evaluate in the validation set.
+11/21/2021 10:03:14 - INFO - modules.trainer -   [22/30] Start to evaluate in the test set.
+11/21/2021 10:03:36 - INFO - modules.trainer -   	epoch          : 22
+11/21/2021 10:03:36 - INFO - modules.trainer -   	ce_loss        : 0.6328564248979092
+11/21/2021 10:03:36 - INFO - modules.trainer -   	con            : 0.2573813581839204
+11/21/2021 10:03:36 - INFO - modules.trainer -   	val_BLEU_1     : 0.42026943423832885
+11/21/2021 10:03:36 - INFO - modules.trainer -   	val_BLEU_2     : 0.2639442057550247
+11/21/2021 10:03:36 - INFO - modules.trainer -   	val_BLEU_3     : 0.17973640218876263
+11/21/2021 10:03:36 - INFO - modules.trainer -   	val_BLEU_4     : 0.1288185626904656
+11/21/2021 10:03:36 - INFO - modules.trainer -   	val_METEOR     : 0.17796967809811212
+11/21/2021 10:03:36 - INFO - modules.trainer -   	val_ROUGE_L    : 0.34821743525168974
+11/21/2021 10:03:36 - INFO - modules.trainer -   	test_BLEU_1    : 0.45553256819279125
+11/21/2021 10:03:36 - INFO - modules.trainer -   	test_BLEU_2    : 0.285982195970764
+11/21/2021 10:03:36 - INFO - modules.trainer -   	test_BLEU_3    : 0.1965316917315496
+11/21/2021 10:03:36 - INFO - modules.trainer -   	test_BLEU_4    : 0.1418634019191827
+11/21/2021 10:03:36 - INFO - modules.trainer -   	test_METEOR    : 0.19286671897579805
+11/21/2021 10:03:36 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3635531554830857
+11/21/2021 10:03:40 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 10:03:45 - INFO - modules.trainer -   Saving current best: model_best.pth ...
+11/21/2021 10:03:45 - INFO - modules.trainer -   [23/30] Start to train in the training set.
+best performance in epoch:  22
+11/21/2021 10:03:47 - INFO - modules.trainer -   [23/30] Step: 0/64, CE Loss: 0.53197, CON Loss: 0.25570.
+11/21/2021 10:04:46 - INFO - modules.trainer -   [23/30] Step: 50/64, CE Loss: 0.58844, CON Loss: 0.25440.
+11/21/2021 10:05:02 - INFO - modules.trainer -   [23/30] Start to evaluate in the validation set.
+11/21/2021 10:05:16 - INFO - modules.trainer -   [23/30] Start to evaluate in the test set.
+11/21/2021 10:05:38 - INFO - modules.trainer -   	epoch          : 23
+11/21/2021 10:05:38 - INFO - modules.trainer -   	ce_loss        : 0.5989678911864758
+11/21/2021 10:05:38 - INFO - modules.trainer -   	con            : 0.2540572606958449
+11/21/2021 10:05:38 - INFO - modules.trainer -   	val_BLEU_1     : 0.25415204609434244
+11/21/2021 10:05:38 - INFO - modules.trainer -   	val_BLEU_2     : 0.1547412729292769
+11/21/2021 10:05:38 - INFO - modules.trainer -   	val_BLEU_3     : 0.10937617878644933
+11/21/2021 10:05:38 - INFO - modules.trainer -   	val_BLEU_4     : 0.08320978835079687
+11/21/2021 10:05:38 - INFO - modules.trainer -   	val_METEOR     : 0.11982385056545322
+11/21/2021 10:05:38 - INFO - modules.trainer -   	val_ROUGE_L    : 0.30353695011799403
+11/21/2021 10:05:38 - INFO - modules.trainer -   	test_BLEU_1    : 0.2825141345521876
+11/21/2021 10:05:38 - INFO - modules.trainer -   	test_BLEU_2    : 0.17494649406432541
+11/21/2021 10:05:38 - INFO - modules.trainer -   	test_BLEU_3    : 0.12482248837571062
+11/21/2021 10:05:38 - INFO - modules.trainer -   	test_BLEU_4    : 0.09445565632975167
+11/21/2021 10:05:38 - INFO - modules.trainer -   	test_METEOR    : 0.13196110216395088
+11/21/2021 10:05:38 - INFO - modules.trainer -   	test_ROUGE_L   : 0.31763067374737014
+11/21/2021 10:05:42 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 10:05:42 - INFO - modules.trainer -   [24/30] Start to train in the training set.
+best performance in epoch:  22
+11/21/2021 10:05:44 - INFO - modules.trainer -   [24/30] Step: 0/64, CE Loss: 0.54151, CON Loss: 0.25236.
+11/21/2021 10:06:43 - INFO - modules.trainer -   [24/30] Step: 50/64, CE Loss: 0.56404, CON Loss: 0.25100.
+11/21/2021 10:06:58 - INFO - modules.trainer -   [24/30] Start to evaluate in the validation set.
+11/21/2021 10:07:13 - INFO - modules.trainer -   [24/30] Start to evaluate in the test set.
+11/21/2021 10:07:34 - INFO - modules.trainer -   	epoch          : 24
+11/21/2021 10:07:34 - INFO - modules.trainer -   	ce_loss        : 0.575152700766921
+11/21/2021 10:07:34 - INFO - modules.trainer -   	con            : 0.2506494610570371
+11/21/2021 10:07:34 - INFO - modules.trainer -   	val_BLEU_1     : 0.3451946573870344
+11/21/2021 10:07:34 - INFO - modules.trainer -   	val_BLEU_2     : 0.20070530301849368
+11/21/2021 10:07:34 - INFO - modules.trainer -   	val_BLEU_3     : 0.12580532617983536
+11/21/2021 10:07:34 - INFO - modules.trainer -   	val_BLEU_4     : 0.08251281713197203
+11/21/2021 10:07:34 - INFO - modules.trainer -   	val_METEOR     : 0.13935649235952344
+11/21/2021 10:07:34 - INFO - modules.trainer -   	val_ROUGE_L    : 0.29379880163130373
+11/21/2021 10:07:34 - INFO - modules.trainer -   	test_BLEU_1    : 0.3631054031128404
+11/21/2021 10:07:34 - INFO - modules.trainer -   	test_BLEU_2    : 0.20924376819273535
+11/21/2021 10:07:34 - INFO - modules.trainer -   	test_BLEU_3    : 0.13314837421048467
+11/21/2021 10:07:34 - INFO - modules.trainer -   	test_BLEU_4    : 0.08980392755403685
+11/21/2021 10:07:34 - INFO - modules.trainer -   	test_METEOR    : 0.1433699982509733
+11/21/2021 10:07:34 - INFO - modules.trainer -   	test_ROUGE_L   : 0.2997840652095391
+11/21/2021 10:07:39 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 10:07:39 - INFO - modules.trainer -   [25/30] Start to train in the training set.
+best performance in epoch:  22
+11/21/2021 10:07:41 - INFO - modules.trainer -   [25/30] Step: 0/64, CE Loss: 0.52289, CON Loss: 0.24888.
+11/21/2021 10:08:40 - INFO - modules.trainer -   [25/30] Step: 50/64, CE Loss: 0.54983, CON Loss: 0.24748.
+11/21/2021 10:08:56 - INFO - modules.trainer -   [25/30] Start to evaluate in the validation set.
+11/21/2021 10:09:10 - INFO - modules.trainer -   [25/30] Start to evaluate in the test set.
+11/21/2021 10:09:31 - INFO - modules.trainer -   	epoch          : 25
+11/21/2021 10:09:31 - INFO - modules.trainer -   	ce_loss        : 0.5557185024954379
+11/21/2021 10:09:31 - INFO - modules.trainer -   	con            : 0.2471108373720199
+11/21/2021 10:09:31 - INFO - modules.trainer -   	val_BLEU_1     : 0.2842645625560261
+11/21/2021 10:09:31 - INFO - modules.trainer -   	val_BLEU_2     : 0.16828914033029804
+11/21/2021 10:09:31 - INFO - modules.trainer -   	val_BLEU_3     : 0.1174892614536944
+11/21/2021 10:09:31 - INFO - modules.trainer -   	val_BLEU_4     : 0.08906629848917964
+11/21/2021 10:09:31 - INFO - modules.trainer -   	val_METEOR     : 0.1246481708493713
+11/21/2021 10:09:31 - INFO - modules.trainer -   	val_ROUGE_L    : 0.3071186009838689
+11/21/2021 10:09:31 - INFO - modules.trainer -   	test_BLEU_1    : 0.33343363144537147
+11/21/2021 10:09:31 - INFO - modules.trainer -   	test_BLEU_2    : 0.2100710578784256
+11/21/2021 10:09:31 - INFO - modules.trainer -   	test_BLEU_3    : 0.15429307098778394
+11/21/2021 10:09:31 - INFO - modules.trainer -   	test_BLEU_4    : 0.12084082661824243
+11/21/2021 10:09:31 - INFO - modules.trainer -   	test_METEOR    : 0.14436675021285178
+11/21/2021 10:09:31 - INFO - modules.trainer -   	test_ROUGE_L   : 0.33142234075263516
+11/21/2021 10:09:34 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 10:09:34 - INFO - modules.trainer -   [26/30] Start to train in the training set.
+best performance in epoch:  22
+11/21/2021 10:09:36 - INFO - modules.trainer -   [26/30] Step: 0/64, CE Loss: 0.47511, CON Loss: 0.24525.
+11/21/2021 10:10:35 - INFO - modules.trainer -   [26/30] Step: 50/64, CE Loss: 0.52074, CON Loss: 0.24377.
+11/21/2021 10:10:51 - INFO - modules.trainer -   [26/30] Start to evaluate in the validation set.
+11/21/2021 10:11:05 - INFO - modules.trainer -   [26/30] Start to evaluate in the test set.
+11/21/2021 10:11:28 - INFO - modules.trainer -   	epoch          : 26
+11/21/2021 10:11:28 - INFO - modules.trainer -   	ce_loss        : 0.5319714373908937
+11/21/2021 10:11:28 - INFO - modules.trainer -   	con            : 0.24339159717783332
+11/21/2021 10:11:28 - INFO - modules.trainer -   	val_BLEU_1     : 0.4236277926589829
+11/21/2021 10:11:28 - INFO - modules.trainer -   	val_BLEU_2     : 0.24400781495141458
+11/21/2021 10:11:28 - INFO - modules.trainer -   	val_BLEU_3     : 0.16305414251672076
+11/21/2021 10:11:28 - INFO - modules.trainer -   	val_BLEU_4     : 0.11765277522755387
+11/21/2021 10:11:28 - INFO - modules.trainer -   	val_METEOR     : 0.15984433349697383
+11/21/2021 10:11:28 - INFO - modules.trainer -   	val_ROUGE_L    : 0.31670984281052744
+11/21/2021 10:11:28 - INFO - modules.trainer -   	test_BLEU_1    : 0.43984639482590876
+11/21/2021 10:11:28 - INFO - modules.trainer -   	test_BLEU_2    : 0.2681539831654341
+11/21/2021 10:11:28 - INFO - modules.trainer -   	test_BLEU_3    : 0.18905849731861965
+11/21/2021 10:11:28 - INFO - modules.trainer -   	test_BLEU_4    : 0.14289881468200755
+11/21/2021 10:11:28 - INFO - modules.trainer -   	test_METEOR    : 0.18012454856602847
+11/21/2021 10:11:28 - INFO - modules.trainer -   	test_ROUGE_L   : 0.34496915619096896
+11/21/2021 10:11:31 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 10:11:31 - INFO - modules.trainer -   [27/30] Start to train in the training set.
+best performance in epoch:  22
+11/21/2021 10:11:33 - INFO - modules.trainer -   [27/30] Step: 0/64, CE Loss: 0.47374, CON Loss: 0.24148.
+11/21/2021 10:12:32 - INFO - modules.trainer -   [27/30] Step: 50/64, CE Loss: 0.51124, CON Loss: 0.23999.
+11/21/2021 10:12:47 - INFO - modules.trainer -   [27/30] Start to evaluate in the validation set.
+11/21/2021 10:13:01 - INFO - modules.trainer -   [27/30] Start to evaluate in the test set.
+11/21/2021 10:13:23 - INFO - modules.trainer -   	epoch          : 27
+11/21/2021 10:13:23 - INFO - modules.trainer -   	ce_loss        : 0.5209961724467576
+11/21/2021 10:13:23 - INFO - modules.trainer -   	con            : 0.2396013243123889
+11/21/2021 10:13:23 - INFO - modules.trainer -   	val_BLEU_1     : 0.23365196443443118
+11/21/2021 10:13:23 - INFO - modules.trainer -   	val_BLEU_2     : 0.14049537096562245
+11/21/2021 10:13:23 - INFO - modules.trainer -   	val_BLEU_3     : 0.09849142430741883
+11/21/2021 10:13:23 - INFO - modules.trainer -   	val_BLEU_4     : 0.07428104970183565
+11/21/2021 10:13:23 - INFO - modules.trainer -   	val_METEOR     : 0.11512751033925374
+11/21/2021 10:13:23 - INFO - modules.trainer -   	val_ROUGE_L    : 0.30353890901677383
+11/21/2021 10:13:23 - INFO - modules.trainer -   	test_BLEU_1    : 0.277231299638251
+11/21/2021 10:13:23 - INFO - modules.trainer -   	test_BLEU_2    : 0.17157768488448483
+11/21/2021 10:13:23 - INFO - modules.trainer -   	test_BLEU_3    : 0.12331063515478795
+11/21/2021 10:13:23 - INFO - modules.trainer -   	test_BLEU_4    : 0.09423335768954043
+11/21/2021 10:13:23 - INFO - modules.trainer -   	test_METEOR    : 0.1311450564657355
+11/21/2021 10:13:23 - INFO - modules.trainer -   	test_ROUGE_L   : 0.32322760441977455
+11/21/2021 10:13:27 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 10:13:27 - INFO - modules.trainer -   [28/30] Start to train in the training set.
+best performance in epoch:  22
+11/21/2021 10:13:29 - INFO - modules.trainer -   [28/30] Step: 0/64, CE Loss: 0.48832, CON Loss: 0.23767.
+11/21/2021 10:14:28 - INFO - modules.trainer -   [28/30] Step: 50/64, CE Loss: 0.49872, CON Loss: 0.23613.
+11/21/2021 10:14:43 - INFO - modules.trainer -   [28/30] Start to evaluate in the validation set.
+11/21/2021 10:14:58 - INFO - modules.trainer -   [28/30] Start to evaluate in the test set.
+11/21/2021 10:15:19 - INFO - modules.trainer -   	epoch          : 28
+11/21/2021 10:15:19 - INFO - modules.trainer -   	ce_loss        : 0.5082492753863335
+11/21/2021 10:15:19 - INFO - modules.trainer -   	con            : 0.23572486219927669
+11/21/2021 10:15:19 - INFO - modules.trainer -   	val_BLEU_1     : 0.2643361410803156
+11/21/2021 10:15:19 - INFO - modules.trainer -   	val_BLEU_2     : 0.1580053719593857
+11/21/2021 10:15:19 - INFO - modules.trainer -   	val_BLEU_3     : 0.1089052860294126
+11/21/2021 10:15:19 - INFO - modules.trainer -   	val_BLEU_4     : 0.08046700604579073
+11/21/2021 10:15:19 - INFO - modules.trainer -   	val_METEOR     : 0.11910023772812327
+11/21/2021 10:15:19 - INFO - modules.trainer -   	val_ROUGE_L    : 0.29867649212796843
+11/21/2021 10:15:19 - INFO - modules.trainer -   	test_BLEU_1    : 0.2963748523266386
+11/21/2021 10:15:19 - INFO - modules.trainer -   	test_BLEU_2    : 0.1816948180089071
+11/21/2021 10:15:19 - INFO - modules.trainer -   	test_BLEU_3    : 0.12925036627748074
+11/21/2021 10:15:19 - INFO - modules.trainer -   	test_BLEU_4    : 0.09719266592035158
+11/21/2021 10:15:19 - INFO - modules.trainer -   	test_METEOR    : 0.1321628244785932
+11/21/2021 10:15:19 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3160052669285337
+11/21/2021 10:15:23 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 10:15:23 - INFO - modules.trainer -   [29/30] Start to train in the training set.
+best performance in epoch:  22
+11/21/2021 10:15:25 - INFO - modules.trainer -   [29/30] Step: 0/64, CE Loss: 0.49938, CON Loss: 0.23368.
+11/21/2021 10:16:24 - INFO - modules.trainer -   [29/30] Step: 50/64, CE Loss: 0.48702, CON Loss: 0.23211.
+11/21/2021 10:16:40 - INFO - modules.trainer -   [29/30] Start to evaluate in the validation set.
+11/21/2021 10:16:54 - INFO - modules.trainer -   [29/30] Start to evaluate in the test set.
+11/21/2021 10:17:16 - INFO - modules.trainer -   	epoch          : 29
+11/21/2021 10:17:16 - INFO - modules.trainer -   	ce_loss        : 0.4924397114664316
+11/21/2021 10:17:16 - INFO - modules.trainer -   	con            : 0.23169934074394405
+11/21/2021 10:17:16 - INFO - modules.trainer -   	val_BLEU_1     : 0.25041824056709355
+11/21/2021 10:17:16 - INFO - modules.trainer -   	val_BLEU_2     : 0.14702962059048574
+11/21/2021 10:17:16 - INFO - modules.trainer -   	val_BLEU_3     : 0.10099608737067078
+11/21/2021 10:17:16 - INFO - modules.trainer -   	val_BLEU_4     : 0.07507153370784686
+11/21/2021 10:17:16 - INFO - modules.trainer -   	val_METEOR     : 0.11595388539442546
+11/21/2021 10:17:16 - INFO - modules.trainer -   	val_ROUGE_L    : 0.29489761128825637
+11/21/2021 10:17:16 - INFO - modules.trainer -   	test_BLEU_1    : 0.28780858420133326
+11/21/2021 10:17:16 - INFO - modules.trainer -   	test_BLEU_2    : 0.1745087244684226
+11/21/2021 10:17:16 - INFO - modules.trainer -   	test_BLEU_3    : 0.12498740557696583
+11/21/2021 10:17:16 - INFO - modules.trainer -   	test_BLEU_4    : 0.09530071556642894
+11/21/2021 10:17:16 - INFO - modules.trainer -   	test_METEOR    : 0.13062332757240716
+11/21/2021 10:17:16 - INFO - modules.trainer -   	test_ROUGE_L   : 0.316744622050951
+11/21/2021 10:17:19 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+11/21/2021 10:17:19 - INFO - modules.trainer -   [30/30] Start to train in the training set.
+best performance in epoch:  22
+11/21/2021 10:17:21 - INFO - modules.trainer -   [30/30] Step: 0/64, CE Loss: 0.42833, CON Loss: 0.22965.
+11/21/2021 10:18:20 - INFO - modules.trainer -   [30/30] Step: 50/64, CE Loss: 0.46645, CON Loss: 0.22799.
+11/21/2021 10:18:35 - INFO - modules.trainer -   [30/30] Start to evaluate in the validation set.
+11/21/2021 10:18:50 - INFO - modules.trainer -   [30/30] Start to evaluate in the test set.
+11/21/2021 10:19:11 - INFO - modules.trainer -   	epoch          : 30
+11/21/2021 10:19:11 - INFO - modules.trainer -   	ce_loss        : 0.47515637800097466
+11/21/2021 10:19:11 - INFO - modules.trainer -   	con            : 0.22756209457293153
+11/21/2021 10:19:11 - INFO - modules.trainer -   	val_BLEU_1     : 0.23441161373129724
+11/21/2021 10:19:11 - INFO - modules.trainer -   	val_BLEU_2     : 0.13877563947909957
+11/21/2021 10:19:11 - INFO - modules.trainer -   	val_BLEU_3     : 0.096074821269531
+11/21/2021 10:19:11 - INFO - modules.trainer -   	val_BLEU_4     : 0.07188464062221131
+11/21/2021 10:19:11 - INFO - modules.trainer -   	val_METEOR     : 0.11312930958699202
+11/21/2021 10:19:11 - INFO - modules.trainer -   	val_ROUGE_L    : 0.2943356420786937
+11/21/2021 10:19:11 - INFO - modules.trainer -   	test_BLEU_1    : 0.285263127699203
+11/21/2021 10:19:11 - INFO - modules.trainer -   	test_BLEU_2    : 0.17173950413865396
+11/21/2021 10:19:11 - INFO - modules.trainer -   	test_BLEU_3    : 0.12121596632963627
+11/21/2021 10:19:11 - INFO - modules.trainer -   	test_BLEU_4    : 0.09097219896997298
+11/21/2021 10:19:11 - INFO - modules.trainer -   	test_METEOR    : 0.131816567236093
+11/21/2021 10:19:11 - INFO - modules.trainer -   	test_ROUGE_L   : 0.3139776538354246
+11/21/2021 10:19:15 - INFO - modules.trainer -   Saving checkpoint: results/iu_xray/current_checkpoint.pth ...
+best performance in epoch:  22
