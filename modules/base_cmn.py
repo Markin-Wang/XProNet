@@ -361,13 +361,13 @@ class BaseCMN(AttModel):
         self.model = self.make_model(tgt_vocab, self.cmn)
         self.logit = nn.Linear(args.d_model, tgt_vocab)
 
-        init_protypes = torch.load(args.init_protypes_path).float()
+        #init_protypes = torch.load(args.init_protypes_path).float()
 
-        self.memory_matrix = nn.Parameter(init_protypes)
+        #self.memory_matrix = nn.Parameter(init_protypes)
 
         #self.attn_global = MultiHeadedAttention(self.num_heads, self.d_model)
 
-        #self.memory_matrix = nn.Parameter(torch.FloatTensor(args.cmm_size, args.cmm_dim))
+        self.memory_matrix = nn.Parameter(torch.FloatTensor((args.num_cluster+2)*self.num_prototype, args.cmm_dim))
 
         #self.labels = torch.arange(self.num_cluster).unsqueeze(1).expand(self.num_cluster,self.num_prototype).flatten()
         nn.init.normal_(self.memory_matrix, 0, 1 / args.cmm_dim)
@@ -431,7 +431,7 @@ class BaseCMN(AttModel):
 
 
         #dummy_memory_matrix = torch.stack([torch.cat([self.memory_matrix, self.global_memory], 0) for index in idxs])
-        responses = self.cmn(att_feats, dummy_memory_matrix, dummy_memory_matrix)
+        #responses = self.cmn(att_feats, dummy_memory_matrix, dummy_memory_matrix)
 
         att_feats = att_feats + responses
         '''

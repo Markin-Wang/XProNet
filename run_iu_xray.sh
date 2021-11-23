@@ -8,8 +8,8 @@ python main.py \
     --threshold 3 \
     --epochs 30 \
     --batch_size 32 \
-    --lr_ve 5e-4 \
-    --lr_ed 1e-3 \
+    --lr_ve 1e-3 \
+    --lr_ed 2e-3 \
     --step_size 10 \
     --gamma 0.8 \
     --num_layers 3 \
