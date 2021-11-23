@@ -79,11 +79,13 @@ class Transformer(nn.Module):
         cmn_masks = cmn_masks.unsqueeze(1).expand(cmn_masks.shape[0], embeddings.size(1), cmn_masks.shape[-1])
 
         # Memory querying and responding for textual features
-        #dummy_memory_matrix = memory_matrix.unsqueeze(0).expand(embeddings.size(0), memory_matrix.size(0), memory_matrix.size(1))
+        dummy_memory_matrix = memory_matrix.unsqueeze(0).expand(embeddings.size(0), memory_matrix.size(0), memory_matrix.size(1))
         #dummy_memory_matrix = torch.stack([self.memory_matrix[labels[i] == 1, :] for i in range(embeddings.size(0))])
-        #responses = self.cmn(embeddings, dummy_memory_matrix, dummy_memory_matrix)
+        responses = self.cmn(embeddings, dummy_memory_matrix, dummy_memory_matrix)
+        '''
 
         responses = self.cmn(embeddings, memory_matrix, memory_matrix, cmn_masks)
+        '''
         embeddings = embeddings + responses
         # Memory querying and responding for textual features
 
@@ -368,7 +370,7 @@ class BaseCMN(AttModel):
         #self.memory_matrix = nn.Parameter(torch.FloatTensor(args.cmm_size, args.cmm_dim))
 
         #self.labels = torch.arange(self.num_cluster).unsqueeze(1).expand(self.num_cluster,self.num_prototype).flatten()
-        #nn.init.normal_(self.memory_matrix, 0, 1 / args.cmm_dim)
+        nn.init.normal_(self.memory_matrix, 0, 1 / args.cmm_dim)
         #nn.init.normal_(self.global_memory, 0, 1 / args.cmm_dim)
         #nn.init.normal_(self.prior_matrix, 0, 1 / args.cmm_dim)
 
@@ -395,10 +397,13 @@ class BaseCMN(AttModel):
 
         # Memory querying and responding for visual features
 
-        #dummy_memory_matrix = self.memory_matrix.unsqueeze(0).expand(att_feats.size(0), self.memory_matrix.size(0), self.memory_matrix.size(1))
+        dummy_memory_matrix = self.memory_matrix.unsqueeze(0).expand(att_feats.size(0), self.memory_matrix.size(0), self.memory_matrix.size(1))
+        responses = self.cmn(att_feats, dummy_memory_matrix, dummy_memory_matrix)
+
         max_num_protype = max((labels[:,-1]*3 + labels[:,:-1].sum(-1))) * self.num_prototype
         query_matrix = self.memory_matrix.new_zeros(att_feats.size(0), max_num_protype, self.memory_matrix.shape[-1])
         cmn_masks = self.memory_matrix.new_zeros(query_matrix.shape[0], att_feats.size(1), max_num_protype)
+        '''
         for i in range(att_feats.size(0)):
             cur_query_matrix = []
             #print(labels[i])
@@ -413,8 +418,10 @@ class BaseCMN(AttModel):
             #print('111',query_matrix[i, :cur_query_matrix.shape[0], :].shape, cur_query_matrix.shape)
             query_matrix[i, :cur_query_matrix.shape[0], :] = cur_query_matrix
             cmn_masks[i, :, :cur_query_matrix.shape[0]] = 1
+        '''
 
-        responses = self.cmn(att_feats, query_matrix, query_matrix, cmn_masks)
+
+
         #embeddings = embeddings + responses
         att_feats = att_feats + responses
 
@@ -446,7 +453,7 @@ class BaseCMN(AttModel):
     def _forward(self, fc_feats, att_feats, seq, att_masks=None, labels=None):
         att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks = \
             self._prepare_feature_forward(att_feats, att_masks, seq, labels)
-        out = self.model(att_feats, seq, att_masks, seq_mask, memory_matrix=query_matrix,
+        out = self.model(att_feats, seq, att_masks, seq_mask, memory_matrix=self.memory_matrix,
                          cmn_masks = cmn_masks, labels = labels)
         outputs = F.log_softmax(self.logit(out), dim=-1)
         con_loss = my_con_loss(self.memory_matrix, num_classes= self.num_cluster,
@@ -468,7 +475,7 @@ class BaseCMN(AttModel):
             past = state[1:]
 
         out, past = self.model.decode(memory, mask, ys, subsequent_mask(ys.size(1)).to(memory.device), past=past,
-                                      memory_matrix=query_matrix, cmn_masks = cmn_masks, labels = labels)
+                                      memory_matrix=self.memory_matrix, cmn_masks = cmn_masks, labels = labels)
 
         return out[:, -1], [ys.unsqueeze(0)] + past
     
