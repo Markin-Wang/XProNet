@@ -27,21 +27,21 @@ def parse_agrs():
     parser = argparse.ArgumentParser()
 
     # Data input settings
-    parser.add_argument('--image_dir', type=str, default='data/mimic_cxr/images/',
+    parser.add_argument('--image_dir', type=str, default='data/iu_xray/images/',
                         help='the path to the directory containing the data.')
-    parser.add_argument('--ann_path', type=str, default='data/mimic_cxr/annotation.json',
+    parser.add_argument('--ann_path', type=str, default='data/iu_xray/annotation.json',
                         help='the path to the directory containing the data.')
-    parser.add_argument('--label_path', type=str, default='data/mimic_cxr/labels.pickle',
+    parser.add_argument('--label_path', type=str, default='data/iu_xray/labels.pickle',
                         help='the path to the label annotatoin')
 
 
     # Data loader settings
-    parser.add_argument('--dataset_name', type=str, default='mimic_cxr', choices=['iu_xray', 'mimic_cxr'],
+    parser.add_argument('--dataset_name', type=str, default='iu_xray', choices=['iu_xray', 'mimic_cxr'],
                         help='the dataset to be used.')
     parser.add_argument('--max_seq_length', type=int, default=60, help='the maximum sequence length of the reports.')
     parser.add_argument('--threshold', type=int, default=3, help='the cut off frequency for the words.')
     parser.add_argument('--num_workers', type=int, default=2, help='the number of workers for dataloader.')
-    parser.add_argument('--batch_size', type=int, default=32, help='the number of samples for a batch')
+    parser.add_argument('--batch_size', type=int, default=8, help='the number of samples for a batch')
 
     # Model settings (for visual extractor)
     parser.add_argument('--visual_extractor', type=str, default='resnet101', help='the visual extractor to be used.')
@@ -51,7 +51,7 @@ def parse_agrs():
     parser.add_argument('--d_model', type=int, default=512, help='the dimension of Transformer.')
     parser.add_argument('--d_ff', type=int, default=512, help='the dimension of FFN.')
     parser.add_argument('--d_vf', type=int, default=2048, help='the dimension of the patch features.')
-    parser.add_argument('--num_heads', type=int, default=8, help='the number of heads in Transformer.')
+    parser.add_argument('--num_heads', type=int, default=32, help='the number of heads in Transformer.')
     parser.add_argument('--num_layers', type=int, default=3, help='the number of layers of Transformer.')
     parser.add_argument('--dropout', type=float, default=0.1, help='the dropout rate of Transformer.')
     parser.add_argument('--logit_layers', type=int, default=1, help='the number of the logit layer.')
@@ -62,7 +62,7 @@ def parse_agrs():
     parser.add_argument('--drop_prob_lm', type=float, default=0.5, help='the dropout rate of the output layer.')
 
     # for Cross-modal Memory
-    parser.add_argument('--topk', type=int, default=32, help='the number of k.')
+    parser.add_argument('--topk', type=int, default=8, help='the number of k.')
     parser.add_argument('--cmm_size', type=int, default=2048, help='the numebr of cmm size.')
     parser.add_argument('--cmm_dim', type=int, default=512, help='the dimension of cmm dimension.')
 
@@ -123,7 +123,7 @@ def parse_agrs():
 # In[ ]:
 num_classes = 13*3+1
 num_cluster = 4
-num_dim=2048
+num_dim=512
 initial_protypes = torch.zeros(((num_classes+2)*num_cluster,num_dim),dtype=float)
 torch.nn.init.normal_(initial_protypes, 0, 1/num_dim)
 counter=np.zeros(num_classes,dtype=float)
@@ -135,7 +135,7 @@ features_list = [[] for i in range(num_classes)]
 
 args = parse_agrs()
 tokenizer = Tokenizer(args)
-model = models.resnet101(pretrained=True)
+model = models.resnet34(pretrained=True)
 modules = list(model.children())[:-2]
 model = nn.Sequential(*modules)
 train_dataloader = R2DataLoader(args, tokenizer, split='train', shuffle=True,drop_last=False)

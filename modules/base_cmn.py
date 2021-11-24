@@ -475,7 +475,7 @@ class BaseCMN(AttModel):
             past = state[1:]
 
         out, past = self.model.decode(memory, mask, ys, subsequent_mask(ys.size(1)).to(memory.device), past=past,
-                                      memory_matrix=self.memory_matrix, cmn_masks = cmn_masks, labels = labels)
+                                      memory_matrix=query_matrix, cmn_masks = cmn_masks, labels = labels)
 
         return out[:, -1], [ys.unsqueeze(0)] + past
     
