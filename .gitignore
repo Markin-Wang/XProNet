@@ -7,3 +7,4 @@ results/*
 logs/*
 ./run_iu_xray.sh
 ./run_mimic_cxr.sh
+run_iu_xray.sh
