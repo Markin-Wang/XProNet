@@ -23,9 +23,11 @@ def parse_agrs():
     parser.add_argument('--label_path', type=str, default='data/iu_xray/labels.pickle',
                         help='the path to the directory containing the data.')
 
-    parser.add_argument('--init_protypes_path', type=str, default='data/iu_xray/init_protypes_512.pt',
+    parser.add_argument('--img_init_protypes_path', type=str, default='data/iu_xray/init_protypes_512.pt',
                         help='the path to the directory containing the data.')
 
+    parser.add_argument('--text_init_protypes_path', type=str, default='data/iu_xray/text_empty_initprotypes_512.pt',
+                        help='the path to the directory containing the data.')
     # Data loader settings
     parser.add_argument('--dataset_name', type=str, default='iu_xray', choices=['iu_xray', 'mimic_cxr'],
                         help='the dataset to be used.')
@@ -41,6 +43,7 @@ def parse_agrs():
     # Model settings (for Transformer)
     parser.add_argument('--d_model', type=int, default=512, help='the dimension of Transformer.')
     parser.add_argument('--d_ff', type=int, default=512, help='the dimension of FFN.')
+    parser.add_argument('--d_txt_ebd', type=int, default=768, help='the dimension of extracted text embedding.')
     parser.add_argument('--d_vf', type=int, default=2048, help='the dimension of the patch features.')
     parser.add_argument('--num_heads', type=int, default=8, help='the number of heads in Transformer.')
     parser.add_argument('--num_layers', type=int, default=3, help='the number of layers of Transformer.')
@@ -97,9 +100,11 @@ def parse_agrs():
     # Others
     parser.add_argument('--seed', type=int, default=9233, help='.')
     parser.add_argument('--resume', type=str, help='whether to resume the training from existing checkpoints.')
-    parser.add_argument('--num_prototype', type=int, default=10, help='.')
+    parser.add_argument('--img_num_protype', type=int, default=10, help='.')
+    parser.add_argument('--text_num_protype', type=int, default=10, help='.')
     parser.add_argument('--num_cluster', type=int, default=20, help='.')
-    parser.add_argument('--weight_con_loss', type=float, default=0.5, help='.')
+    parser.add_argument('--weight_con_loss', type=float, default=1, help='.')
+    parser.add_argument('--weight_bce_loss', type=float, default=1, help='.')
     parser.add_argument('--con_margin', type=float, default=0.4, help='.')
 
     args = parser.parse_args()

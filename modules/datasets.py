@@ -37,7 +37,7 @@ class IuxrayMultiImageDataset(BaseDataset):
         image_2 = Image.open(os.path.join(self.image_dir, image_path[1])).convert('RGB')
         array = image_id.split('-')
         modified_id = array[0]+'-'+array[1]
-        label = torch.LongTensor(self.labels[modified_id])
+        label = torch.FloatTensor(self.labels[modified_id])
         if self.transform is not None:
             image_1 = self.transform(image_1)
             image_2 = self.transform(image_2)
@@ -56,7 +56,7 @@ class MimiccxrSingleImageDataset(BaseDataset):
         image_path = example['image_path']
         image = Image.open(os.path.join(self.image_dir, image_path[0])).convert('RGB')
         image_id = os.path.join(self.image_dir, image_path[0])
-        label = torch.LongTensor(self.labels[example['id']])
+        label = torch.FloatTensor(self.labels[example['id']])
         if self.transform is not None:
             image = self.transform(image)
         report_ids = example['ids']

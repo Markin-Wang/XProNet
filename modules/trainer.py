@@ -177,42 +177,47 @@ class Trainer(BaseTrainer):
         self.val_dataloader = val_dataloader
         self.test_dataloader = test_dataloader
         self.con_loss_weight = args.weight_con_loss
-        self.num_cluster = args.num_cluster
-        self.num_prototype = args.num_prototype
-        #self.labels = torch.arange(args.num_cluster).unsqueeze(1).\
-        #    expand(args.num_cluster, args.num_prototype).flatten().to(self.device)
+        self.bce_loss_weight = args.weight_bce_loss
 
     def _train_epoch(self, epoch):
 
         self.logger.info('[{}/{}] Start to train in the training set.'.format(epoch, self.epochs))
         ce_loss = 0
-        con_loss = 0
+        img_con_loss = 0
+        txt_con_loss = 0
+        bce_loss = 0
         self.model.train()
         for batch_idx, (images_id, images, reports_ids, reports_masks, labels) in enumerate(self.train_dataloader):
 
             images, reports_ids, reports_masks, labels = images.to(self.device), reports_ids.to(self.device), \
                                                  reports_masks.to(self.device), labels.to(self.device)
 
-            output, con_ls = self.model(images, reports_ids, labels=labels, mode='train')
+            output, img_con_ls, txt_con_ls, bce_ls = self.model(images, reports_ids, labels=labels, mode='train')
             ce_ls = self.criterion(output, reports_ids, reports_masks)
             #print('222', con_ls, con_ls.shape)
             #if self.n_gpu > 1:
-            con_ls = con_ls.mean()
+            img_con_ls = img_con_ls.mean()
+            txt_con_ls = txt_con_ls.mean()
             #con_ls = contrastive_loss(memory_matrix, labels)
             #con_ls = 0
-            con_loss += con_ls.item()
+            img_con_loss += img_con_ls.item()
+            txt_con_loss += txt_con_ls.item()
+            bce_loss += bce_ls.item()
             #con_loss += 0
             ce_loss += ce_ls.item()
-            loss = ce_ls + self.con_loss_weight * con_ls
+            loss = ce_ls + self.con_loss_weight * img_con_ls + self.con_loss_weight * txt_con_loss \
+                   + self.bce_loss_weight * bce_ls
             self.optimizer.zero_grad()
             loss.backward()
             self.optimizer.step()
             if batch_idx % self.args.log_period == 0:
-                self.logger.info('[{}/{}] Step: {}/{}, CE Loss: {:.5f}, CON Loss: {:.5f}.'
+                self.logger.info('[{}/{}] Step: {}/{}, CE Ls: {:.5f}, CON Ls1: {:.5f}, CON Ls2: {:.5f}, BCE Ls: {:.5f}.'
                                  .format(epoch, self.epochs, batch_idx, len(self.train_dataloader),
-                                         ce_loss / (batch_idx + 1), con_loss / (batch_idx + 1)))
+                                         ce_loss / (batch_idx + 1), img_con_loss / (batch_idx + 1),
+                                         txt_con_loss / (batch_idx + 1),bce_loss / (batch_idx + 1)))
 
-        log = {'ce_loss': ce_loss / len(self.train_dataloader),'con': con_loss / len(self.train_dataloader)}
+        log = {'ce_loss': ce_loss / len(self.train_dataloader),'img_con': img_con_loss / len(self.train_dataloader),
+               'txt_con': txt_con_loss / len(self.train_dataloader), 'bce_loss': bce_loss / len(self.train_dataloader)}
 
         self.logger.info('[{}/{}] Start to evaluate in the validation set.'.format(epoch, self.epochs))
         self.model.eval()

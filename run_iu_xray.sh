@@ -2,12 +2,13 @@ python main.py \
     --image_dir data/iu_xray/images/ \
     --ann_path data/iu_xray/annotation.json \
     --label_path data/iu_xray/labels.pickle \
-    --init_protypes_path data/iu_xray/init_protypes_512_empty_224_both.pt \
+    --img_init_protypes_path data/iu_xray/init_protypes_512_empty_224_both.pt \
+    --text_init_protypes_path data/iu_xray/text_empty_initprotypes_512.pt \
     --dataset_name iu_xray \
     --max_seq_length 60 \
     --threshold 3 \
     --epochs 30 \
-    --batch_size 32 \
+    --batch_size 12 \
     --lr_ve 1e-3 \
     --lr_ed 2e-3 \
     --step_size 10 \
@@ -20,9 +21,11 @@ python main.py \
     --beam_size 3 \
     --save_dir results/iu_xray/ \
     --log_period 50 \
-    --n_gpu 2 \
+    --n_gpu 1 \
     --weight_con_loss 4 \
     --num_cluster 40 \
-    --num_prototype 8 \
+    --img_num_protype 8 \
+    --text_num_protype 4 \
     --con_margin 0.4 \
+    --weight_bce_loss 1
 
