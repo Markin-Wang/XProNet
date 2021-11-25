@@ -102,8 +102,11 @@ def parse_agrs():
     parser.add_argument('--resume', type=str, help='whether to resume the training from existing checkpoints.')
     parser.add_argument('--img_num_protype', type=int, default=10, help='.')
     parser.add_argument('--text_num_protype', type=int, default=10, help='.')
+    parser.add_argument('--gbl_num_protype', type=int, default=10, help='.')
     parser.add_argument('--num_cluster', type=int, default=20, help='.')
-    parser.add_argument('--weight_con_loss', type=float, default=1, help='.')
+    parser.add_argument('--weight_img_con_loss', type=float, default=1, help='.')
+    parser.add_argument('--weight_txt_con_loss', type=float, default=1, help='.')
+
     parser.add_argument('--weight_bce_loss', type=float, default=1, help='.')
     parser.add_argument('--con_margin', type=float, default=0.4, help='.')
 

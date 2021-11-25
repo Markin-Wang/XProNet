@@ -22,10 +22,12 @@ python main.py \
     --save_dir results/iu_xray/ \
     --log_period 50 \
     --n_gpu 1 \
-    --weight_con_loss 4 \
+    --weight_img_con_loss 4 \
     --num_cluster 40 \
     --img_num_protype 8 \
     --text_num_protype 4 \
     --con_margin 0.4 \
-    --weight_bce_loss 1
+    --weight_bce_loss 1 \
+    --gbl_num_cluster 8 \
+    --weight_txt_con_loss 1 \
 

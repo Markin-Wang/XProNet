@@ -177,7 +177,8 @@ class Trainer(BaseTrainer):
         self.train_dataloader = train_dataloader
         self.val_dataloader = val_dataloader
         self.test_dataloader = test_dataloader
-        self.con_loss_weight = args.weight_con_loss
+        self.img_con_loss_weight = args.weight_img_con_loss
+        self.txt_con_loss_weight = args.weight_txt_con_loss
         self.bce_loss_weight = args.weight_bce_loss
 
     def _train_epoch(self, epoch):
@@ -207,7 +208,7 @@ class Trainer(BaseTrainer):
             bce_loss += bce_ls.item()
             #con_loss += 0
             ce_loss += ce_ls.item()
-            loss = ce_ls + self.con_loss_weight * img_con_ls + self.con_loss_weight * txt_con_loss \
+            loss = ce_ls + self.img_con_loss_weight * img_con_ls + self.txt_con_loss_weight * txt_con_loss \
                    + self.bce_loss_weight * bce_ls
             self.optimizer.zero_grad()
             loss.backward()

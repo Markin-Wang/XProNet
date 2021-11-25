@@ -374,7 +374,7 @@ class BaseCMN(AttModel):
         self.txt_feat_head = nn.Linear(args.d_model, 40)
 
         self.attn_global = MultiHeadedAttention(self.num_heads, self.d_model)
-        self.global_protype = nn.Parameter(torch.FloatTensor(self.img_num_protype + self.text_num_protype, args.cmm_dim))
+        self.global_protype = nn.Parameter(torch.FloatTensor(args.gbl_num_protype, args.cmm_dim))
 
         #self.memory_matrix = nn.Parameter(torch.FloatTensor((args.num_cluster+2)*self.num_prototype, args.cmm_dim))
 
