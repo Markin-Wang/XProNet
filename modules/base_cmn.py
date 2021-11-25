@@ -350,7 +350,7 @@ class BaseCMN(AttModel):
         self.num_cluster = args.num_cluster
         self.margin = args.con_margin
 
-        self.bce_loss = nn.BCEWithLogitsLoss()
+
 
 
         tgt_vocab = self.vocab_size + 1
@@ -503,9 +503,9 @@ class BaseCMN(AttModel):
                                num_protypes = self.text_num_protype, margin = self.margin)
         img_con_loss = img_con_loss.unsqueeze(0) # for  multi-gpu setting
         txt_con_loss = txt_con_loss.unsqueeze(0)  # for  multi-gpu setting
-        bce_loss = self.bce_loss(self.img_feat_head(torch.mean(att_feats, dim=1)), labels)
+        #bce_loss = self.bce_loss(self.img_feat_head(torch.mean(att_feats, dim=1)), labels)
 
-        return outputs, img_con_loss, txt_con_loss, bce_loss
+        return outputs, img_con_loss, txt_con_loss, self.img_feat_head(torch.mean(att_feats, dim=1))
 
     def core(self, it, fc_feats_ph, att_feats_ph, memory, state, mask, query_matrix, cmn_masks, labels=None):
         if len(state) == 0:

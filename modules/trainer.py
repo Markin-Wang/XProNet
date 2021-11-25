@@ -30,6 +30,7 @@ class BaseTrainer(object):
         self.lr_scheduler = lr_scheduler
 
         self.epochs = self.args.epochs
+        self.bce_loss = torch.nn.BCEWithLogitsLoss()
         self.save_period = self.args.save_period
 
         self.mnt_mode = args.monitor_mode
@@ -192,7 +193,8 @@ class Trainer(BaseTrainer):
             images, reports_ids, reports_masks, labels = images.to(self.device), reports_ids.to(self.device), \
                                                  reports_masks.to(self.device), labels.to(self.device)
 
-            output, img_con_ls, txt_con_ls, bce_ls = self.model(images, reports_ids, labels=labels, mode='train')
+            output, img_con_ls, txt_con_ls, img_cls = self.model(images, reports_ids, labels=labels, mode='train')
+            bce_ls = self.bce_loss(img_cls, labels)
             ce_ls = self.criterion(output, reports_ids, reports_masks)
             #print('222', con_ls, con_ls.shape)
             #if self.n_gpu > 1:
