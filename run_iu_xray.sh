@@ -1,4 +1,4 @@
-python main.py \
+CUDA_VISIBLE_DEVICES=2,3 python main.py \
     --image_dir data/iu_xray/images/ \
     --ann_path data/iu_xray/annotation.json \
     --label_path data/iu_xray/labels.pickle \
@@ -8,9 +8,9 @@ python main.py \
     --max_seq_length 60 \
     --threshold 3 \
     --epochs 30 \
-    --batch_size 16 \
-    --lr_ve 5e-4 \
-    --lr_ed 1e-3 \
+    --batch_size 32 \
+    --lr_ve 1e-3 \
+    --lr_ed 2e-3 \
     --step_size 10 \
     --gamma 0.8 \
     --num_layers 3 \
@@ -21,7 +21,7 @@ python main.py \
     --beam_size 3 \
     --save_dir results/iu_xray/ \
     --log_period 50 \
-    --n_gpu 1 \
+    --n_gpu 2 \
     --num_cluster 40 \
     --img_num_protype 8 \
     --text_num_protype 4 \
