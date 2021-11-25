@@ -8,13 +8,13 @@ python main.py \
     --max_seq_length 60 \
     --threshold 3 \
     --epochs 30 \
-    --batch_size 12 \
-    --lr_ve 1e-3 \
-    --lr_ed 2e-3 \
+    --batch_size 16 \
+    --lr_ve 5e-4 \
+    --lr_ed 1e-3 \
     --step_size 10 \
     --gamma 0.8 \
     --num_layers 3 \
-    --topk 8 \
+    --topk 10 \
     --cmm_size 2048 \
     --cmm_dim 512 \
     --seed 7580 \
@@ -22,12 +22,12 @@ python main.py \
     --save_dir results/iu_xray/ \
     --log_period 50 \
     --n_gpu 1 \
-    --weight_img_con_loss 4 \
     --num_cluster 40 \
     --img_num_protype 8 \
     --text_num_protype 4 \
+    --gbl_num_protype 8 \
     --con_margin 0.4 \
     --weight_bce_loss 1 \
-    --gbl_num_cluster 8 \
     --weight_txt_con_loss 1 \
+    --weight_img_con_loss 1 \
 

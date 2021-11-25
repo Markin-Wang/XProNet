@@ -387,7 +387,7 @@ class BaseCMN(AttModel):
         return []
 
     def _prepare_feature(self, fc_feats, att_feats, att_masks, labels = None):
-        att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks = self._prepare_feature_forward(att_feats, att_masks, labels=labels)
+        att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks, _ = self._prepare_feature_forward(att_feats, att_masks, labels=labels)
         memory = self.model.encode(att_feats, att_masks)
 
         # print('111', fc_feats.shape) 12x4096
@@ -489,17 +489,17 @@ class BaseCMN(AttModel):
         else:
             seq_mask = None
 
-        return att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks[:,0,:]
+        return att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks[:,0,:], txt_protype
 
     def _forward(self, fc_feats, att_feats, seq, att_masks=None, labels=None):
-        att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks = \
+        att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks, txt_protype = \
             self._prepare_feature_forward(att_feats, att_masks, seq, labels)
         out = self.model(att_feats, seq, att_masks, seq_mask, memory_matrix=query_matrix,
                          cmn_masks = cmn_masks, labels = labels)
         outputs = F.log_softmax(self.logit(out), dim=-1)
         img_con_loss = my_con_loss(self.img_protype, num_classes= self.num_cluster,
                                num_protypes = self.img_num_protype, margin = self.margin)
-        txt_con_loss = my_con_loss(self.text_protype, num_classes= self.num_cluster,
+        txt_con_loss = my_con_loss(txt_protype, num_classes= self.num_cluster,
                                num_protypes = self.text_num_protype, margin = self.margin)
         img_con_loss = img_con_loss.unsqueeze(0) # for  multi-gpu setting
         txt_con_loss = txt_con_loss.unsqueeze(0)  # for  multi-gpu setting

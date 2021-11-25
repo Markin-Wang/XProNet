@@ -208,7 +208,7 @@ class Trainer(BaseTrainer):
             bce_loss += bce_ls.item()
             #con_loss += 0
             ce_loss += ce_ls.item()
-            loss = ce_ls + self.img_con_loss_weight * img_con_ls + self.txt_con_loss_weight * txt_con_loss \
+            loss = ce_ls + self.img_con_loss_weight * img_con_ls + self.txt_con_loss_weight * txt_con_ls \
                    + self.bce_loss_weight * bce_ls
             self.optimizer.zero_grad()
             loss.backward()
