@@ -44,6 +44,7 @@ def parse_agrs():
     parser.add_argument('--d_model', type=int, default=512, help='the dimension of Transformer.')
     parser.add_argument('--d_ff', type=int, default=512, help='the dimension of FFN.')
     parser.add_argument('--d_txt_ebd', type=int, default=768, help='the dimension of extracted text embedding.')
+    parser.add_argument('--d_img_ebd', type=int, default=512, help='the dimension of extracted img embedding.')
     parser.add_argument('--d_vf', type=int, default=2048, help='the dimension of the patch features.')
     parser.add_argument('--num_heads', type=int, default=8, help='the number of heads in Transformer.')
     parser.add_argument('--num_layers', type=int, default=3, help='the number of layers of Transformer.')
@@ -107,8 +108,10 @@ def parse_agrs():
     parser.add_argument('--weight_img_con_loss', type=float, default=1, help='.')
     parser.add_argument('--weight_txt_con_loss', type=float, default=1, help='.')
 
-    parser.add_argument('--weight_bce_loss', type=float, default=1, help='.')
-    parser.add_argument('--con_margin', type=float, default=0.4, help='.')
+    parser.add_argument('--weight_img_bce_loss', type=float, default=1, help='.')
+    parser.add_argument('--weight_txt_bce_loss', type=float, default=1, help='.')
+    parser.add_argument('--img_con_margin', type=float, default=0.4, help='.')
+    parser.add_argument('--txt_con_margin', type=float, default=0.4, help='.')
 
     args = parser.parse_args()
     return args
