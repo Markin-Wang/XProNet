@@ -70,8 +70,9 @@ def con_loss(features, labels):
 def my_con_loss(features, num_classes, num_protypes, margin = 0.4):
     B, _ = features.shape
 
-    labels = torch.arange(num_classes+2).expand(num_protypes, num_classes+2).t().flatten()
-    labels[(num_classes-1)*num_protypes:] = num_classes - 1
+    #labels = torch.arange(num_classes+2).expand(num_protypes, num_classes+2).t().flatten()
+    #labels[(num_classes-1)*num_protypes:] = num_classes - 1
+    labels = torch.arange(num_classes).expand(num_protypes, num_classes).t().flatten()
     labels = labels.cuda()
     features = F.normalize(features)
     cos_matrix = features.mm(features.t())

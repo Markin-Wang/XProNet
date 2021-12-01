@@ -80,7 +80,7 @@ class BaseTrainer(object):
                 try:
                     # check whether model performance improved or not, according to specified metric(mnt_metric)
                     improved = (self.mnt_mode == 'min' and log[self.mnt_metric] <= self.mnt_best) or \
-                               (self.mnt_mode == 'max' and log[self.mnt_metric] >= self.mnt_best)
+                               (self.mnt_mode == 'max' and (log[self.mnt_metric] + log['val_ROUGE_L']) >= self.mnt_best)
                 except KeyError:
                     self.logger.warning(
                         "Warning: Metric '{}' is not found. " "Model performance monitoring is disabled.".format(
@@ -89,7 +89,8 @@ class BaseTrainer(object):
                     improved = False
 
                 if improved:
-                    self.mnt_best = log[self.mnt_metric]
+                    #self.mnt_best = log[self.mnt_metric]
+                    self.mnt_best = log[self.mnt_metric] + log['val_ROUGE_L']
                     not_improved_count = 0
                     best = True
                     best_epoch = epoch
@@ -196,37 +197,33 @@ class Trainer(BaseTrainer):
             images, reports_ids, reports_masks, labels = images.to(self.device), reports_ids.to(self.device), \
                                                  reports_masks.to(self.device), labels.to(self.device)
 
-            output, img_con_ls, txt_con_ls, img_cls, txt_cls = self.model(images, reports_ids, labels=labels, mode='train')
+            output, img_con_ls, img_cls, txt_cls = self.model(images, reports_ids, labels=labels, mode='train')
             img_bce_ls = self.bce_loss(img_cls, labels)
             txt_bce_ls = self.bce_loss(txt_cls, labels)
             ce_ls = self.criterion(output, reports_ids, reports_masks)
             #print('222', con_ls, con_ls.shape)
             #if self.n_gpu > 1:
             img_con_ls = img_con_ls.mean()
-            txt_con_ls = txt_con_ls.mean()
             #con_ls = contrastive_loss(memory_matrix, labels)
             #con_ls = 0
             img_con_loss += img_con_ls.item()
-            txt_con_loss += txt_con_ls.item()
             img_bce_loss += img_bce_ls.item()
             txt_bce_loss += txt_bce_ls.item()
             #con_loss += 0
             ce_loss += ce_ls.item()
-            loss = ce_ls + self.img_con_loss_weight * img_con_ls + self.txt_con_loss_weight * txt_con_ls \
+            loss = ce_ls + self.img_con_loss_weight * img_con_ls \
                    + self.img_bce_loss_weight * img_bce_ls + self.txt_bce_loss_weight * txt_bce_ls
             self.optimizer.zero_grad()
             loss.backward()
             self.optimizer.step()
             if batch_idx % self.args.log_period == 0:
-                self.logger.info('[{}/{}] Step: {}/{}, CE Ls: {:.5f}, CON Ls1: {:.5f}, CON Ls2: '
-                                 '{:.5f}, BCE Ls1: {:.5f}, BCE Ls2: {:.5f}.'
+                self.logger.info('[{}/{}] Step: {}/{}, CE Ls: {:.5f}, CON Ls1: {:.5f}, BCE Ls1: {:.5f}, BCE Ls2: {:.5f}.'
                                  .format(epoch, self.epochs, batch_idx, len(self.train_dataloader),
                                          ce_loss / (batch_idx + 1), img_con_loss / (batch_idx + 1),
-                                         txt_con_loss / (batch_idx + 1), img_bce_loss / (batch_idx + 1),
+                                         img_bce_loss / (batch_idx + 1),
                                          txt_bce_ls / (batch_idx + 1)))
 
         log = {'ce_loss': ce_loss / len(self.train_dataloader), 'img_con': img_con_loss / len(self.train_dataloader),
-               'txt_con': txt_con_loss / len(self.train_dataloader),
                'img_bce_loss': img_bce_loss / len(self.train_dataloader), 'txt_bce_loss': txt_bce_loss / len(self.train_dataloader)}
 
         self.logger.info('[{}/{}] Start to evaluate in the validation set.'.format(epoch, self.epochs))

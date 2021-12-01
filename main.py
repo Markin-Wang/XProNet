@@ -25,6 +25,8 @@ def parse_agrs():
 
     parser.add_argument('--img_init_protypes_path', type=str, default='data/iu_xray/init_protypes_512.pt',
                         help='the path to the directory containing the data.')
+    parser.add_argument('--init_protypes_path', type=str, default='data/iu_xray/init_protypes_512.pt',
+                        help='the path to the directory containing the data.')
 
     parser.add_argument('--text_init_protypes_path', type=str, default='data/iu_xray/text_empty_initprotypes_512.pt',
                         help='the path to the directory containing the data.')
@@ -104,6 +106,7 @@ def parse_agrs():
     parser.add_argument('--img_num_protype', type=int, default=10, help='.')
     parser.add_argument('--text_num_protype', type=int, default=10, help='.')
     parser.add_argument('--gbl_num_protype', type=int, default=10, help='.')
+    parser.add_argument('--num_protype', type=int, default=10, help='.')
     parser.add_argument('--num_cluster', type=int, default=20, help='.')
     parser.add_argument('--weight_img_con_loss', type=float, default=1, help='.')
     parser.add_argument('--weight_txt_con_loss', type=float, default=1, help='.')

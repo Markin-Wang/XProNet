@@ -354,12 +354,16 @@ class BaseCMN(AttModel):
         self.num_cluster = args.num_cluster
         self.img_margin = args.img_con_margin
         self.txt_margin = args.txt_con_margin
+        self.num_protype = args.num_protype
+        
 
-        self.img_cls_head = nn.Sequential(nn.Linear(args.cmm_dim, args.cmm_dim), nn.Linear(args.cmm_dim, 40))
+        self.img_cls_head = nn.Sequential(nn.Linear(args.cmm_dim, args.cmm_dim), nn.Linear(args.cmm_dim, 14))
 
-        self.txt_cls_head = nn.Sequential(nn.Linear(args.cmm_dim, args.cmm_dim), nn.Linear(args.cmm_dim, 40))
+        self.txt_cls_head = nn.Sequential(nn.Linear(args.cmm_dim, args.cmm_dim), nn.Linear(args.cmm_dim, 14))
 
         self.txt_dim_reduction = nn.Linear(args.d_txt_ebd, args.cmm_dim)
+
+        self.dim_reduction = nn.Linear(args.d_txt_ebd + args.d_img_ebd, args.cmm_dim)
 
         self.img_dim_reduction = nn.Linear(args.d_img_ebd, args.cmm_dim)
 
@@ -374,11 +378,18 @@ class BaseCMN(AttModel):
         self.model = self.make_model(tgt_vocab, self.cmn)
         self.logit = nn.Linear(args.d_model, tgt_vocab)
 
+        ''''
+
         img_init_protypes = torch.load(args.img_init_protypes_path).float()
         self.img_protype = nn.Parameter(img_init_protypes)
 
         text_init_protypes = torch.load(args.text_init_protypes_path).float()
         self.text_protype = nn.Parameter(text_init_protypes)
+        '''
+
+        init_protypes = torch.load(args.init_protypes_path).float()
+        self.protypes = nn.Parameter(init_protypes)
+
 
 
 
@@ -386,21 +397,21 @@ class BaseCMN(AttModel):
 
         #self.txt_feat_head = nn.Linear(args.d_model, 40)
 
-        self.attn_global = MultiHeadedAttention(self.num_heads, self.d_model)
-        self.global_protype = nn.Parameter(torch.FloatTensor(args.gbl_num_protype, args.cmm_dim))
+        #self.attn_global = MultiHeadedAttention(self.num_heads, self.d_model)
+        #self.global_protype = nn.Parameter(torch.FloatTensor(args.gbl_num_protype, args.cmm_dim))
 
         #self.memory_matrix = nn.Parameter(torch.FloatTensor((args.num_cluster+2)*self.num_prototype, args.cmm_dim))
 
         #self.labels = torch.arange(self.num_cluster).unsqueeze(1).expand(self.num_cluster,self.num_prototype).flatten()
         #nn.init.normal_(self.memory_matrix, 0, 1 / args.cmm_dim)
-        nn.init.normal_(self.global_protype, 0, 1 / args.cmm_dim)
+        #nn.init.normal_(self.global_protype, 0, 1 / args.cmm_dim)
         #nn.init.normal_(self.prior_matrix, 0, 1 / args.cmm_dim)
 
     def init_hidden(self, bsz):
         return []
 
     def _prepare_feature(self, fc_feats, att_feats, att_masks, labels = None):
-        att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks, _, _ = \
+        att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks, _ = \
             self._prepare_feature_forward(att_feats, att_masks, labels=labels)
         memory = self.model.encode(att_feats, att_masks)
 
@@ -423,57 +434,40 @@ class BaseCMN(AttModel):
         #dummy_memory_matrix = self.memory_matrix.unsqueeze(0).expand(att_feats.size(0), self.memory_matrix.size(0), self.memory_matrix.size(1))
         #responses = self.cmn(att_feats, dummy_memory_matrix, dummy_memory_matrix)
 
-        max_img_num_protype = max((labels[:, -1]*3 + labels[:,: -1].sum(-1))) * self.img_num_protype
-        max_txt_num_protype = max((labels[:, -1] * 3 + labels[:, : -1].sum(-1))) * self.text_num_protype
-        txt_protype = self.txt_dim_reduction(self.text_protype)
-        img_protype = self.img_dim_reduction(self.img_protype)
-        img_query_matrix = img_protype.new_zeros(att_feats.size(0), max_img_num_protype.int(), img_protype.shape[-1])
-        txt_query_matrix = txt_protype.new_zeros(att_feats.size(0), max_txt_num_protype.int(), txt_protype.shape[-1])
-        img_cmn_masks = img_protype.new_zeros(img_query_matrix.shape[0], att_feats.size(1), max_img_num_protype.int())
-        txt_cmn_masks = txt_protype.new_zeros(txt_query_matrix.shape[0], att_feats.size(1), max_txt_num_protype.int())
+        #max_num_protype = max((labels[:, -1]*3 + labels[:,: -1].sum(-1))) * self.num_protype
+        max_num_protype = max(labels.sum(-1)) * self.num_protype
+        protypes = self.dim_reduction(self.protypes)
+        query_matrix = protypes.new_zeros(att_feats.size(0), max_num_protype.int(), protypes.shape[-1])
+        cmn_masks = protypes.new_zeros(query_matrix.shape[0], att_feats.size(1), max_num_protype.int())
 
         for i in range(att_feats.size(0)):
-            cur_img_query_matrix = []
-            cur_txt_query_matrix = []
-            #print(labels[i])
+            cur_query_matrix = []
             for j in range(len(labels[i])):
                 if labels[i, j] == 1:
-                    if j != len(labels[i])-1:
-                        cur_img_query_matrix.extend(
-                            img_protype[j*self.img_num_protype:(j+1)*self.img_num_protype, :])
-                        cur_txt_query_matrix.extend(
-                            txt_protype[j * self.text_num_protype:(j + 1) * self.text_num_protype, :])
-                    else:
-                        cur_img_query_matrix.extend(img_protype[j * self.img_num_protype:, :])
-                        cur_txt_query_matrix.extend(txt_protype[j * self.text_num_protype:, :])
+                        cur_query_matrix.extend(
+                            protypes[j*self.num_protype:(j+1)*self.num_protype, :])
 
-            cur_img_query_matrix = torch.stack(cur_img_query_matrix, 0)
-            cur_txt_query_matrix = torch.stack(cur_txt_query_matrix, 0)
+
+            cur_query_matrix = torch.stack(cur_query_matrix, 0)
             #print('111',query_matrix[i, :cur_query_matrix.shape[0], :].shape, cur_query_matrix.shape)
-            img_query_matrix[i, :cur_img_query_matrix.shape[0], :] = cur_img_query_matrix
-            txt_query_matrix[i, :cur_txt_query_matrix.shape[0], :] = cur_txt_query_matrix
-            img_cmn_masks[i, :, :cur_img_query_matrix.shape[0]] = 1
-            txt_cmn_masks[i, :, :cur_txt_query_matrix.shape[0]] = 1
-
-        query_matrix = torch.cat((img_query_matrix, txt_query_matrix), dim=1)
-
-
-        cmn_masks = torch.cat((img_cmn_masks, txt_cmn_masks), dim=2)
-
-
-        global_query_matrix = self.global_protype.unsqueeze(0).expand(
-            att_feats.size(0), self.global_protype.size(0), self.global_protype.size(1))
-
-        global_query_matrix = self.attn_global(global_query_matrix, query_matrix, query_matrix,
-                                               mask = cmn_masks[:, :global_query_matrix.size(1) ,:])
+            query_matrix[i, :cur_query_matrix.shape[0], :] = cur_query_matrix
+            cmn_masks[i, :, :cur_query_matrix.shape[0]] = 1
 
 
 
-        global_cmn_masks = self.global_protype.new_ones(global_query_matrix.shape[0], att_feats.size(1),
-                                                        global_query_matrix.shape[1])
+        #global_query_matrix = self.global_protype.unsqueeze(0).expand(
+        #    att_feats.size(0), self.global_protype.size(0), self.global_protype.size(1))
 
-        query_matrix = torch.cat((query_matrix, global_query_matrix), dim=1)
-        cmn_masks = torch.cat((cmn_masks, global_cmn_masks), dim=2)
+        #global_query_matrix = self.attn_global(global_query_matrix, query_matrix, query_matrix,
+        #                                       mask = cmn_masks[:, :global_query_matrix.size(1) ,:])
+
+
+
+        #global_cmn_masks = self.global_protype.new_ones(global_query_matrix.shape[0], att_feats.size(1),
+         #                                               global_query_matrix.shape[1])
+
+        #query_matrix = torch.cat((query_matrix, global_query_matrix), dim=1)
+        #cmn_masks = torch.cat((cmn_masks, global_cmn_masks), dim=2)
 
         responses = self.cmn(att_feats, query_matrix, query_matrix, cmn_masks)
 
@@ -506,25 +500,23 @@ class BaseCMN(AttModel):
         else:
             seq_mask = None
 
-        return att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks[:,0,:], img_protype, txt_protype
+        return att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks[:,0,:], protypes
 
     def _forward(self, fc_feats, att_feats, seq, att_masks=None, labels=None):
-        att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks, img_protype, txt_protype = \
+        att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks, protypes = \
             self._prepare_feature_forward(att_feats, att_masks, seq, labels)
         out, txt_feats = self.model(att_feats, seq, att_masks, seq_mask, memory_matrix=query_matrix,
                          cmn_masks = cmn_masks, labels = labels)
         outputs = F.log_softmax(self.logit(out), dim=-1)
-        img_con_loss = my_con_loss(img_protype, num_classes= self.num_cluster,
-                               num_protypes = self.img_num_protype, margin = self.img_margin)
-        txt_con_loss = my_con_loss(txt_protype, num_classes= self.num_cluster,
-                               num_protypes = self.text_num_protype, margin = self.txt_margin)
-        img_con_loss = img_con_loss.unsqueeze(0) # for  multi-gpu setting
-        txt_con_loss = txt_con_loss.unsqueeze(0)  # for  multi-gpu setting
+        con_loss = my_con_loss(protypes, num_classes= self.num_cluster,
+                               num_protypes = self.num_protype, margin = self.img_margin)
+
+        #txt_con_loss = txt_con_loss.unsqueeze(0)  # for  multi-gpu setting
         #bce_loss = self.bce_loss(self.img_feat_head(torch.mean(att_feats, dim=1)), labels)
         img_bce_loss = self.img_cls_head(torch.mean(att_feats, dim=1))
         txt_bce_loss = self.txt_cls_head(torch.mean(txt_feats, dim=1))
 
-        return outputs, img_con_loss, txt_con_loss, img_bce_loss, txt_bce_loss
+        return outputs, con_loss, img_bce_loss, txt_bce_loss
 
     def core(self, it, fc_feats_ph, att_feats_ph, memory, state, mask, query_matrix, cmn_masks, labels=None):
         if len(state) == 0:
