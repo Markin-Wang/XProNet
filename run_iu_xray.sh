@@ -9,7 +9,7 @@ python main.py \
     --max_seq_length 60 \
     --threshold 3 \
     --epochs 30 \
-    --batch_size 16 \
+    --batch_size 32 \
     --lr_ve 1e-3 \
     --lr_ed 2e-3 \
     --step_size 10 \
@@ -22,7 +22,7 @@ python main.py \
     --beam_size 3 \
     --save_dir results/iu_xray/ \
     --log_period 50 \
-    --n_gpu 1 \
+    --n_gpu 2 \
     --num_cluster 14 \
     --img_num_protype 8 \
     --text_num_protype 4 \

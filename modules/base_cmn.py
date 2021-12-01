@@ -355,7 +355,7 @@ class BaseCMN(AttModel):
         self.img_margin = args.img_con_margin
         self.txt_margin = args.txt_con_margin
         self.num_protype = args.num_protype
-        
+
 
         self.img_cls_head = nn.Sequential(nn.Linear(args.cmm_dim, args.cmm_dim), nn.Linear(args.cmm_dim, 14))
 
@@ -510,7 +510,7 @@ class BaseCMN(AttModel):
         outputs = F.log_softmax(self.logit(out), dim=-1)
         con_loss = my_con_loss(protypes, num_classes= self.num_cluster,
                                num_protypes = self.num_protype, margin = self.img_margin)
-
+        con_loss = con_loss.unsqueeze(0)  # for  multi-gpu setting
         #txt_con_loss = txt_con_loss.unsqueeze(0)  # for  multi-gpu setting
         #bce_loss = self.bce_loss(self.img_feat_head(torch.mean(att_feats, dim=1)), labels)
         img_bce_loss = self.img_cls_head(torch.mean(att_feats, dim=1))
