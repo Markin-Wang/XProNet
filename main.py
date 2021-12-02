@@ -2,7 +2,7 @@ import argparse
 
 import numpy as np
 import torch
-
+import random
 from models.models import BaseCMNModel
 from modules.dataloaders import R2DataLoader
 from modules.loss import compute_loss
@@ -129,6 +129,9 @@ def main():
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
     np.random.seed(args.seed)
+    random.seed(args.seed)
+    torch.cuda.manual_seed(args.seed)
+    torch.cuda.manual_seed_all(args.seed)
 
     # create tokenizer
     tokenizer = Tokenizer(args)

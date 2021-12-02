@@ -1,19 +1,21 @@
 python main.py \
     --image_dir data/mimic_cxr/images/ \
     --ann_path data/mimic_cxr/annotation.json \
-    --label_path data/mimic_cxr/labels.pickle \
-    --init_protypes_path data/mimic_cxr/init_protypes_512_224.pt \
+    --label_path data/mimic_cxr/labels_14.pickle \
+    --img_init_protypes_path data/mimic_cxr/init_protypes_2048_empty_224_both.pt \
+    --text_init_protypes_path data/mimic_cxr/text_empty_initprotypes_512.pt \
+    --init_protypes_path data/mimic_cxr/cat_initprotypes_2048_768_14_cluster10.pt \
     --dataset_name mimic_cxr \
     --max_seq_length 100 \
     --threshold 10 \
     --epochs 30 \
-    --batch_size 64 \
-    --lr_ve 2e-3 \
-    --lr_ed 4e-3 \
+    --batch_size 32 \
+    --lr_ve 1e-3 \
+    --lr_ed 2e-3 \
     --step_size 3 \
     --gamma 0.8 \
     --num_layers 3 \
-    --topk 8 \
+    --topk 16 \
     --cmm_size 2048 \
     --cmm_dim 512 \
     --seed 9153	 \
@@ -21,7 +23,16 @@ python main.py \
     --save_dir results/mimic_cxr/ \
     --log_period 1000 \
     --n_gpu 2 \
-    --weight_con_loss 4 \
-    --num_cluster 40 \
-    --num_prototype 8 \
-    --con_margin 0.4 \
+    --num_cluster 14 \
+    --img_num_protype 8 \
+    --text_num_protype 4 \
+    --gbl_num_protype 8 \
+    --img_con_margin 0.4 \
+    --txt_con_margin 0.4 \
+    --weight_img_bce_loss 0 \
+    --weight_txt_bce_loss 0 \
+    --weight_txt_con_loss 1 \
+    --weight_img_con_loss 1 \
+    --d_img_ebd 2048 \
+    --d_txt_ebd 768 \
+    --num_protype 20

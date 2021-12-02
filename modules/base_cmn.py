@@ -11,6 +11,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import pickle
 from .utils import my_con_loss
+from .utils import my_con_loss2
 
 from .att_model import pack_wrapper, AttModel
 
@@ -91,7 +92,7 @@ class Transformer(nn.Module):
         # Memory querying and responding for textual features
 
 
-        return self.decoder(embeddings, memory, src_mask, tgt_mask, past=past), embeddings
+        return self.decoder(embeddings, memory, src_mask, tgt_mask, past=past), embeddings, responses
 
 
 class Encoder(nn.Module):
@@ -500,23 +501,25 @@ class BaseCMN(AttModel):
         else:
             seq_mask = None
 
-        return att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks[:,0,:], protypes
+        return att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks[:,0,:], responses
 
     def _forward(self, fc_feats, att_feats, seq, att_masks=None, labels=None):
-        att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks, protypes = \
+        att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks, img_responses = \
             self._prepare_feature_forward(att_feats, att_masks, seq, labels)
-        out, txt_feats = self.model(att_feats, seq, att_masks, seq_mask, memory_matrix=query_matrix,
+        out, txt_feats, txt_responses = self.model(att_feats, seq, att_masks, seq_mask, memory_matrix=query_matrix,
                          cmn_masks = cmn_masks, labels = labels)
         outputs = F.log_softmax(self.logit(out), dim=-1)
-        con_loss = my_con_loss(protypes, num_classes= self.num_cluster,
-                               num_protypes = self.num_protype, margin = self.img_margin)
-        con_loss = con_loss.unsqueeze(0)  # for  multi-gpu setting
-        #txt_con_loss = txt_con_loss.unsqueeze(0)  # for  multi-gpu setting
+        img_con_loss = my_con_loss2(torch.mean(img_responses, dim=1), num_classes= self.num_cluster,
+                               num_protypes = self.num_protype, labels = labels, margin = self.img_margin)
+        img_con_loss = img_con_loss.unsqueeze(0)  # for  multi-gpu setting
+        txt_con_loss = my_con_loss2(torch.mean(txt_responses, dim=1), num_classes= self.num_cluster,
+                               num_protypes = self.num_protype, labels = labels, margin = self.img_margin)
+        txt_con_loss = txt_con_loss.unsqueeze(0)  # for  multi-gpu setting
         #bce_loss = self.bce_loss(self.img_feat_head(torch.mean(att_feats, dim=1)), labels)
         img_bce_loss = self.img_cls_head(torch.mean(att_feats, dim=1))
         txt_bce_loss = self.txt_cls_head(torch.mean(txt_feats, dim=1))
 
-        return outputs, con_loss, img_bce_loss, txt_bce_loss
+        return outputs, img_con_loss, txt_con_loss, img_bce_loss, txt_bce_loss
 
     def core(self, it, fc_feats_ph, att_feats_ph, memory, state, mask, query_matrix, cmn_masks, labels=None):
         if len(state) == 0:
@@ -530,7 +533,7 @@ class BaseCMN(AttModel):
             ys = torch.cat([state[0][0], it.unsqueeze(1)], dim=1)
             past = state[1:]
 
-        [out, past], _ = self.model.decode(memory, mask, ys, subsequent_mask(ys.size(1)).to(memory.device), past=past,
+        [out, past], _, _ = self.model.decode(memory, mask, ys, subsequent_mask(ys.size(1)).to(memory.device), past=past,
                                       memory_matrix=query_matrix, cmn_masks = cmn_masks, labels = labels)
 
         return out[:, -1], [ys.unsqueeze(0)] + past

@@ -86,6 +86,43 @@ def my_con_loss(features, num_classes, num_protypes, margin = 0.4):
 
     return loss
 
-def my_triplet_loss(features, labels, num_protypes):
+def my_con_loss2(features, num_classes, num_protypes, labels, margin = 0.4, alpha = 1.2):
+    B, _ = features.shape
 
-    return None
+    #labels = torch.arange(num_classes+2).expand(num_protypes, num_classes+2).t().flatten()
+    #labels[(num_classes-1)*num_protypes:] = num_classes - 1
+
+    features = F.normalize(features)
+    cos_matrix = features.mm(features.t())
+    losses = []
+    for i in range(B):
+        label_num = labels[i].sum()
+        max_sim = 1/(alpha ** (label_num-1))
+        pos_label_matrix = labels[:, labels[i] == 1]
+        pos_label_matrix = torch.sum(pos_label_matrix, dim=1)
+        pos_label_matrix[pos_label_matrix != 0] = 1
+        neg_label_matrix = 1 - pos_label_matrix
+        pos_cos_matrix = max_sim - cos_matrix[i, :]
+        pos_cos_matrix[pos_cos_matrix < 0] = 0
+        neg_cos_matrix = cos_matrix[i, :] - margin
+        neg_cos_matrix[neg_cos_matrix < 0] = 0
+        losses.append((pos_cos_matrix * pos_label_matrix).sum() + (neg_cos_matrix * neg_label_matrix).sum())
+    loss = losses[0]
+    for i in range(1, len(losses)):
+        loss = loss + losses[i]
+    loss /= (B * B)
+
+    return loss
+
+
+
+
+    pos_label_matrix = torch.stack([labels == labels[i] for i in range(B)]).float()
+    neg_label_matrix = 1 - pos_label_matrix
+    pos_cos_matrix = 1 - cos_matrix
+    neg_cos_matrix = cos_matrix - margin
+    neg_cos_matrix[neg_cos_matrix < 0] = 0
+    loss = (pos_cos_matrix * pos_label_matrix).sum() + (neg_cos_matrix * neg_label_matrix).sum()
+    loss /= (B * B)
+
+    return loss
