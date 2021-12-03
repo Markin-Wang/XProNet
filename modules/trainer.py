@@ -219,7 +219,7 @@ class Trainer(BaseTrainer):
             loss.backward()
             self.optimizer.step()
             if batch_idx % self.args.log_period == 0:
-                self.logger.info('[{}/{}] Step: {}/{}, CE Ls: {:.5f}, CON Ls1: {:.5f}, CON Lss: {:.5f}, BCE Ls1: {:.5f}, BCE Ls2: {:.5f}.'
+                self.logger.info('[{}/{}] Step: {}/{}, CE Ls: {:.5f}, CON Ls1: {:.5f}, CON Lss2: {:.5f}, BCE Ls1: {:.5f}, BCE Ls2: {:.5f}.'
                                  .format(epoch, self.epochs, batch_idx, len(self.train_dataloader),
                                          ce_loss / (batch_idx + 1), img_con_loss / (batch_idx + 1),
                                          txt_con_loss / (batch_idx + 1),

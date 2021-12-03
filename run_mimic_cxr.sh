@@ -27,12 +27,12 @@ python main.py \
     --img_num_protype 8 \
     --text_num_protype 4 \
     --gbl_num_protype 8 \
-    --img_con_margin 0.4 \
-    --txt_con_margin 0.4 \
     --weight_img_bce_loss 0 \
     --weight_txt_bce_loss 0 \
     --weight_txt_con_loss 1 \
     --weight_img_con_loss 1 \
+    --img_con_margin 0.2 \
+    --txt_con_margin 0.2 \
     --d_img_ebd 2048 \
     --d_txt_ebd 768 \
     --num_protype 20

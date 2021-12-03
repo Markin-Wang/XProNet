@@ -513,7 +513,7 @@ class BaseCMN(AttModel):
                                num_protypes = self.num_protype, labels = labels, margin = self.img_margin)
         img_con_loss = img_con_loss.unsqueeze(0)  # for  multi-gpu setting
         txt_con_loss = my_con_loss2(torch.mean(txt_responses, dim=1), num_classes= self.num_cluster,
-                               num_protypes = self.num_protype, labels = labels, margin = self.img_margin)
+                               num_protypes = self.num_protype, labels = labels, margin = self.txt_margin)
         txt_con_loss = txt_con_loss.unsqueeze(0)  # for  multi-gpu setting
         #bce_loss = self.bce_loss(self.img_feat_head(torch.mean(att_feats, dim=1)), labels)
         img_bce_loss = self.img_cls_head(torch.mean(att_feats, dim=1))

@@ -86,7 +86,7 @@ def my_con_loss(features, num_classes, num_protypes, margin = 0.4):
 
     return loss
 
-def my_con_loss2(features, num_classes, num_protypes, labels, margin = 0.4, alpha = 1.2):
+def my_con_loss2(features, num_classes, num_protypes, labels, margin = 0.4, alpha = 1.5):
     B, _ = features.shape
 
     #labels = torch.arange(num_classes+2).expand(num_protypes, num_classes+2).t().flatten()
@@ -96,11 +96,16 @@ def my_con_loss2(features, num_classes, num_protypes, labels, margin = 0.4, alph
     cos_matrix = features.mm(features.t())
     losses = []
     for i in range(B):
-        label_num = labels[i].sum()
-        max_sim = 1/(alpha ** (label_num-1))
+        max_sim = labels[i].new_ones(B)
         pos_label_matrix = labels[:, labels[i] == 1]
         pos_label_matrix = torch.sum(pos_label_matrix, dim=1)
         pos_label_matrix[pos_label_matrix != 0] = 1
+        label_diff = abs(labels[i] - labels[pos_label_matrix == 1]).sum(dim = 1)
+        label_sum = labels[i].sum() + labels[pos_label_matrix == 1].sum(dim=1)
+        #print('111', label_diff/label_sum)
+        #print('222', 1/(alpha ** (label_diff/label_sum)))
+        max_sim[pos_label_matrix == 1] = 1/(alpha ** (label_diff/label_sum))
+        #print('333', max_sim)
         neg_label_matrix = 1 - pos_label_matrix
         pos_cos_matrix = max_sim - cos_matrix[i, :]
         pos_cos_matrix[pos_cos_matrix < 0] = 0
