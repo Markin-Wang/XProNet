@@ -1,4 +1,4 @@
-python main.py \
+python visualize.py \
     --image_dir data/iu_xray/images/ \
     --ann_path data/iu_xray/annotation.json \
     --label_path data/iu_xray/labels_14.pickle \
@@ -9,7 +9,7 @@ python main.py \
     --max_seq_length 60 \
     --threshold 3 \
     --epochs 30 \
-    --batch_size 16 \
+    --batch_size 4 \
     --lr_ve 1e-3 \
     --lr_ed 2e-3 \
     --step_size 10 \
@@ -31,7 +31,7 @@ python main.py \
     --txt_con_margin 0.4 \
     --weight_img_bce_loss 0 \
     --weight_txt_bce_loss 0 \
-    --weight_txt_con_loss 0.1 \
+    --weight_txt_con_loss 1 \
     --weight_img_con_loss 1 \
     --d_img_ebd 2048 \
     --d_txt_ebd 768 \

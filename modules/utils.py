@@ -86,7 +86,7 @@ def my_con_loss(features, num_classes, num_protypes, margin = 0.4):
 
     return loss
 
-def my_con_loss2(features, num_classes, num_protypes, labels, margin = 0.4, alpha = 1.5):
+def my_con_loss2(features, num_classes, num_protypes, labels, margin = 0.4, alpha = 1.75):
     B, _ = features.shape
 
     #labels = torch.arange(num_classes+2).expand(num_protypes, num_classes+2).t().flatten()
@@ -101,9 +101,9 @@ def my_con_loss2(features, num_classes, num_protypes, labels, margin = 0.4, alph
         pos_label_matrix = torch.sum(pos_label_matrix, dim=1)
         pos_label_matrix[pos_label_matrix != 0] = 1
         label_diff = abs(labels[i] - labels[pos_label_matrix == 1]).sum(dim = 1)
-        label_sum = labels[i].sum() + labels[pos_label_matrix == 1].sum(dim=1)
-        #print('111', label_diff/label_sum)
-        #print('222', 1/(alpha ** (label_diff/label_sum)))
+        label_sum = (labels[i] + labels[pos_label_matrix == 1]).sum(dim=1)
+        #label_sum[label_sum != 0] = 1
+        #label_sum = label_sum.sum(dim=1)
         max_sim[pos_label_matrix == 1] = 1/(alpha ** (label_diff/label_sum))
         #print('333', max_sim)
         neg_label_matrix = 1 - pos_label_matrix
