@@ -138,7 +138,7 @@ def main():
     test_dataloader = R2DataLoader(args, tokenizer, split='test', shuffle=False)
 
     # build model architecture
-    model = BaseCMNModel(args, tokenizer)
+    model = BaseCMNModel(args, tokenizer, mode = 'test')
     model.load_state_dict(torch.load(args.model_path)['state_dict'])
 
     logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message)s',

@@ -7,12 +7,12 @@ from modules.visual_extractor import VisualExtractor
 
 
 class BaseCMNModel(nn.Module):
-    def __init__(self, args, tokenizer):
+    def __init__(self, args, tokenizer, mode = 'train'):
         super(BaseCMNModel, self).__init__()
         self.args = args
         self.tokenizer = tokenizer
         self.visual_extractor = VisualExtractor(args)
-        self.encoder_decoder = BaseCMN(args, tokenizer)
+        self.encoder_decoder = BaseCMN(args, tokenizer, mode = mode)
         #if args.dataset_name == 'iu_xray':
         #    self.forward = self.forward_iu_xray
         #else:

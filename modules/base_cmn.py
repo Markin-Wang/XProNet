@@ -341,7 +341,7 @@ class BaseCMN(AttModel):
                 nn.init.xavier_uniform_(p)
         return model
 
-    def __init__(self, args, tokenizer):
+    def __init__(self, args, tokenizer, mode = 'train'):
         super(BaseCMN, self).__init__(args, tokenizer)
         self.args = args
         self.num_layers = args.num_layers
@@ -387,9 +387,10 @@ class BaseCMN(AttModel):
         text_init_protypes = torch.load(args.text_init_protypes_path).float()
         self.text_protype = nn.Parameter(text_init_protypes)
         '''
-
-        init_protypes = torch.load(args.init_protypes_path).float()
-        self.protypes = nn.Parameter(init_protypes)
+        self.protypes = nn.Parameter(torch.FloatTensor(args.num_protype * args.num_cluster, args.d_txt_ebd + args.d_img_ebd))
+        if mode == 'train':
+            init_protypes = torch.load(args.init_protypes_path).float()
+            self.protypes = nn.Parameter(init_protypes)
 
 
 
