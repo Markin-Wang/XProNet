@@ -47,7 +47,7 @@ The following packages are required to run the scripts:
 - [Python >= 3.6]
 - [PyTorch = 1.6]
 - [Torchvision]
-- [Pycocoevalcaption]
+- [Pycocoevalcap]
 
 * You can create the environment via conda:
 ```bash
