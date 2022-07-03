@@ -61,12 +61,13 @@ You can download the trained models [here](https://drive.google.com/drive/folder
 ## Datasets
 We use two datasets (IU X-Ray and MIMIC-CXR) in our paper.
 
-For `IU X-Ray`, you can download the dataset from [here](https://drive.google.com/file/d/1c0BXEuDy8Cmm2jfN0YYGkQxFZd2ZIoLg/view?usp=sharing) and then put the files in `data/iu_xray`.
+For `IU X-Ray`, you can download the dataset from [here](https://openi.nlm.nih.gov/faq)) 
 
-For `MIMIC-CXR`, you can download the dataset from [here](https://drive.google.com/file/d/1DS6NYirOXQf8qYieSVMvqNwuOlgAbM_E/view?usp=sharing) and then put the files in `data/mimic_cxr`.
+For `MIMIC-CXR`, you firstly need to get the can download the dataset from [here](https://physionet.org/content/mimic-cxr/2.0.0/).
+After downloading the datasets, put them in the directory `data`.
 
 ## Pseudo Label Generation
-You can generate the pesudo label for each dataset by leveraging the automatic labller ChexBert[https://github.com/stanfordmlgroup/CheXbert].
+You can generate the pesudo label for each dataset by leveraging the automatic labller [ChexBert](https://github.com/stanfordmlgroup/CheXbert).
 
 We also provide the generated labels in the files directory.
 
