@@ -25,7 +25,7 @@ Xray and MIMIC-CXR, where its performance exceeds recent state-of-
 the-art approaches by a large margin on IU-Xray dataset and achieves
 the SOTA performance on MIMIC-CXR. 
 
-<img src='architecture.png' width='1280' height='350'>
+<img src='architecture.png'>
 
 ## Citations
 
