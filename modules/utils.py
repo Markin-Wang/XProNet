@@ -86,7 +86,7 @@ def my_con_loss(features, num_classes, num_protypes, margin = 0.4):
 
     return loss
 
-def my_con_loss2(features, num_classes, num_protypes, labels, margin = 0.4, alpha = 1.75):
+def my_con_loss2(features, num_classes, num_protypes, labels, margin = 0.4, alpha = 1.5):
     B, _ = features.shape
 
     #labels = torch.arange(num_classes+2).expand(num_protypes, num_classes+2).t().flatten()
@@ -116,18 +116,4 @@ def my_con_loss2(features, num_classes, num_protypes, labels, margin = 0.4, alph
     for i in range(1, len(losses)):
         loss = loss + losses[i]
     loss /= (B * B)
-
-    return loss
-
-
-
-
-    pos_label_matrix = torch.stack([labels == labels[i] for i in range(B)]).float()
-    neg_label_matrix = 1 - pos_label_matrix
-    pos_cos_matrix = 1 - cos_matrix
-    neg_cos_matrix = cos_matrix - margin
-    neg_cos_matrix[neg_cos_matrix < 0] = 0
-    loss = (pos_cos_matrix * pos_label_matrix).sum() + (neg_cos_matrix * neg_label_matrix).sum()
-    loss /= (B * B)
-
     return loss

@@ -34,14 +34,14 @@ def parse_agrs():
     parser.add_argument('--text_init_protypes_path', type=str, default='data/iu_xray/text_empty_initprotypes_512.pt',
                         help='the path to the directory containing the data.')
     # Data loader settings
-    parser.add_argument('--dataset_name', type=str, default='iu_xray', choices=['iu_xray', 'mimic_cxr'],
+    parser.add_argument('--dataset_name', type=str, default='iu_xray', choices=['iu_xray', 'mimic_cxr', 'mimic_cxr_test'],
                         help='the dataset to be used.')
-    parser.add_argument('--model_path', type=str, default='results/iu_xray/19875/model_best.pth',
+    parser.add_argument('--model_path', type=str, default='./10548.pth',
                         help='the dataset to be used.')
     parser.add_argument('--max_seq_length', type=int, default=60, help='the maximum sequence length of the reports.')
     parser.add_argument('--threshold', type=int, default=3, help='the cut off frequency for the words.')
     parser.add_argument('--num_workers', type=int, default=2, help='the number of workers for dataloader.')
-    parser.add_argument('--batch_size', type=int, default=16, help='the number of samples for a batch')
+    parser.add_argument('--batch_size', type=int, default=32, help='the number of samples for a batch')
 
     # Model settings (for visual extractor)
     parser.add_argument('--visual_extractor', type=str, default='resnet101', help='the visual extractor to be used.')
@@ -156,8 +156,6 @@ def main():
         for batch_idx, (images_id, images, reports_ids, reports_masks, labels) in enumerate(tqdm(test_dataloader)):
             images, reports_ids, reports_masks, labels = images.cuda(), reports_ids.cuda(), \
                                                          reports_masks.cuda(), labels.cuda()
-            if torch.sum(labels[:, :-1]) == 0:
-                continue
 
             output, _ = model(images, labels=labels, mode='sample')
             # change to self.model.module for multi-gpu
@@ -175,10 +173,11 @@ def main():
                     continue
                 val_met = metrics({images_id: [gt]}, {images_id: [predict]})
                 label = str(label)
-                records[id] = {'predict': predict, 'ground truth': gt, 'met': val_met, 'label': label}
+                if val_met['BLEU_4'] > 0.2:
+                    records[id] = {'predict': predict, 'ground truth': gt, 'met': val_met, 'label': label}
 
 
-    f = open('iu_xray_predict_sample_abnormal.json', 'w', encoding='utf-8')
+    f = open('mimic_cxr_predict_sample_abnormal.json', 'w', encoding='utf-8')
     json.dump(records, f, indent=1)
     f.close()
 

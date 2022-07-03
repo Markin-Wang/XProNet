@@ -10,15 +10,15 @@ python main.py \
     --threshold 10 \
     --epochs 30 \
     --batch_size 16 \
-    --lr_ve 1e-3 \
-    --lr_ed 2e-3 \
+    --lr_ve 5e-5 \
+    --lr_ed 1e-4 \
     --step_size 3 \
     --gamma 0.8 \
     --num_layers 3 \
-    --topk 15 \
+    --topk 13 \
     --cmm_size 2048 \
     --cmm_dim 512 \
-    --seed 9153	 \
+    --seed 7580  \
     --beam_size 3 \
     --save_dir results/mimic_cxr/ \
     --log_period 1000 \
@@ -27,12 +27,12 @@ python main.py \
     --img_num_protype 8 \
     --text_num_protype 4 \
     --gbl_num_protype 8 \
-    --weight_img_bce_loss 0 \
-    --weight_txt_bce_loss 0 \
-    --weight_txt_con_loss 1 \
-    --weight_img_con_loss 1 \
     --img_con_margin 0.4 \
     --txt_con_margin 0.4 \
+    --weight_img_bce_loss 0 \
+    --weight_txt_bce_loss 0 \
+    --weight_txt_con_loss 0.1 \
+    --weight_img_con_loss 1 \
     --d_img_ebd 2048 \
     --d_txt_ebd 768 \
     --num_protype 20

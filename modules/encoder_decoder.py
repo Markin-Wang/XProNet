@@ -323,7 +323,7 @@ class PositionalEncoding(nn.Module):
         return self.dropout(x)
 
 
-class BaseCMN(AttModel):
+class EncoderDecoder(AttModel):
 
     def make_model(self, tgt_vocab, cmn):
         c = copy.deepcopy
@@ -342,7 +342,7 @@ class BaseCMN(AttModel):
         return model
 
     def __init__(self, args, tokenizer, mode = 'train'):
-        super(BaseCMN, self).__init__(args, tokenizer)
+        super(EncoderDecoder, self).__init__(args, tokenizer)
         self.args = args
         self.num_layers = args.num_layers
         self.d_model = args.d_model
@@ -350,13 +350,10 @@ class BaseCMN(AttModel):
         self.num_heads = args.num_heads
         self.dropout = args.dropout
         self.topk = args.topk
-        self.img_num_protype = args.img_num_protype
-        self.text_num_protype = args.text_num_protype
         self.num_cluster = args.num_cluster
         self.img_margin = args.img_con_margin
         self.txt_margin = args.txt_con_margin
         self.num_protype = args.num_protype
-
 
         self.img_cls_head = nn.Sequential(nn.Linear(args.cmm_dim, args.cmm_dim), nn.Linear(args.cmm_dim, 14))
 
@@ -379,14 +376,6 @@ class BaseCMN(AttModel):
         self.model = self.make_model(tgt_vocab, self.cmn)
         self.logit = nn.Linear(args.d_model, tgt_vocab)
 
-        ''''
-
-        img_init_protypes = torch.load(args.img_init_protypes_path).float()
-        self.img_protype = nn.Parameter(img_init_protypes)
-
-        text_init_protypes = torch.load(args.text_init_protypes_path).float()
-        self.text_protype = nn.Parameter(text_init_protypes)
-        '''
         self.protypes = nn.Parameter(torch.FloatTensor(args.num_protype * args.num_cluster, args.d_txt_ebd + args.d_img_ebd))
         if mode == 'train':
             init_protypes = torch.load(args.init_protypes_path).float()
@@ -394,33 +383,15 @@ class BaseCMN(AttModel):
 
 
 
-
-        #self.img_feat_head = nn.Linear(args.d_model, 40)
-
-        #self.txt_feat_head = nn.Linear(args.d_model, 40)
-
-        #self.attn_global = MultiHeadedAttention(self.num_heads, self.d_model)
-        #self.global_protype = nn.Parameter(torch.FloatTensor(args.gbl_num_protype, args.cmm_dim))
-
-        #self.memory_matrix = nn.Parameter(torch.FloatTensor((args.num_cluster+2)*self.num_prototype, args.cmm_dim))
-
-        #self.labels = torch.arange(self.num_cluster).unsqueeze(1).expand(self.num_cluster,self.num_prototype).flatten()
-        #nn.init.normal_(self.memory_matrix, 0, 1 / args.cmm_dim)
-        #nn.init.normal_(self.global_protype, 0, 1 / args.cmm_dim)
-        #nn.init.normal_(self.prior_matrix, 0, 1 / args.cmm_dim)
-
     def init_hidden(self, bsz):
         return []
+
 
     def _prepare_feature(self, fc_feats, att_feats, att_masks, labels = None):
         att_feats, seq, att_masks, seq_mask, query_matrix, cmn_masks, _ = \
             self._prepare_feature_forward(att_feats, att_masks, labels=labels)
         memory = self.model.encode(att_feats, att_masks)
 
-        # print('111', fc_feats.shape) 12x4096
-        # print('222', att_feats.shape) # 12x98x512
-        # print('111',fc_feats[..., :1].shape) 12x1
-        #print('222', att_feats[..., :1].shape) 12x98x1
         return fc_feats[..., :1], att_feats[..., :1], memory, att_masks, labels, query_matrix, cmn_masks
 
     def _prepare_feature_forward(self, att_feats, att_masks=None, seq=None, labels=None,):
@@ -431,12 +402,6 @@ class BaseCMN(AttModel):
         if att_masks is None:
             att_masks = att_feats.new_ones(att_feats.shape[:2], dtype=torch.long)
 
-        # Memory querying and responding for visual features
-
-        #dummy_memory_matrix = self.memory_matrix.unsqueeze(0).expand(att_feats.size(0), self.memory_matrix.size(0), self.memory_matrix.size(1))
-        #responses = self.cmn(att_feats, dummy_memory_matrix, dummy_memory_matrix)
-
-        #max_num_protype = max((labels[:, -1]*3 + labels[:,: -1].sum(-1))) * self.num_protype
         max_num_protype = max(labels.sum(-1)) * self.num_protype
         protypes = self.dim_reduction(self.protypes)
         query_matrix = protypes.new_zeros(att_feats.size(0), max_num_protype.int(), protypes.shape[-1])
@@ -449,47 +414,17 @@ class BaseCMN(AttModel):
                         cur_query_matrix.extend(
                             protypes[j*self.num_protype:(j+1)*self.num_protype, :])
 
-
             cur_query_matrix = torch.stack(cur_query_matrix, 0)
-            #print('111',query_matrix[i, :cur_query_matrix.shape[0], :].shape, cur_query_matrix.shape)
+
             query_matrix[i, :cur_query_matrix.shape[0], :] = cur_query_matrix
             cmn_masks[i, :, :cur_query_matrix.shape[0]] = 1
 
 
-
-        #global_query_matrix = self.global_protype.unsqueeze(0).expand(
-        #    att_feats.size(0), self.global_protype.size(0), self.global_protype.size(1))
-
-        #global_query_matrix = self.attn_global(global_query_matrix, query_matrix, query_matrix,
-        #                                       mask = cmn_masks[:, :global_query_matrix.size(1) ,:])
-
-
-
-        #global_cmn_masks = self.global_protype.new_ones(global_query_matrix.shape[0], att_feats.size(1),
-         #                                               global_query_matrix.shape[1])
-
-        #query_matrix = torch.cat((query_matrix, global_query_matrix), dim=1)
-        #cmn_masks = torch.cat((cmn_masks, global_cmn_masks), dim=2)
-
         responses = self.cmn(att_feats, query_matrix, query_matrix, cmn_masks)
 
-
-        #embeddings = embeddings + responses
-        #att_feats = att_feats + responses
+        # feature interaction
         att_feats = self.fuse_feature(torch.cat((att_feats, responses), dim=2))
 
-
-
-
-
-        #dummy_memory_matrix = torch.stack([self.memory_matrix[labels[i]==1,:] for i in range(att_feats.size(0))])
-
-
-        #dummy_memory_matrix = torch.stack([torch.cat([self.memory_matrix, self.global_memory], 0) for index in idxs])
-        #responses = self.cmn(att_feats, dummy_memory_matrix, dummy_memory_matrix)
-
-
-        # Memory querying and responding for visual features
 
         att_masks = att_masks.unsqueeze(-2)
         if seq is not None:

@@ -79,8 +79,10 @@ class BaseTrainer(object):
             if self.mnt_mode != 'off':
                 try:
                     # check whether model performance improved or not, according to specified metric(mnt_metric)
+                    cur_metric = log['val_BLEU_4'] + 0.33 * log['val_BLEU_1'] + 0.67 * log['val_METEOR']
                     improved = (self.mnt_mode == 'min' and log[self.mnt_metric] <= self.mnt_best) or \
-                               (self.mnt_mode == 'max' and (log[self.mnt_metric]) >= self.mnt_best)
+                               (self.mnt_mode == 'max' and cur_metric >= self.mnt_best)
+                               #(self.mnt_mode == 'max' and (log[self.mnt_metric]) >= self.mnt_best)
                 except KeyError:
                     self.logger.warning(
                         "Warning: Metric '{}' is not found. " "Model performance monitoring is disabled.".format(
@@ -89,8 +91,8 @@ class BaseTrainer(object):
                     improved = False
 
                 if improved:
+                    self.mnt_best = cur_metric
                     #self.mnt_best = log[self.mnt_metric]
-                    self.mnt_best = log[self.mnt_metric]
                     not_improved_count = 0
                     best = True
                     best_epoch = epoch
@@ -101,7 +103,6 @@ class BaseTrainer(object):
                     self.logger.info("Validation performance didn\'t improve for {} epochs. " "Training stops.".format(
                         self.early_stop))
                     break
-
             if epoch % self.save_period == 0:
                 self._save_checkpoint(epoch, save_best=best)
             print('best performance in epoch: ',best_epoch)

@@ -2,17 +2,17 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from modules.base_cmn import BaseCMN
+from modules.encoder_decoder import EncoderDecoder
 from modules.visual_extractor import VisualExtractor
 
 
-class BaseCMNModel(nn.Module):
+class XProNet(nn.Module):
     def __init__(self, args, tokenizer, mode = 'train'):
-        super(BaseCMNModel, self).__init__()
+        super(XProNet, self).__init__()
         self.args = args
         self.tokenizer = tokenizer
         self.visual_extractor = VisualExtractor(args)
-        self.encoder_decoder = BaseCMN(args, tokenizer, mode = mode)
+        self.encoder_decoder = EncoderDecoder(args, tokenizer, mode = mode)
         #if args.dataset_name == 'iu_xray':
         #    self.forward = self.forward_iu_xray
         #else:

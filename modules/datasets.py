@@ -21,13 +21,6 @@ class BaseDataset(Dataset):
         with open(args.label_path, 'rb') as f:
             self.labels = pickle.load(f)
 
-        weights = torch.Tensor([ 75.62962963,  13.26896552,   9.345     ,  32.37096774,
-        40.38      , 128.3125    ,  27.34246575,  13.99275362,
-       205.9       ,  28.55714286, 107.89473684,  63.65625   ,
-        97.52380952,   0.31448539])
-
-
-
         for i in range(len(self.examples)):
             self.examples[i]['ids'] = tokenizer(self.examples[i]['report'])[:self.max_seq_length]
             self.examples[i]['mask'] = [1] * len(self.examples[i]['ids'])

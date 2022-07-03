@@ -1,7 +1,7 @@
 python main.py \
     --image_dir data/iu_xray/images/ \
     --ann_path data/iu_xray/annotation.json \
-    --label_path data/iu_xray/labels_14.pickle \
+    --label_path data/iu_xray/labels/labels_14.pickle \
     --img_init_protypes_path data/iu_xray/init_protypes_2048_empty_224_both.pt \
     --text_init_protypes_path data/iu_xray/text_empty_initprotypes_512.pt \
     --init_protypes_path data/iu_xray/cat_initprotypes_2048_768_14_cluster10.pt \
@@ -24,9 +24,6 @@ python main.py \
     --log_period 50 \
     --n_gpu 1 \
     --num_cluster 14 \
-    --img_num_protype 8 \
-    --text_num_protype 4 \
-    --gbl_num_protype 8 \
     --img_con_margin 0.4 \
     --txt_con_margin 0.4 \
     --weight_img_bce_loss 0 \

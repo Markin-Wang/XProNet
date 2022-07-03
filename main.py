@@ -3,7 +3,7 @@ import argparse
 import numpy as np
 import torch
 import random
-from models.models import BaseCMNModel
+from models.models import XProNet
 from modules.dataloaders import R2DataLoader
 from modules.loss import compute_loss
 from modules.metrics import compute_scores
@@ -142,7 +142,7 @@ def main():
     test_dataloader = R2DataLoader(args, tokenizer, split='test', shuffle=False)
 
     # build model architecture
-    model = BaseCMNModel(args, tokenizer)
+    model = XProNet(args, tokenizer)
 
     # get function handles of loss and metrics
     criterion = compute_loss

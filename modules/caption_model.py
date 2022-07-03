@@ -74,6 +74,16 @@ class CaptionModel(nn.Module):
             #print('111', ys.shape, ix.shape) 12x2283
             ys, ix = ys[:, :beam_size], ix[:, :beam_size]
             beam_ix = ix // vocab_size  # Nxb which beam
+            #
+
+
+
+
+
+
+
+
+            beam_ix = torch.div(ix, vocab_size, rounding_mode = 'floor')
             selected_ix = ix % vocab_size  # Nxb # which world
             state_ix = (beam_ix + torch.arange(batch_size).type_as(beam_ix).unsqueeze(-1) * logprobs.shape[1]).reshape(
                 -1)  # N*b which in Nxb beams
