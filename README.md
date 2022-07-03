@@ -4,7 +4,26 @@ This is the official implementation of [Cross-modal Memory Networks for Radiolog
 
 ## Abstract
 
-The core for tackling the fine-grained visual categorization (FGVC) is to learn subtleyet discriminative features. Most previous works achieve this by explicitly selecting thediscriminative parts or integrating the attention mechanism via CNN-based approaches.However,  these  methods  enhance  the  computational  complexity  and  make  the  modeldominated  by  the  regions  containing  the  most  of  the  objects.   Recently,  vision  trans-former (ViT) has achieved SOTA performance on general image recognition tasks.  Theself-attention mechanism aggregates and weights the information from all patches to theclassification token,  making it perfectly suitable for FGVC. Nonetheless,  the classifi-cation  token  in  the  deep  layer  pays  more  attention  to  the  global  information,  lackingthe local and low-level features that are essential for FGVC. In this work, we proposea novel pure transformer-based framework Feature Fusion Vision Transformer (FFVT)where we aggregate the important tokens from each transformer layer to compensate thelocal, low-level and middle-level information.  We design a novel token selection mod-ule called mutual attention weight selection (MAWS) to guide the network effectivelyand efficiently towards selecting discriminative tokens without introducing extra param-eters.  We verify the effectiveness of FFVT on four benchmarks where FFVT achievesthe state-of-the-art performance.
+Radiology report generation (RRG) aims to describe auto-
+matically a radiology image with human-like language. As an alternative
+to expert diagnosis, RRG could potentially support the work of radiol-
+ogists, reducing the burden of manual reporting. Previous approaches
+often adopt an encoder-decoder architecture and focus on single-modal
+feature learning, while few studies explore cross-modal feature inter-
+action. Here we propose a Cross-modal PROtotype driven NETwork
+(XPRONET) to promote cross-modal pattern learning and exploit it
+to improve the task of radiology report generation. This is achieved by
+three well-designed, fully differentiable and complementary modules: a
+shared cross-modal prototype matrix to record the cross-modal proto-
+types; a cross-modal prototype network to learn the cross-modal pro-
+totypes and embed the cross-modal information into the visual and
+textual features; and an improved multi-label contrastive loss to en-
+able and enhance multi-label prototype learning. Experimental results
+demonstrate that XPRONET obtains substantial improvements on two
+commonly used medical report generation benchmark datasets, i.e., IU-
+Xray and MIMIC-CXR, where its performance exceeds recent state-of-
+the-art approaches by a large margin on IU-Xray dataset and achieves
+the SOTA performance on MIMIC-CXR. 
 
 ## Citations
 
