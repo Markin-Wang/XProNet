@@ -36,8 +36,8 @@ conda env create --name [env_name] --file env.yml
 ```
 
 
-## Download R2GenCMN
-You can download the models we trained [here](https://drive.google.com/drive/folders/1_y_6srL2ZnvDvE_I0YDvdgRzZCNrcMUf?usp=sharing).
+## Download Trained Models
+You can download the trained models [here](https://drive.google.com/drive/folders/1_y_6srL2ZnvDvE_I0YDvdgRzZCNrcMUf?usp=sharing).
 
 ## Datasets
 We use two datasets (IU X-Ray and MIMIC-CXR) in our paper.
