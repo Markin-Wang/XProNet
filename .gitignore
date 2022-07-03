@@ -16,4 +16,5 @@ gen_init_protype*
 visualize.py
 visualize_iu_xray.sh
 visualize_mimic_cxr.sh
-.json
+mimic_predict_sample_abnormal.json
+RRGPro.tar.gz
