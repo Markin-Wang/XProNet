@@ -29,18 +29,9 @@ the SOTA performance on MIMIC-CXR.
 
 ## Citations
 
-If you use or extend our work, please cite our paper at ACL-IJCNLP-2021.
+If you use or extend our work, please cite our paper.
 ```
-@inproceedings{chen-acl-2021-r2gencmn,
-    title = "Generating Radiology Reports via Memory-driven Transformer",
-    author = "Chen, Zhihong and
-      Shen, Yaling  and
-      Song, Yan and
-      Wan, Xiang",
-    booktitle = "Proceedings of the Joint Conference of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing",
-    month = aug,
-    year = "2021",
-}
+
 ```
 
 ## Prerequisites
