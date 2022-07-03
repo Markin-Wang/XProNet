@@ -65,6 +65,20 @@ For `IU X-Ray`, you can download the dataset from [here](https://drive.google.co
 
 For `MIMIC-CXR`, you can download the dataset from [here](https://drive.google.com/file/d/1DS6NYirOXQf8qYieSVMvqNwuOlgAbM_E/view?usp=sharing) and then put the files in `data/mimic_cxr`.
 
+## Pseudo Label Generation
+You can generate the pesudo label for each dataset by leveraging the automatic labller ChexBert[https://github.com/stanfordmlgroup/CheXbert].
+
+We also provide the generated labels in the files directory.
+
+## Cross-modal Prototypes Initilization
+The processed cross-modal prototypes are provided in the files directly.
+For those who prefer to generate the prototype for initilization by their own, you should:
+- Leverage the pretrained visual extractor (imagenet-pretrained) and Bert (ChexBert) to extract the visual and texual features.
+- Concat the visual and texual features.
+- Utilize K-mean algorithm to cluster to cross-modal features to 14 clusters.
+
+The above procedure is elobarately described in our paper.
+
 ## Run on IU X-Ray
 
 Run `bash run_iu_xray.sh` to train a model on the IU X-Ray data.
