@@ -72,3 +72,7 @@ Run `bash run_iu_xray.sh` to train a model on the IU X-Ray data.
 ## Run on MIMIC-CXR
 
 Run `bash run_mimic_cxr.sh` to train a model on the MIMIC-CXR data.
+
+## Acknowledgment
+Our project references the codes in the following repos. Thanks for thier works and sharing.
+- [R2GenCMN](https://github.com/cuhksz-nlp/R2GenCMN))
