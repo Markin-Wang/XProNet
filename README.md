@@ -57,6 +57,7 @@ We use two datasets (IU X-Ray and MIMIC-CXR) in our paper.
 For `IU X-Ray`, you can download the dataset from [here](https://openi.nlm.nih.gov/faq).
 
 For `MIMIC-CXR`, you can download the dataset from [here](https://physionet.org/content/mimic-cxr/2.0.0/).
+
 After downloading the datasets, put them in the directory `data`.
 
 ## Pseudo Label Generation
