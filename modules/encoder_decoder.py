@@ -374,8 +374,6 @@ class EncoderDecoder(AttModel):
             init_protypes = torch.load(args.init_protypes_path).float()
             self.protypes = nn.Parameter(init_protypes)
 
-
-
     def init_hidden(self, bsz):
         return []
 
@@ -406,7 +404,6 @@ class EncoderDecoder(AttModel):
                 if labels[i, j] == 1:
                         cur_query_matrix.extend(
                             protypes[j*self.num_protype:(j+1)*self.num_protype, :])
-
             cur_query_matrix = torch.stack(cur_query_matrix, 0)
 
             query_matrix[i, :cur_query_matrix.shape[0], :] = cur_query_matrix
