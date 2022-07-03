@@ -5,7 +5,6 @@ results/*
 .ipynb_checkpoints
 .idea
 logs/*
-./run_iu_xray.sh
 ./run_mimic_cxr.sh
 run_iu_xray.sh
 modules/__pycache__
@@ -17,3 +16,4 @@ gen_init_protype*
 visualize.py
 visualize_iu_xray.sh
 visualize_mimic_cxr.sh
+.json
