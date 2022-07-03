@@ -6,7 +6,6 @@ results/*
 .idea
 logs/*
 ./run_mimic_cxr.sh
-run_iu_xray.sh
 modules/__pycache__
 .idea
 .ipynb_checkpoints
