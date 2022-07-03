@@ -11,7 +11,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import pickle
 from .utils import my_con_loss
-from .utils import my_con_loss2
 
 from .att_model import pack_wrapper, AttModel
 
@@ -79,18 +78,12 @@ class Transformer(nn.Module):
 
         cmn_masks = cmn_masks.unsqueeze(1).expand(cmn_masks.shape[0], embeddings.size(1), cmn_masks.shape[-1])
 
-        # Memory querying and responding for textual features
-        #dummy_memory_matrix = memory_matrix.unsqueeze(0).expand(embeddings.size(0), memory_matrix.size(0), memory_matrix.size(1))
-        #dummy_memory_matrix = torch.stack([self.memory_matrix[labels[i] == 1, :] for i in range(embeddings.size(0))])
-        #responses = self.cmn(embeddings, dummy_memory_matrix, dummy_memory_matrix)
-
+        # Cross-modal prototype querying and responding for textual features
 
         responses = self.cmn(embeddings, memory_matrix, memory_matrix, cmn_masks)
 
         #embeddings = embeddings + responses
         embeddings = self.fuse_feature(torch.cat((embeddings, responses), dim=2))
-        # Memory querying and responding for textual features
-
 
         return self.decoder(embeddings, memory, src_mask, tgt_mask, past=past), embeddings, responses
 
@@ -445,13 +438,13 @@ class EncoderDecoder(AttModel):
         out, txt_feats, txt_responses = self.model(att_feats, seq, att_masks, seq_mask, memory_matrix=query_matrix,
                          cmn_masks = cmn_masks, labels = labels)
         outputs = F.log_softmax(self.logit(out), dim=-1)
-        img_con_loss = my_con_loss2(torch.mean(img_responses, dim=1), num_classes= self.num_cluster,
+        img_con_loss = my_con_loss(torch.mean(img_responses, dim=1), num_classes= self.num_cluster,
                                num_protypes = self.num_protype, labels = labels, margin = self.img_margin)
         img_con_loss = img_con_loss.unsqueeze(0)  # for  multi-gpu setting
-        txt_con_loss = my_con_loss2(torch.mean(txt_responses, dim=1), num_classes= self.num_cluster,
+        txt_con_loss = my_con_loss(torch.mean(txt_responses, dim=1), num_classes= self.num_cluster,
                                num_protypes = self.num_protype, labels = labels, margin = self.txt_margin)
         txt_con_loss = txt_con_loss.unsqueeze(0)  # for  multi-gpu setting
-        #bce_loss = self.bce_loss(self.img_feat_head(torch.mean(att_feats, dim=1)), labels)
+
         img_bce_loss = self.img_cls_head(torch.mean(att_feats, dim=1))
         txt_bce_loss = self.txt_cls_head(torch.mean(txt_feats, dim=1))
 
@@ -460,8 +453,6 @@ class EncoderDecoder(AttModel):
     def core(self, it, fc_feats_ph, att_feats_ph, memory, state, mask, query_matrix, cmn_masks, labels=None):
         if len(state) == 0:
             ys = it.unsqueeze(1)
-            # print('111',ys.shape) 12x1
-            #print('222',fc_feats_ph.shape) 12 x 1
 
             past = [fc_feats_ph.new_zeros(self.num_layers * 2, fc_feats_ph.shape[0], 0, self.d_model),
                     fc_feats_ph.new_zeros(self.num_layers * 2, fc_feats_ph.shape[0], 0, self.d_model)]
@@ -485,4 +476,4 @@ def con_loss(features, labels):
     neg_cos_matrix[neg_cos_matrix < 0] = 0
     loss = (pos_cos_matrix * pos_label_matrix).sum() + (neg_cos_matrix * neg_label_matrix).sum()
     loss /= (B * B)
-    return loss      
+    return loss
