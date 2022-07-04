@@ -80,9 +80,8 @@ Our experiments on IU X-Ray were done on a machine with 1x2080Ti.
 Run `bash run_iu_xray.sh` to train a model on the IU X-Ray data.
 
 ## Run on MIMIC-CXR
-Our experiments on MIMIC-CXR were done on a machine with 4x2080Ti
+Our experiments on MIMIC-CXR were done on a machine with 4x2080Ti.
 
-.
 Run `bash run_mimic_cxr.sh` to train a model on the MIMIC-CXR data.
 
 ## Acknowledgment
