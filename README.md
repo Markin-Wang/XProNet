@@ -25,20 +25,13 @@ Xray and MIMIC-CXR, where its performance exceeds recent state-of-
 the-art approaches by a large margin on IU-Xray dataset and achieves
 the SOTA performance on MIMIC-CXR. 
 
+<img src='architecture.png'>
+
 ## Citations
 
-If you use or extend our work, please cite our paper at ACL-IJCNLP-2021.
+If you use or extend our work, please cite our paper.
 ```
-@inproceedings{chen-acl-2021-r2gencmn,
-    title = "Generating Radiology Reports via Memory-driven Transformer",
-    author = "Chen, Zhihong and
-      Shen, Yaling  and
-      Song, Yan and
-      Wan, Xiang",
-    booktitle = "Proceedings of the Joint Conference of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing",
-    month = aug,
-    year = "2021",
-}
+
 ```
 
 ## Prerequisites
@@ -64,6 +57,7 @@ We use two datasets (IU X-Ray and MIMIC-CXR) in our paper.
 For `IU X-Ray`, you can download the dataset from [here](https://openi.nlm.nih.gov/faq).
 
 For `MIMIC-CXR`, you can download the dataset from [here](https://physionet.org/content/mimic-cxr/2.0.0/).
+
 After downloading the datasets, put them in the directory `data`.
 
 ## Pseudo Label Generation
