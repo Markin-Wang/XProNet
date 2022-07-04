@@ -66,7 +66,7 @@ You can generate the pesudo label for each dataset by leveraging the automatic l
 We also provide the generated labels in the files directory.
 
 ## Cross-modal Prototypes Initialization
-The processed cross-modal prototypes are provided in the files directly.
+The processed cross-modal prototypes are provided in the files directory.
 For those who prefer to generate the prototype for initilization by their own, you should:
 - Leverage the pretrained visual extractor (imagenet-pretrained) and Bert (ChexBert) to extract the visual and texual features.
 - Concat the visual and texual features.
