@@ -84,10 +84,7 @@ def my_con_loss(features, num_classes, num_protypes, labels, margin = 0.4, alpha
         pos_label_matrix[pos_label_matrix != 0] = 1
         label_diff = abs(labels[i] - labels[pos_label_matrix == 1]).sum(dim = 1)
         label_sum = (labels[i] + labels[pos_label_matrix == 1]).sum(dim=1)
-        #label_sum[label_sum != 0] = 1
-        #label_sum = label_sum.sum(dim=1)
         max_sim[pos_label_matrix == 1] = 1/(alpha ** (label_diff/label_sum))
-        #print('333', max_sim)
         neg_label_matrix = 1 - pos_label_matrix
         pos_cos_matrix = max_sim - cos_matrix[i, :]
         pos_cos_matrix[pos_cos_matrix < 0] = 0
