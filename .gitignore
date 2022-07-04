@@ -17,3 +17,4 @@ visualize_iu_xray.sh
 visualize_mimic_cxr.sh
 mimic_predict_sample_abnormal.json
 RRGPro.tar.gz
+iu_xray_keywords.txt
