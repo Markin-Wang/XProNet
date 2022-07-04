@@ -1,5 +1,0 @@
-The number of keywords: 1379.
-The maximum length of one keyword: 3.
-The number of the report: 2069.
-Select Top 3 keywords for each report.
-Keywords||Frequency
