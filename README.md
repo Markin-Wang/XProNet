@@ -4,26 +4,8 @@ This is the official implementation of [Cross-modal Prototype Driven Network for
 
 ## Abstract
 
-Radiology report generation (RRG) aims to describe auto-
-matically a radiology image with human-like language. As an alternative
-to expert diagnosis, RRG could potentially support the work of radiol-
-ogists, reducing the burden of manual reporting. Previous approaches
-often adopt an encoder-decoder architecture and focus on single-modal
-feature learning, while few studies explore cross-modal feature inter-
-action. Here we propose a Cross-modal PROtotype driven NETwork
-(XPRONET) to promote cross-modal pattern learning and exploit it
-to improve the task of radiology report generation. This is achieved by
-three well-designed, fully differentiable and complementary modules: a
-shared cross-modal prototype matrix to record the cross-modal proto-
-types; a cross-modal prototype network to learn the cross-modal pro-
-totypes and embed the cross-modal information into the visual and
-textual features; and an improved multi-label contrastive loss to en-
-able and enhance multi-label prototype learning. Experimental results
-demonstrate that XPRONET obtains substantial improvements on two
-commonly used medical report generation benchmark datasets, i.e., IU-
-Xray and MIMIC-CXR, where its performance exceeds recent state-of-
-the-art approaches by a large margin on IU-Xray dataset and achieves
-the SOTA performance on MIMIC-CXR. 
+Radiology report generation (RRG) aims to describe automatically a radiology image with human-like language. As an alternative to expert diagnosis, RRG could potentially support the work of radiologists, reducing the burden of manual reporting. Previous approaches often adopt an encoder-decoder architecture and focus on single-modal feature learning, while few studies explore cross-modal feature interaction. Here we propose a Cross-modal PROtotype driven NETwork (XPRONET) to promote cross-modal pattern learning and exploit it to improve the task of radiology report generation. This is achieved by three well-designed, fully differentiable and complementary modules: a shared cross-modal prototype matrix to record the cross-modal proto-
+types; a cross-modal prototype network to learn the cross-modal prototypes and embed the cross-modal information into the visual and textual features; and an improved multi-label contrastive loss to enable and enhance multi-label prototype learning. Experimental results demonstrate that XPRONET obtains substantial improvements on two commonly used medical report generation benchmark datasets, i.e., IU-Xray and MIMIC-CXR, where its performance exceeds recent state-of-the-art approaches by a large margin on IU-Xray dataset and achieves the SOTA performance on MIMIC-CXR. 
 
 <img src='architecture.png'>
 
