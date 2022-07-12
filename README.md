@@ -1,6 +1,6 @@
 # XProNet
 
-This is the official implementation of [Cross-modal Prototype Driven Network for Radiology Report Generation]() accepted to ECCV2022.
+This is the official implementation of [Cross-modal Prototype Driven Network for Radiology Report Generation](https://arxiv.org/abs/2207.04818) accepted to ECCV2022.
 
 ## Abstract
 
