@@ -214,6 +214,7 @@ class Trainer(BaseTrainer):
             txt_bce_loss += txt_bce_ls.item()
             #con_loss += 0
             ce_loss += ce_ls.item()
+            # bce loss, the multi-label classification loss is only used to see the performance of prototype learning, weights=0
             loss = ce_ls + self.img_con_loss_weight * img_con_ls + self.txt_con_loss_weight * txt_con_ls\
                    + self.img_bce_loss_weight * img_bce_ls + self.txt_bce_loss_weight * txt_bce_ls
             self.optimizer.zero_grad()
