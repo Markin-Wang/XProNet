@@ -13,7 +13,12 @@ types; a cross-modal prototype network to learn the cross-modal prototypes and e
 
 If you use or extend our work, please cite our paper.
 ```
-
+@article{wang2022cross,
+  title={Cross-modal Prototype Driven Network for Radiology Report Generation},
+  author={Wang, Jun and Bhalerao, Abhir and He, Yulan},
+  journal={arXiv preprint arXiv:2207.04818},
+  year={2022}
+}
 ```
 
 ## Prerequisites
