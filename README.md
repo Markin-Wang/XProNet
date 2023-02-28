@@ -48,7 +48,7 @@ For `MIMIC-CXR`, you can download the dataset from [here](https://physionet.org/
 After downloading the datasets, put them in the directory `data`.
 
 ## Pseudo Label Generation
-You can generate the pesudo label for each dataset by leveraging the automatic labller [ChexBert](https://github.com/stanfordmlgroup/CheXbert).
+You can generate the pesudo label for each dataset by leveraging the automatic labeler  [ChexBert](https://github.com/stanfordmlgroup/CheXbert).
 
 We also provide the generated labels in the files directory.
 
@@ -79,5 +79,5 @@ Visual extractor labels: {'BLEU_1': 0.3439767902051841, 'BLEU_2': 0.214721829856
 
 
 ## Acknowledgment
-Our project references the codes in the following repos. Thanks for thier works and sharing.
+Our project references the codes in the following repos. Thanks for their works and sharing.
 - [R2GenCMN](https://github.com/cuhksz-nlp/R2GenCMN)
