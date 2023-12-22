@@ -27,7 +27,7 @@ If you use or extend our work, please cite our paper.
 
 ***12/22/2023***
 
-1. XPRONet now supports Multi-GPU (Distributed) and Mixed Precision Training, to support the new features, please ensure Pytorch Version >= 1.8.
+1. XPRONet now supports Multi-GPU (Distributed) and Mixed Precision Training, to support the new features, please ensure Pytorch Version >= 1.8 (Note there may be slight difference for the test results between Multi-GPU test and Single GPU test due to the DDP sampler.
 2. We provide a separate test scripts to enable quick test in the trained dataset.
 3. We recommend to re-generate the initial prototype matrix if you have your own data-precessing on the dataset, e.g, different image resolution or downsampled images.
 4. We optimize and clean some parts of the code.

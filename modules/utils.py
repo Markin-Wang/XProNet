@@ -1,7 +1,7 @@
 import torch
 import torch.nn.functional as F
 import argparse
-
+import torch.distributed as dist
 
 def parse_agrs():
     parser = argparse.ArgumentParser()

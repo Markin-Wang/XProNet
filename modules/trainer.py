@@ -109,7 +109,7 @@ class BaseTrainer(object):
                     break
             if dist.get_rank() == self.local_rank and epoch % self.save_period == 0:
                 self._save_checkpoint(epoch, save_best=best)
-            self.logger.info('best performance in epoch: ',best_epoch)
+            self.logger.info(f'best performance in epoch: {best_epoch}')
 
     def _synchronize_data(self, log):
         pairs = [[k, v] for k, v in log.items()]
