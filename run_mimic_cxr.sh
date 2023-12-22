@@ -1,4 +1,4 @@
-TORCH_DISTRIBUTED_DEBUG=INFO torchrun --nnodes=1 --nproc_per_node=1 main.py \
+torchrun --nnodes=1 --nproc_per_node=1 main.py \
     --image_dir data/mimic_cxr/images/ \
     --ann_path data/mimic_cxr/annotation.json \
     --label_path data/mimic_cxr/labels_14.pickle \
