@@ -2,7 +2,8 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 from torchvision import transforms
-
+from torch.utils.data import DistributedSampler
+import torch.distributed as dist
 from .datasets import IuxrayMultiImageDataset, MimiccxrSingleImageDataset
 
 
@@ -36,13 +37,21 @@ class R2DataLoader(DataLoader):
         else:
             self.dataset = MimiccxrSingleImageDataset(self.args, self.tokenizer, self.split, transform=self.transform)
 
+        num_tasks = dist.get_world_size()
+        global_rank = dist.get_rank()
+        self.sampler = torch.utils.data.DistributedSampler(
+            self.dataset, num_replicas=num_tasks, rank=global_rank, shuffle=self.shuffle
+        )
+
         self.init_kwargs = {
             'dataset': self.dataset,
             'batch_size': self.batch_size,
-            'shuffle': self.shuffle,
+            'sampler': self.sampler,
+            #'shuffle': self.shuffle,
             'collate_fn': self.collate_fn,
             'num_workers': self.num_workers,
-            'drop_last':drop_last
+            'drop_last':drop_last,
+            'prefetch_factor': self.batch_size // self.num_workers * 2
         }
         super().__init__(**self.init_kwargs)
 

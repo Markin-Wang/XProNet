@@ -8,6 +8,7 @@ class Tokenizer(object):
         self.ann_path = args.ann_path
         self.threshold = args.threshold
         self.dataset_name = args.dataset_name
+        self.all_texts = []
         if self.dataset_name == 'iu_xray':
             self.clean_report = self.clean_report_iu_xray
         else:
@@ -19,7 +20,9 @@ class Tokenizer(object):
         total_tokens = []
 
         for example in self.ann['train']:
-            tokens = self.clean_report(example['report']).split()
+            report = self.clean_report(example['report'])
+            self.all_texts.append(report)
+            tokens = report.split()
             for token in tokens:
                 total_tokens.append(token)
 

@@ -23,11 +23,19 @@ If you use or extend our work, please cite our paper.
 }
 ```
 
+## Updates
+
+***12/22/2023***
+
+1. XPRONet now supports Multi-GPU (Distributed) and Mixed Precision Training, to support the new features, please ensure Pytorch Version >= 1.8.
+2. We provide a separate test scripts to enable quick test in the trained dataset.
+3. We recommend to re-generate the initial prototype matrix if you have your own data-precessing on the dataset, e.g, different image resolution or downsampled images.
+
 ## Prerequisites
 
 The following packages are required to run the scripts:
 - [Python >= 3.6]
-- [PyTorch = 1.6]
+- [PyTorch >= 1.6]
 - [Torchvision]
 - [Pycocoevalcap]
 

@@ -1,28 +1,31 @@
-import logging
 import os
 from abc import abstractmethod
-
+from tqdm import tqdm
 import torch
 from numpy import inf
 from .utils import con_loss as contrastive_loss
-
+import json
+from torch.cuda.amp import GradScaler, autocast
+from modules.utils import reduce_tensor
+import torch.distributed as dist
 
 
 class BaseTrainer(object):
-    def __init__(self, model, criterion, metric_ftns, optimizer, args, lr_scheduler):
+    def __init__(self, model, criterion, metric_ftns, optimizer, args, lr_scheduler, logger):
         self.args = args
 
-        logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message)s',
-                            datefmt='%m/%d/%Y %H:%M:%S', level=logging.INFO)
-        self.logger = logging.getLogger(__name__)
+        # logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message)s',
+        #                     datefmt='%m/%d/%Y %H:%M:%S', level=logging.INFO)
+        self.logger = logger
+        self.use_amp = args.use_amp
+        self.local_rank = args.local_rank
 
         # setup GPU device if available, move model into configured device
-        self.device, device_ids = self._prepare_device(args.n_gpu)
+        self.model = model
+        self.device = self.model.device
 
-  
-        self.model = model.to(self.device)
-        if len(device_ids) > 1:
-            self.model = torch.nn.DataParallel(model, device_ids=device_ids)
+        # Mixed Precision Training
+        self.scaler = GradScaler(enabled=self.use_amp, init_scale=256)
 
         self.criterion = criterion
         self.metric_ftns = metric_ftns
@@ -43,7 +46,7 @@ class BaseTrainer(object):
 
         self.start_epoch = 1
         self.n_gpu = args.n_gpu
-        self.checkpoint_dir = args.save_dir
+        self.checkpoint_dir = os.path.join(args.output, args.dataset_name, args.exp_name)
 
         self.best_recorder = {'val': {self.mnt_metric: self.mnt_best},
                               'test': {self.mnt_metric_test: self.mnt_best}}
@@ -67,6 +70,7 @@ class BaseTrainer(object):
             # save logged informations into log dict
             log = {'epoch': epoch}
             log.update(result)
+            log = self._synchronize_data(log)
 
             self._record_best(log)
 
@@ -103,9 +107,17 @@ class BaseTrainer(object):
                     self.logger.info("Validation performance didn\'t improve for {} epochs. " "Training stops.".format(
                         self.early_stop))
                     break
-            if epoch % self.save_period == 0:
+            if dist.get_rank() == self.local_rank and epoch % self.save_period == 0:
                 self._save_checkpoint(epoch, save_best=best)
-            print('best performance in epoch: ',best_epoch)
+            self.logger.info('best performance in epoch: ',best_epoch)
+
+    def _synchronize_data(self, log):
+        pairs = [[k, v] for k, v in log.items()]
+        keys = [x[0] for x in pairs]
+        values = torch.Tensor([x[1] for x in pairs]).to(self.model.device)
+        values = reduce_tensor(values)
+        log.update({k: v.item() for k, v in zip(keys, values)})
+        return log
 
     def _record_best(self, log):
         improved_val = (self.mnt_mode == 'min' and log[self.mnt_metric] <= self.best_recorder['val'][
@@ -173,9 +185,9 @@ class BaseTrainer(object):
 
 
 class Trainer(BaseTrainer):
-    def __init__(self, model, criterion, metric_ftns, optimizer, args, lr_scheduler, train_dataloader,
+    def __init__(self, model, criterion, metric_ftns, optimizer, args, lr_scheduler, logger, train_dataloader,
                  val_dataloader, test_dataloader):
-        super(Trainer, self).__init__(model, criterion, metric_ftns, optimizer, args, lr_scheduler)
+        super(Trainer, self).__init__(model, criterion, metric_ftns, optimizer, args, lr_scheduler, logger)
         self.train_dataloader = train_dataloader
         self.val_dataloader = val_dataloader
         self.test_dataloader = test_dataloader
@@ -190,57 +202,60 @@ class Trainer(BaseTrainer):
         ce_loss = 0
         img_con_loss = 0
         txt_con_loss = 0
-        img_bce_loss = 0
-        txt_bce_loss = 0
         self.model.train()
-        for batch_idx, (images_id, images, reports_ids, reports_masks, labels) in enumerate(self.train_dataloader):
+        for batch_idx, (images_id, images, reports_ids, reports_masks, labels) in enumerate(tqdm(self.train_dataloader)):
 
             images, reports_ids, reports_masks, labels = images.to(self.device), reports_ids.to(self.device), \
                                                  reports_masks.to(self.device), labels.to(self.device)
+            self.optimizer.zero_grad()
+            with autocast(dtype=torch.float16, enabled=self.use_amp):
+                output, img_con_ls, txt_con_ls, img_cls, txt_cls = self.model(images, reports_ids, labels=labels, mode='train')
+                # img_bce_ls = self.bce_loss(img_cls, labels)
+                # txt_bce_ls = self.bce_loss(txt_cls, labels)
+                ce_ls = self.criterion(output, reports_ids, reports_masks)
+                #print('222', con_ls, con_ls.shape)
+                #if self.n_gpu > 1:
+                img_con_ls = img_con_ls.mean()
+                txt_con_ls = txt_con_ls.mean()
+                loss = ce_ls + self.img_con_loss_weight * img_con_ls + self.txt_con_loss_weight * txt_con_ls
+                       # + self.img_bce_loss_weight * img_bce_ls + self.txt_bce_loss_weight * txt_bce_ls
 
-            output, img_con_ls, txt_con_ls, img_cls, txt_cls = self.model(images, reports_ids, labels=labels, mode='train')
-            img_bce_ls = self.bce_loss(img_cls, labels)
-            txt_bce_ls = self.bce_loss(txt_cls, labels)
-            ce_ls = self.criterion(output, reports_ids, reports_masks)
-            #print('222', con_ls, con_ls.shape)
-            #if self.n_gpu > 1:
-            img_con_ls = img_con_ls.mean()
-            txt_con_ls = txt_con_ls.mean()
             #con_ls = contrastive_loss(memory_matrix, labels)
             #con_ls = 0
             img_con_loss += img_con_ls.item()
             txt_con_loss += txt_con_ls.item()
-            img_bce_loss += img_bce_ls.item()
-            txt_bce_loss += txt_bce_ls.item()
+            # img_bce_loss += img_bce_ls.item()
+            # txt_bce_loss += txt_bce_ls.item()
             #con_loss += 0
             ce_loss += ce_ls.item()
             # bce loss, the multi-label classification loss is only used to see the performance of prototype learning, weights=0
-            loss = ce_ls + self.img_con_loss_weight * img_con_ls + self.txt_con_loss_weight * txt_con_ls\
-                   + self.img_bce_loss_weight * img_bce_ls + self.txt_bce_loss_weight * txt_bce_ls
-            self.optimizer.zero_grad()
-            loss.backward()
-            self.optimizer.step()
+
+            self.scaler.scale(loss).backward()
+            self.scaler.step(self.optimizer)
+            self.scaler.update()
             if batch_idx % self.args.log_period == 0:
-                self.logger.info('[{}/{}] Step: {}/{}, CE Ls: {:.5f}, CON Ls1: {:.5f}, CON Ls2: {:.5f}, BCE Ls1: {:.5f}, BCE Ls2: {:.5f}.'
+                self.logger.info('[{}/{}] Step: {}/{}, CE Ls: {:.5f}, CON Ls1: {:.5f}, CON Ls2: {:.5f}'
                                  .format(epoch, self.epochs, batch_idx, len(self.train_dataloader),
                                          ce_loss / (batch_idx + 1), img_con_loss / (batch_idx + 1),
                                          txt_con_loss / (batch_idx + 1),
-                                         img_bce_loss / (batch_idx + 1),
-                                         txt_bce_ls / (batch_idx + 1)))
+                                         # img_bce_loss / (batch_idx + 1),
+                                         # txt_bce_ls / (batch_idx + 1))
+                                 ))
 
         log = {'ce_loss': ce_loss / len(self.train_dataloader), 'img_con': img_con_loss / len(self.train_dataloader),
                'txt_con': txt_con_loss / len(self.train_dataloader),
-               'img_bce_loss': img_bce_loss / len(self.train_dataloader), 'txt_bce_loss': txt_bce_loss / len(self.train_dataloader)}
+               # 'img_bce_loss': img_bce_loss / len(self.train_dataloader), 'txt_bce_loss': txt_bce_loss / len(self.train_dataloader)
+               }
 
         self.logger.info('[{}/{}] Start to evaluate in the validation set.'.format(epoch, self.epochs))
         self.model.eval()
         with torch.no_grad():
             val_gts, val_res = [], []
-            for batch_idx, (images_id, images, reports_ids, reports_masks, labels) in enumerate(self.val_dataloader):
+            for batch_idx, (images_id, images, reports_ids, reports_masks, labels) in enumerate(tqdm(self.val_dataloader)):
                 images, reports_ids, reports_masks, labels = images.to(self.device), reports_ids.to(
                     self.device), reports_masks.to(self.device), labels.to(self.device)
-
-                output, _ = self.model(images, labels = labels, mode='sample')
+                with autocast(dtype=torch.float16, enabled=self.use_amp):
+                    output, _ = self.model(images, labels = labels, mode='sample')
                 # change to self.model.module for multi-gpu
                 if self.n_gpu>1:
                     reports = self.model.module.tokenizer.decode_batch(output.cpu().numpy())
@@ -259,10 +274,11 @@ class Trainer(BaseTrainer):
         self.model.eval()
         with torch.no_grad():
             test_gts, test_res = [], []
-            for batch_idx, (images_id, images, reports_ids, reports_masks, labels) in enumerate(self.test_dataloader):
+            for batch_idx, (images_id, images, reports_ids, reports_masks, labels) in enumerate(tqdm(self.test_dataloader)):
                 images, reports_ids, reports_masks, labels = images.to(self.device), reports_ids.to(
                     self.device), reports_masks.to(self.device), labels.to(self.device)
-                output, _ = self.model(images, labels=labels, mode='sample')
+                with autocast(dtype=torch.float16, enabled=self.use_amp):
+                    output, _ = self.model(images, labels=labels, mode='sample')
                 if self.n_gpu>1:
                     reports = self.model.module.tokenizer.decode_batch(output.cpu().numpy())
                     ground_truths = self.model.module.tokenizer.decode_batch(reports_ids[:, 1:].cpu().numpy())
@@ -279,3 +295,38 @@ class Trainer(BaseTrainer):
         self.lr_scheduler.step()
 
         return log
+
+
+    def test(self):
+        self.logger.info('Start to evaluate in the test set.')
+        self.model.eval()
+        log = {}
+        image_ids = []
+        with torch.no_grad():
+            test_gts, test_res = [], []
+            for batch_idx, (images_id, images, reports_ids, reports_masks, labels) in enumerate(tqdm(self.test_dataloader)):
+                images, reports_ids, reports_masks, labels = images.to(self.device), reports_ids.to(
+                    self.device), reports_masks.to(self.device), labels.to(self.device)
+                with autocast(dtype=torch.float16, enabled=self.use_amp):
+                    output, _ = self.model(images, labels=labels, mode='sample')
+                if self.n_gpu>1:
+                    reports = self.model.module.tokenizer.decode_batch(output.cpu().numpy())
+                    ground_truths = self.model.module.tokenizer.decode_batch(reports_ids[:, 1:].cpu().numpy())
+                else:
+                    reports = self.model.tokenizer.decode_batch(output.cpu().numpy())
+                    ground_truths = self.model.tokenizer.decode_batch(reports_ids[:, 1:].cpu().numpy())
+                test_res.extend(reports)
+                test_gts.extend(ground_truths)
+                image_ids.extend(images_id)
+
+            test_met = self.metric_ftns({i: [gt] for i, gt in enumerate(test_gts)},
+                                        {i: [re] for i, re in enumerate(test_res)})
+            log.update(**{'test_' + k: v for k, v in test_met.items()})
+            data = (image_ids, test_res, test_gts)
+            save_data = [{'img_id': img_id, 'pred': pred, 'gt': gt} for img_id, pred, gt in zip(*data)]
+            save_data = [log] + save_data
+            with open('caption_data.json','w') as f:
+                json.dump(save_data,f)
+
+        for key, value in log.items():
+            self.logger.info('\t{:15s}: {}'.format(str(key), value))

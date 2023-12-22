@@ -348,9 +348,9 @@ class EncoderDecoder(AttModel):
         self.txt_margin = args.txt_con_margin
         self.num_protype = args.num_protype
 
-        self.img_cls_head = nn.Sequential(nn.Linear(args.cmm_dim, args.cmm_dim), nn.Linear(args.cmm_dim, 14))
-
-        self.txt_cls_head = nn.Sequential(nn.Linear(args.cmm_dim, args.cmm_dim), nn.Linear(args.cmm_dim, 14))
+        # self.img_cls_head = nn.Sequential(nn.Linear(args.cmm_dim, args.cmm_dim), nn.Linear(args.cmm_dim, 14))
+        #
+        # self.txt_cls_head = nn.Sequential(nn.Linear(args.cmm_dim, args.cmm_dim), nn.Linear(args.cmm_dim, 14))
 
         self.txt_dim_reduction = nn.Linear(args.d_txt_ebd, args.cmm_dim)
 
@@ -393,21 +393,28 @@ class EncoderDecoder(AttModel):
         if att_masks is None:
             att_masks = att_feats.new_ones(att_feats.shape[:2], dtype=torch.long)
 
-        max_num_protype = max(labels.sum(-1)) * self.num_protype
-        protypes = self.dim_reduction(self.protypes)
+        per_num_protype = labels.sum(-1) * self.num_protype
+        max_num_protype = max(per_num_protype)
+        protypes = self.dim_reduction(self.protypes).view(self.num_cluster, self.num_protype, -1)
+
         query_matrix = protypes.new_zeros(att_feats.size(0), max_num_protype.int(), protypes.shape[-1])
         cmn_masks = protypes.new_zeros(query_matrix.shape[0], att_feats.size(1), max_num_protype.int())
 
+        labels_mask = labels == 1
         for i in range(att_feats.size(0)):
-            cur_query_matrix = []
-            for j in range(len(labels[i])):
-                if labels[i, j] == 1:
-                        cur_query_matrix.extend(
-                            protypes[j*self.num_protype:(j+1)*self.num_protype, :])
-            cur_query_matrix = torch.stack(cur_query_matrix, 0)
+            query_matrix[i, :per_num_protype[i].long()] = protypes[labels_mask[i]].view(-1, protypes.shape[-1])
+            cmn_masks[i, :, :per_num_protype[i].long()] = 1
 
-            query_matrix[i, :cur_query_matrix.shape[0], :] = cur_query_matrix
-            cmn_masks[i, :, :cur_query_matrix.shape[0]] = 1
+        # for i in range(att_feats.size(0)):
+        #     cur_query_matrix = []
+        #     for j in range(len(labels[i])):
+        #         if labels[i, j] == 1:
+        #                 cur_query_matrix.extend(
+        #                     protypes[j*self.num_protype:(j+1)*self.num_protype, :])
+        #     cur_query_matrix = torch.stack(cur_query_matrix, 0)
+        #
+        #     query_matrix[i, :cur_query_matrix.shape[0], :] = cur_query_matrix
+        #     cmn_masks[i, :, :cur_query_matrix.shape[0]] = 1
 
 
         responses = self.cmn(att_feats, query_matrix, query_matrix, cmn_masks)
@@ -442,10 +449,10 @@ class EncoderDecoder(AttModel):
                                num_protypes = self.num_protype, labels = labels, margin = self.txt_margin)
         txt_con_loss = txt_con_loss.unsqueeze(0)  # for  multi-gpu setting
 
-        img_bce_loss = self.img_cls_head(torch.mean(att_feats, dim=1))
-        txt_bce_loss = self.txt_cls_head(torch.mean(txt_feats, dim=1))
+        # img_bce_loss = self.img_cls_head(torch.mean(att_feats, dim=1))
+        # txt_bce_loss = self.txt_cls_head(torch.mean(txt_feats, dim=1))
 
-        return outputs, img_con_loss, txt_con_loss, img_bce_loss, txt_bce_loss
+        return outputs, img_con_loss, txt_con_loss, None, None
 
     def core(self, it, fc_feats_ph, att_feats_ph, memory, state, mask, query_matrix, cmn_masks, labels=None):
         if len(state) == 0:

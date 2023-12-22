@@ -1,4 +1,4 @@
-python main.py \
+torchrun --nnodes=1 --nproc_per_node=1 main.py \
     --image_dir data/mimic_cxr/images/ \
     --ann_path data/mimic_cxr/annotation.json \
     --label_path data/mimic_cxr/labels_14.pickle \
@@ -7,27 +7,23 @@ python main.py \
     --max_seq_length 100 \
     --threshold 10 \
     --epochs 30 \
-    --batch_size 16 \
+    --batch_size 64 \
     --lr_ve 5e-5 \
     --lr_ed 1e-4 \
     --step_size 3 \
-    --gamma 0.8 \
     --num_layers 3 \
     --topk 15 \
-    --cmm_size 2048 \
-    --cmm_dim 512 \
     --seed 7580  \
-    --beam_size 3 \
     --save_dir results/mimic_cxr/ \
-    --log_period 1000 \
+    --log_period 500 \
     --n_gpu 1 \
     --num_cluster 14 \
     --img_con_margin 0.4 \
     --txt_con_margin 0.4 \
-    --weight_img_bce_loss 0 \
-    --weight_txt_bce_loss 0 \
     --weight_txt_con_loss 0.1 \
     --weight_img_con_loss 1 \
     --d_img_ebd 2048 \
     --d_txt_ebd 768 \
-    --num_protype 20
+    --num_protype 20 \
+    --use_amp \
+    --num_workers 12 \
