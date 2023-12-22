@@ -348,15 +348,7 @@ class EncoderDecoder(AttModel):
         self.txt_margin = args.txt_con_margin
         self.num_protype = args.num_protype
 
-        # self.img_cls_head = nn.Sequential(nn.Linear(args.cmm_dim, args.cmm_dim), nn.Linear(args.cmm_dim, 14))
-        #
-        # self.txt_cls_head = nn.Sequential(nn.Linear(args.cmm_dim, args.cmm_dim), nn.Linear(args.cmm_dim, 14))
-
-        self.txt_dim_reduction = nn.Linear(args.d_txt_ebd, args.cmm_dim)
-
         self.dim_reduction = nn.Linear(args.d_txt_ebd + args.d_img_ebd, args.cmm_dim)
-
-        self.img_dim_reduction = nn.Linear(args.d_img_ebd, args.cmm_dim)
 
         self.fuse_feature = nn.Linear(args.d_model*2, args.d_model)
 
@@ -405,17 +397,6 @@ class EncoderDecoder(AttModel):
             query_matrix[i, :per_num_protype[i].long()] = protypes[labels_mask[i]].view(-1, protypes.shape[-1])
             cmn_masks[i, :, :per_num_protype[i].long()] = 1
 
-        # for i in range(att_feats.size(0)):
-        #     cur_query_matrix = []
-        #     for j in range(len(labels[i])):
-        #         if labels[i, j] == 1:
-        #                 cur_query_matrix.extend(
-        #                     protypes[j*self.num_protype:(j+1)*self.num_protype, :])
-        #     cur_query_matrix = torch.stack(cur_query_matrix, 0)
-        #
-        #     query_matrix[i, :cur_query_matrix.shape[0], :] = cur_query_matrix
-        #     cmn_masks[i, :, :cur_query_matrix.shape[0]] = 1
-
 
         responses = self.cmn(att_feats, query_matrix, query_matrix, cmn_masks)
 
@@ -448,9 +429,6 @@ class EncoderDecoder(AttModel):
         txt_con_loss = my_con_loss(torch.mean(txt_responses, dim=1), num_classes= self.num_cluster,
                                num_protypes = self.num_protype, labels = labels, margin = self.txt_margin)
         txt_con_loss = txt_con_loss.unsqueeze(0)  # for  multi-gpu setting
-
-        # img_bce_loss = self.img_cls_head(torch.mean(att_feats, dim=1))
-        # txt_bce_loss = self.txt_cls_head(torch.mean(txt_feats, dim=1))
 
         return outputs, img_con_loss, txt_con_loss, None, None
 

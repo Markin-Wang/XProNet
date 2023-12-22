@@ -65,7 +65,7 @@ def main():
 
     model = model.to(device_id)
     model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[device_id], broadcast_buffers=False,
-                                                      find_unused_parameters=True)
+                                                      find_unused_parameters=False)
     model_without_ddp = model.module
 
     if dist.get_rank() == args.local_rank:
