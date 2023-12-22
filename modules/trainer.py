@@ -241,6 +241,7 @@ class Trainer(BaseTrainer):
                                          # img_bce_loss / (batch_idx + 1),
                                          # txt_bce_ls / (batch_idx + 1))
                                  ))
+            break
 
         log = {'ce_loss': ce_loss / len(self.train_dataloader), 'img_con': img_con_loss / len(self.train_dataloader),
                'txt_con': txt_con_loss / len(self.train_dataloader),
@@ -257,12 +258,8 @@ class Trainer(BaseTrainer):
                 with autocast(dtype=torch.float16, enabled=self.use_amp):
                     output, _ = self.model(images, labels = labels, mode='sample')
                 # change to self.model.module for multi-gpu
-                if self.n_gpu>1:
-                    reports = self.model.module.tokenizer.decode_batch(output.cpu().numpy())
-                    ground_truths = self.model.module.tokenizer.decode_batch(reports_ids[:, 1:].cpu().numpy())
-                else:
-                    reports = self.model.tokenizer.decode_batch(output.cpu().numpy())
-                    ground_truths = self.model.tokenizer.decode_batch(reports_ids[:, 1:].cpu().numpy())
+                reports = self.model.module.tokenizer.decode_batch(output.cpu().numpy())
+                ground_truths = self.model.module.tokenizer.decode_batch(reports_ids[:, 1:].cpu().numpy())
                 val_res.extend(reports)
                 val_gts.extend(ground_truths)
 
@@ -279,12 +276,8 @@ class Trainer(BaseTrainer):
                     self.device), reports_masks.to(self.device), labels.to(self.device)
                 with autocast(dtype=torch.float16, enabled=self.use_amp):
                     output, _ = self.model(images, labels=labels, mode='sample')
-                if self.n_gpu>1:
-                    reports = self.model.module.tokenizer.decode_batch(output.cpu().numpy())
-                    ground_truths = self.model.module.tokenizer.decode_batch(reports_ids[:, 1:].cpu().numpy())
-                else:
-                    reports = self.model.tokenizer.decode_batch(output.cpu().numpy())
-                    ground_truths = self.model.tokenizer.decode_batch(reports_ids[:, 1:].cpu().numpy())
+                reports = self.model.module.tokenizer.decode_batch(output.cpu().numpy())
+                ground_truths = self.model.module.tokenizer.decode_batch(reports_ids[:, 1:].cpu().numpy())
                 test_res.extend(reports)
                 test_gts.extend(ground_truths)
 
