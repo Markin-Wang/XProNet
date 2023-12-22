@@ -106,6 +106,7 @@ class BaseTrainer(object):
                 if not_improved_count > self.early_stop:
                     self.logger.info("Validation performance didn\'t improve for {} epochs. " "Training stops.".format(
                         self.early_stop))
+                    break
             if dist.get_rank() == self.local_rank and epoch % self.save_period == 0:
                 self._save_checkpoint(epoch, save_best=best)
             self.logger.info(f'best performance in epoch: {best_epoch}')
