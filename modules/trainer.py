@@ -240,7 +240,6 @@ class Trainer(BaseTrainer):
                                          # img_bce_loss / (batch_idx + 1),
                                          # txt_bce_ls / (batch_idx + 1))
                                  ))
-            break
 
         log = {'ce_loss': ce_loss / len(self.train_dataloader), 'img_con': img_con_loss / len(self.train_dataloader),
                'txt_con': txt_con_loss / len(self.train_dataloader),
