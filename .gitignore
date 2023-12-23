@@ -1,3 +1,4 @@
+files/*
 ./modules/__pycache__
 data/*
 data
