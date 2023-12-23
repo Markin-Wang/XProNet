@@ -11,8 +11,6 @@ import pyarrow as pa
 import io
 from modules.tokenizers import Tokenizer
 import torchvision
-torchvision.disable_beta_transforms_warning()
-from torchvision import datapoints
 
 
 class BaseDatasetArrow(Dataset):
