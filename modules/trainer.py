@@ -111,6 +111,9 @@ class BaseTrainer(object):
                 self._save_checkpoint(epoch, save_best=best)
             self.logger.info(f'best performance in epoch: {best_epoch}')
 
+        if dist.get_rank() == self.local_rank:
+            self._print_best()
+
     def _synchronize_data(self, log):
         pairs = [[k, v] for k, v in log.items()]
         keys = [x[0] for x in pairs]
