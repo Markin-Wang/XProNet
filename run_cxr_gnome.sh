@@ -15,7 +15,7 @@ torchrun --nnodes=1 --nproc_per_node=1 main.py \
     --topk 15 \
     --seed 7580  \
     --save_dir results/cxr_gnome/ \
-    --log_period 500 \
+    --log_period 10 \
     --n_gpu 1 \
     --num_cluster 14 \
     --img_con_margin 0.4 \

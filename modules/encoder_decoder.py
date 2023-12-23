@@ -13,7 +13,7 @@ import pickle
 from .utils import my_con_loss
 
 from .att_model import pack_wrapper, AttModel
-
+from torch.cuda.amp import autocast
 
 def clones(module, N):
     return nn.ModuleList([copy.deepcopy(module) for _ in range(N)])
@@ -28,7 +28,7 @@ def attention(query, key, value, mask=None, dropout=None):
     d_k = query.size(-1)
     scores = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(d_k)
     if mask is not None:
-        scores = scores.masked_fill(mask == 0, float('-inf'))
+        scores = scores.masked_fill(mask == 0, torch.finfo(scores.dtype).min)
     p_attn = F.softmax(scores, dim=-1)
     if dropout is not None:
         p_attn = dropout(p_attn)
@@ -37,9 +37,10 @@ def attention(query, key, value, mask=None, dropout=None):
 
 def memory_querying_responding(query, key, value, mask=None, dropout=None, topk=32):
     d_k = query.size(-1)
+
     scores = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(d_k)
     if mask is not None:
-        scores = scores.masked_fill(mask == 0, float('-inf'))
+        scores = scores.masked_fill(mask == 0, torch.finfo(scores.dtype).min)
     selected_scores, idx = scores.topk(topk)
     # query [8, 8, 49/98, 64]) value [8, 8, 2048, 64] score [8, 8, 49/98, 2048]
     # idx 8x8x98x32
@@ -48,7 +49,7 @@ def memory_querying_responding(query, key, value, mask=None, dropout=None, topk=
 
     selected_value = torch.gather(dummy_value, 3, dummy_idx) # [8, 8, 98, 32, 64]
 
-    p_attn = F.softmax(selected_scores, dim=-1)  # [8, 8, 98, 32]
+    p_attn = F.softmax(selected_scores.float(), dim=-1)  # [8, 8, 98, 32]
 
     if dropout is not None:
         p_attn = dropout(p_attn)
@@ -79,7 +80,6 @@ class Transformer(nn.Module):
         cmn_masks = cmn_masks.unsqueeze(1).expand(cmn_masks.shape[0], embeddings.size(1), cmn_masks.shape[-1])
 
         # Cross-modal prototype querying and responding for textual features
-
         responses = self.cmn(embeddings, memory_matrix, memory_matrix, cmn_masks)
 
         #embeddings = embeddings + responses
@@ -388,7 +388,6 @@ class EncoderDecoder(AttModel):
         per_num_protype = labels.sum(-1) * self.num_protype
         max_num_protype = max(per_num_protype)
         protypes = self.dim_reduction(self.protypes).view(self.num_cluster, self.num_protype, -1)
-
         query_matrix = protypes.new_zeros(att_feats.size(0), max_num_protype.int(), protypes.shape[-1])
         cmn_masks = protypes.new_zeros(query_matrix.shape[0], att_feats.size(1), max_num_protype.int())
 
@@ -396,7 +395,6 @@ class EncoderDecoder(AttModel):
         for i in range(att_feats.size(0)):
             query_matrix[i, :per_num_protype[i].long()] = protypes[labels_mask[i]].view(-1, protypes.shape[-1])
             cmn_masks[i, :, :per_num_protype[i].long()] = 1
-
 
         responses = self.cmn(att_feats, query_matrix, query_matrix, cmn_masks)
 

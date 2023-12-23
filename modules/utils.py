@@ -105,6 +105,8 @@ def parse_agrs():
     parser.add_argument('--gbl_num_protype', type=int, default=10, help='.')
     parser.add_argument('--num_protype', type=int, default=10, help='.')
     parser.add_argument('--num_cluster', type=int, default=20, help='.')
+    parser.add_argument('--start_eval_epoch', type=int, default=0, help='epoch to start validation')
+
     parser.add_argument('--weight_img_con_loss', type=float, default=1, help='.')
     parser.add_argument('--weight_txt_con_loss', type=float, default=1, help='.')
 
@@ -112,6 +114,7 @@ def parse_agrs():
     parser.add_argument('--weight_txt_bce_loss', type=float, default=1, help='.')
     parser.add_argument('--img_con_margin', type=float, default=0.4, help='.')
     parser.add_argument('--txt_con_margin', type=float, default=0.4, help='.')
+    parser.add_argument('--test_after', action='store_true', help='perform test after the training')
 
     args = parser.parse_args()
     return args
