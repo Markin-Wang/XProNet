@@ -253,7 +253,6 @@ class Trainer(BaseTrainer):
             self.scaler.scale(loss).backward()
             self.scaler.step(self.optimizer)
             self.scaler.update()
-            self.lr_scheduler.step()
             if batch_idx % self.args.log_period == 0:
                 self.logger.info('[{}/{}] Step: {}/{}, CE Ls: {:.5f}, CON Ls1: {:.5f}, CON Ls2: {:.5f}'
                                  .format(epoch, self.epochs, batch_idx, len(self.train_dataloader),
@@ -267,7 +266,7 @@ class Trainer(BaseTrainer):
                'txt_con': txt_con_loss / len(self.train_dataloader),
                # 'img_bce_loss': img_bce_loss / len(self.train_dataloader), 'txt_bce_loss': txt_bce_loss / len(self.train_dataloader)
                }
-
+        self.lr_scheduler.step()
         return log
 
     def _valid(self, epoch, split='val'):
