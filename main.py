@@ -51,13 +51,21 @@ def main():
     logger = create_logger(output_dir=save_dir, dist_rank=args.local_rank, name=args.exp_name)
 
     # create tokenizer
-    tokenizer = Tokenizer(args)
-    all_texts = tokenizer.all_texts
+    if args.dataset_name == 'cxr_gnome':
+        tokenizer = None
+    else:
+        tokenizer = Tokenizer(args)
 
     # create data loader
     train_dataloader = R2DataLoader(args, tokenizer, split='train', shuffle=True, drop_last=True)
+    if args.dataset_name == 'cxr_gnome':
+        tokenizer = train_dataloader.dataset.tokenizer
+    all_texts = tokenizer.all_texts
+
     val_dataloader = R2DataLoader(args, tokenizer, split='val', shuffle=False)
     test_dataloader = R2DataLoader(args, tokenizer, split='test', shuffle=False)
+
+
 
     # build model architecture
     model = XProNet(args, tokenizer)

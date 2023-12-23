@@ -5,6 +5,7 @@ from torchvision import transforms
 from torch.utils.data import DistributedSampler
 import torch.distributed as dist
 from .datasets import IuxrayMultiImageDataset, MimiccxrSingleImageDataset
+from .dataset_arrow import CXRGenomeDatasetArrow
 
 
 class R2DataLoader(DataLoader):
@@ -34,6 +35,8 @@ class R2DataLoader(DataLoader):
 
         if self.dataset_name == 'iu_xray':
             self.dataset = IuxrayMultiImageDataset(self.args, self.tokenizer, self.split, transform=self.transform)
+        elif self.dataset_name == 'cxr_gnome':
+            self.dataset = CXRGenomeDatasetArrow(args=self.args, tokenizer=self.tokenizer, split=self.split, transform=self.transform)
         else:
             self.dataset = MimiccxrSingleImageDataset(self.args, self.tokenizer, self.split, transform=self.transform)
 

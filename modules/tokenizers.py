@@ -4,24 +4,31 @@ from collections import Counter
 
 
 class Tokenizer(object):
-    def __init__(self, args):
+    def __init__(self, args, all_texts=None):
         self.ann_path = args.ann_path
         self.threshold = args.threshold
         self.dataset_name = args.dataset_name
-        self.all_texts = []
         if self.dataset_name == 'iu_xray':
             self.clean_report = self.clean_report_iu_xray
         else:
             self.clean_report = self.clean_report_mimic_cxr
-        self.ann = json.loads(open(self.ann_path, 'r').read())
+
+        if all_texts is not None:
+            self.all_texts = all_texts
+        else:
+            self.all_texts = []
+            self.ann = json.loads(open(self.ann_path, 'r').read())
+            for example in self.ann['train']:
+                report = self.clean_report(example['report'])
+                self.all_texts.append(report)
+
         self.token2idx, self.idx2token = self.create_vocabulary()
 
     def create_vocabulary(self):
         total_tokens = []
 
-        for example in self.ann['train']:
-            report = self.clean_report(example['report'])
-            self.all_texts.append(report)
+        for report in self.all_texts:
+            if self.dataset_name == 'cxr_gnome': report = report[0]
             tokens = report.split()
             for token in tokens:
                 total_tokens.append(token)
