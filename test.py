@@ -69,6 +69,8 @@ def main():
 
     # build model architecture
     model = XProNet(args, tokenizer)
+    state_dict = torch.load(os.path.join(args.trained_model_path))['state_dict']
+    model.load_state_dict(state_dict)
     # change this with your pretrained model path
 
     optimizer = build_optimizer(args, model)
@@ -77,8 +79,6 @@ def main():
     model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[device_id], broadcast_buffers=False,
                                                       find_unused_parameters=True)
 
-    state_dict = torch.load(os.path.join(args.trained_model_path))['state_dict']
-    model.load_state_dict(state_dict)
     model_without_ddp = model.module
 
     if dist.get_rank() == args.local_rank:
