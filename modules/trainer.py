@@ -291,7 +291,7 @@ class Trainer(BaseTrainer):
 
             val_met = self.metric_ftns({i: [gt] for i, gt in enumerate(val_gts)},
                                        {i: [re] for i, re in enumerate(val_res)})
-            log.update(**{'val_' + k: v for k, v in val_met.items()})
+            log.update(**{f'{split}_' + k: v for k, v in val_met.items()})
         return log
 
 
