@@ -180,7 +180,7 @@ class BaseTrainer(object):
     def _save_checkpoint(self, epoch, save_best=False):
         state = {
             'epoch': epoch,
-            'state_dict': self.model.state_dict(),
+            'state_dict': self.model.module.state_dict(),
             'optimizer': self.optimizer.state_dict(),
             'monitor_best': self.mnt_best
         }

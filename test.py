@@ -63,21 +63,22 @@ def main():
     if args.dataset_name == 'cxr_gnome':
         tokenizer = train_dataloader.dataset.tokenizer
     all_texts = tokenizer.all_texts
-    
+
     val_dataloader = R2DataLoader(args, tokenizer, split='val', shuffle=False)
     test_dataloader = R2DataLoader(args, tokenizer, split='test', shuffle=False)
 
     # build model architecture
     model = XProNet(args, tokenizer)
     # change this with your pretrained model path
-    state_dict = torch.load(os.path.join(args.trained_model_path))['state_dict']
-    model.load_state_dict(state_dict)
 
     optimizer = build_optimizer(args, model)
 
     model = model.to(device_id)
     model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[device_id], broadcast_buffers=False,
                                                       find_unused_parameters=True)
+
+    state_dict = torch.load(os.path.join(args.trained_model_path))['state_dict']
+    model.load_state_dict(state_dict)
     model_without_ddp = model.module
 
     if dist.get_rank() == args.local_rank:
